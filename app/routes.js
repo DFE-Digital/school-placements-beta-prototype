@@ -48,6 +48,7 @@ router.use(passport.session())
 // Controller modules
 const accountController = require('./controllers/account')
 const authenticationController = require('./controllers/authentication')
+const organisationController = require('./controllers/organisations')
 
 // Authentication middleware
 const checkIsAuthenticated = (req, res, next) => {
@@ -120,3 +121,17 @@ router.get('/terms-and-conditions', authenticationController.terms_and_condition
 /// ------------------------------------------------------------------------ ///
 
 router.get('/account', checkIsAuthenticated, accountController.user_account)
+
+/// ------------------------------------------------------------------------ ///
+/// ORGANISATION ROUTES
+/// ------------------------------------------------------------------------ ///
+
+router.get('/organisations/:organisationId/details', checkIsAuthenticated, organisationController.show_organisation_get)
+
+router.get('/organisations/:organisationId', checkIsAuthenticated, organisationController.organisation)
+
+router.get('/organisations', checkIsAuthenticated, organisationController.list_organisations_get)
+
+router.get('/', checkIsAuthenticated, (req, res) => {
+  res.redirect('/organisations')
+})
