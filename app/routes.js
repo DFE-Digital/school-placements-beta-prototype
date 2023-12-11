@@ -49,6 +49,7 @@ router.use(passport.session())
 const accountController = require('./controllers/account')
 const authenticationController = require('./controllers/authentication')
 const organisationController = require('./controllers/organisations')
+const userController = require('./controllers/users')
 
 // Authentication middleware
 const checkIsAuthenticated = (req, res, next) => {
@@ -56,7 +57,7 @@ const checkIsAuthenticated = (req, res, next) => {
     // the signed in user
     res.locals.passport = req.session.passport
     // the base URL for navigation
-    // res.locals.baseUrl = `/organisations/${req.params.organisationId}`
+    res.locals.baseUrl = `/organisations/${req.params.organisationId}`
     next()
   } else {
     delete req.session.data
@@ -135,3 +136,26 @@ router.get('/organisations', checkIsAuthenticated, organisationController.list_o
 router.get('/', checkIsAuthenticated, (req, res) => {
   res.redirect('/organisations')
 })
+
+/// ------------------------------------------------------------------------ ///
+/// USER ROUTES
+/// ------------------------------------------------------------------------ ///
+
+router.get('/organisations/:organisationId/users/new', checkIsAuthenticated, userController.new_user_get)
+router.post('/organisations/:organisationId/users/new', checkIsAuthenticated, userController.new_user_post)
+
+router.get('/organisations/:organisationId/users/new/check', checkIsAuthenticated, userController.new_user_check_get)
+router.post('/organisations/:organisationId/users/new/check', checkIsAuthenticated, userController.new_user_check_post)
+
+router.get('/organisations/:organisationId/users/:userId/edit', checkIsAuthenticated, userController.edit_user_get)
+router.post('/organisations/:organisationId/users/:userId/edit', checkIsAuthenticated, userController.edit_user_post)
+
+router.get('/organisations/:organisationId/users/:userId/edit/check', checkIsAuthenticated, userController.edit_user_check_get)
+router.post('/organisations/:organisationId/users/:userId/edit/check', checkIsAuthenticated, userController.edit_user_check_post)
+
+router.get('/organisations/:organisationId/users/:userId/delete', checkIsAuthenticated, userController.delete_user_get)
+router.post('/organisations/:organisationId/users/:userId/delete', checkIsAuthenticated, userController.delete_user_post)
+
+router.get('/organisations/:organisationId/users/:userId', checkIsAuthenticated, userController.user_details)
+
+router.get('/organisations/:organisationId/users', checkIsAuthenticated, userController.user_list)
