@@ -5,3 +5,6 @@
 
 // Add extra styles here
 $app-assets-path: '/public/';
+
+// Import local component styles
+@import "app/views/_components/all.scss";
