@@ -55,12 +55,15 @@ exports.user_details = (req, res) => {
 /// ------------------------------------------------------------------------ ///
 
 exports.new_user_get = (req, res) => {
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+
   let back = `/support/organisations/${req.params.organisationId}/users`
   if (req.query.referrer === 'check') {
     back = `/support/organisations/${req.params.organisationId}/users/new/check`
   }
 
   res.render('../views/support/users/edit', {
+    organisation,
     user: req.session.data.user,
     actions: {
       save: `/support/organisations/${req.params.organisationId}/users/new`,
@@ -71,6 +74,8 @@ exports.new_user_get = (req, res) => {
 }
 
 exports.new_user_post = (req, res) => {
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+
   const errors = []
 
   if (!req.session.data.user.firstName.length) {
@@ -116,6 +121,7 @@ exports.new_user_post = (req, res) => {
 
   if (errors.length) {
     res.render('../views/support/users/edit', {
+      organisation,
       user: req.session.data.user,
       actions: {
         save: `/support/organisations/${req.params.organisationId}/users/new`,
@@ -130,7 +136,10 @@ exports.new_user_post = (req, res) => {
 }
 
 exports.new_user_check_get = (req, res) => {
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+
   res.render('../views/support/users/check-your-answers', {
+    organisation,
     user: req.session.data.user,
     actions: {
       save: `/support/organisations/${req.params.organisationId}/users/new/check`,
@@ -158,6 +167,7 @@ exports.new_user_check_post = (req, res) => {
 /// ------------------------------------------------------------------------ ///
 
 exports.edit_user_get = (req, res) => {
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
   const currentUser = userModel.findOne({ organisationId: req.params.organisationId, userId: req.params.userId })
 
   if (req.session.data.user) {
@@ -167,6 +177,7 @@ exports.edit_user_get = (req, res) => {
   }
 
   res.render('../views/support/users/edit', {
+    organisation,
     currentUser,
     user,
     actions: {
@@ -178,6 +189,8 @@ exports.edit_user_get = (req, res) => {
 }
 
 exports.edit_user_post = (req, res) => {
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+
   const errors = []
 
   if (!req.session.data.user.firstName.length) {
@@ -206,6 +219,7 @@ exports.edit_user_post = (req, res) => {
 
   if (errors.length) {
     res.render('../views/support/users/edit', {
+      organisation,
       user: req.session.data.user,
       actions: {
         save: `/support/organisations/${req.params.organisationId}/users/${req.params.userId}/edit`,
@@ -227,9 +241,11 @@ exports.edit_user_post = (req, res) => {
 }
 
 exports.edit_user_check_get = (req, res) => {
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
   const currentUser = userModel.findOne({ organisationId: req.params.organisationId, userId: req.params.userId })
 
   res.render('../views/support/users/check-your-answers', {
+    organisation,
     currentUser,
     user: req.session.data.user,
     referrer: 'change',
@@ -260,9 +276,11 @@ exports.edit_user_check_post = (req, res) => {
 /// ------------------------------------------------------------------------ ///
 
 exports.delete_user_get = (req, res) => {
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
   const user = userModel.findOne({ organisationId: req.params.organisationId, userId: req.params.userId })
 
   res.render('../views/support/users/delete', {
+    organisation,
     user,
     actions: {
       save: `/support/organisations/${req.params.organisationId}/users/${req.params.userId}/delete`,
