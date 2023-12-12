@@ -5,6 +5,8 @@
     "node": "18.12.1"
   },
   "scripts": {
+    "generate-data": "node ./scripts/generate-data.js",
+    "postinstall": "npm run generate-data",
     "dev": "govuk-prototype-kit dev",
     "serve": "govuk-prototype-kit serve",
     "start": "govuk-prototype-kit start"
@@ -15,7 +17,6 @@
     "convert-csv-to-json": "^2.0.0",
     "csv-string": "^4.1.1",
     "del": "6.1.1",
-    "got": "^11.8.6",
     "govuk-frontend": "4.7.0",
     "govuk-prototype-kit": "13.16.0",
     "gray-matter": "^4.0.3",
