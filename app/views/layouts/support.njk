@@ -39,18 +39,20 @@
     classes: "govuk-width-container"
   }) }}
 
-  {{ appOrganisationActions({
-    text: organisation.name,
-    actions: {
-      items: [
-        {
-          text: "Change organisation",
-          href: "/support/organisations"
-        }
-      ]
-    },
-    classes: "govuk-width-container"
-  }) }}
+  {% if not hideOrganisationSwitcher %}
+    {{ appOrganisationActions({
+      text: organisation.name,
+      actions: {
+        items: [
+          {
+            text: "Change organisation",
+            href: "/support/organisations"
+          }
+        ]
+      },
+      classes: "govuk-width-container"
+    }) }}
+  {% endif %}
 
   {% if not hidePrimaryNavigation %}
     {{ appPrimaryNavigation({
