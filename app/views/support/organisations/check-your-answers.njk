@@ -62,7 +62,7 @@
               actions: {
                 items: [
                   {
-                    href: actions.change + "?referrer=check",
+                    href: actions.change + "/" + data.type + "?referrer=check",
                     text: "Change",
                     visuallyHiddenText: "name"
                   }
@@ -85,8 +85,8 @@
                     visuallyHiddenText: "UK provider reference number (UKPRN)"
                   }
                 ]
-              }
-            } if organisation.type != "school",
+              } if 1==0
+            } if data.type != "school",
             {
               key: {
                 text: "Accredited provider ID"
@@ -103,8 +103,8 @@
                     visuallyHiddenText: "accredited provider ID"
                   }
                 ]
-              }
-            } if organisation.type != "school",
+              } if 1==0
+            } if data.type != "school",
             {
               key: {
                 text: "Unique reference number (URN)"
@@ -121,12 +121,12 @@
                     visuallyHiddenText: "unique reference number (URN)"
                   }
                 ]
-              }
-            } if organisation.type == "school"
+              } if 1==0
+            } if data.type == "school"
           ]
         }) }}
 
-        {% if organisation.type == "school" %}
+        {% if data.type == "school" %}
 
           <h2 class="govuk-heading-m govuk-!-margin-top-7">
             Additional details
@@ -150,7 +150,7 @@
                       visuallyHiddenText: "establishment group"
                     }
                   ]
-                }
+                } if 1==0
               },
               {
                 key: {
@@ -168,7 +168,7 @@
                       visuallyHiddenText: "establishment type"
                     }
                   ]
-                }
+                } if 1==0
               },
               {
                 key: {
@@ -186,7 +186,7 @@
                       visuallyHiddenText: "establishment status"
                     }
                   ]
-                }
+                } if 1==0
               } if 1==0,
               {
                 key: {
@@ -204,7 +204,7 @@
                       visuallyHiddenText: "establishment phase"
                     }
                   ]
-                }
+                } if 1==0
               },
               {
                 key: {
@@ -222,7 +222,7 @@
                       visuallyHiddenText: "gender"
                     }
                   ]
-                }
+                } if 1==0
               },
               {
                 key: {
@@ -240,7 +240,7 @@
                       visuallyHiddenText: "minimum age"
                     }
                   ]
-                }
+                } if 1==0
               },
               {
                 key: {
@@ -258,7 +258,7 @@
                       visuallyHiddenText: "maximum age"
                     }
                   ]
-                }
+                } if 1==0
               },
               {
                 key: {
@@ -276,7 +276,7 @@
                       visuallyHiddenText: "six form"
                     }
                   ]
-                }
+                } if 1==0
               } if organisation.establishmentPhase in [4,5,6,7],
               {
                 key: {
@@ -294,7 +294,7 @@
                       visuallyHiddenText: "nursery provision"
                     }
                   ]
-                }
+                } if 1==0
               } if organisation.establishmentPhase in [1,2,3,7],
               {
                 key: {
@@ -312,7 +312,7 @@
                       visuallyHiddenText: "religious character"
                     }
                   ]
-                }
+                } if 1==0
               },
               {
                 key: {
@@ -330,7 +330,7 @@
                       visuallyHiddenText: "admissions policy"
                     }
                   ]
-                }
+                } if 1==0
               },
               {
                 key: {
@@ -348,7 +348,7 @@
                       visuallyHiddenText: "urban or rural"
                     }
                   ]
-                }
+                } if 1==0
               },
               {
                 key: {
@@ -366,7 +366,7 @@
                       visuallyHiddenText: "school capacity"
                     }
                   ]
-                }
+                } if 1==0
               },
               {
                 key: {
@@ -384,7 +384,7 @@
                       visuallyHiddenText: "total pupils"
                     }
                   ]
-                }
+                } if 1==0
               },
               {
                 key: {
@@ -402,7 +402,7 @@
                       visuallyHiddenText: "total boys"
                     }
                   ]
-                }
+                } if 1==0
               },
               {
                 key: {
@@ -420,7 +420,7 @@
                       visuallyHiddenText: "total girls"
                     }
                   ]
-                }
+                } if 1==0
               },
               {
                 key: {
@@ -438,7 +438,7 @@
                       visuallyHiddenText: "free school meals"
                     }
                   ]
-                }
+                } if 1==0
               }
             ]
           }) }}
@@ -481,7 +481,7 @@
                       visuallyHiddenText: "special classes"
                     }
                   ]
-                }
+                } if 1==0
               },
               {
                 key: {
@@ -498,7 +498,7 @@
                       visuallyHiddenText: "SEND provision"
                     }
                   ]
-                }
+                } if 1==0
               }
             ]
           }) }}
@@ -553,7 +553,7 @@
                     visuallyHiddenText: "email address"
                   }
                 ]
-              }
+              } if 1==0
             },
             {
               key: {
@@ -571,14 +571,14 @@
                     visuallyHiddenText: "telephone number"
                   }
                 ]
-              }
+              } if 1==0
             },
             {
               key: {
                 text: "Website"
               },
               value: {
-                text: organisation.contact.website if organisation.contact.website else "Not entered",
+                text: organisation.contact.website | urlize | safe if organisation.contact.website else "Not entered",
                 classes: "govuk-hint" if not organisation.contact.website
               },
               actions: {
@@ -589,7 +589,7 @@
                     visuallyHiddenText: "website"
                   }
                 ]
-              }
+              } if 1==0
             },
             {
               key: {
@@ -606,7 +606,7 @@
                     visuallyHiddenText: "address"
                   }
                 ]
-              }
+              } if 1==0
             }
           ]
         }) }}
