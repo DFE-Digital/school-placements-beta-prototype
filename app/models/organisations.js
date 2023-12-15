@@ -44,7 +44,21 @@ exports.findOne = (params) => {
 }
 
 exports.insertOne = (params) => {
+  let organisation
 
+  if (params.organisation) {
+    organisation = params.organisation
+
+    organisation.createdAt = new Date()
+
+    const filePath = directoryPath + '/' + organisation.id + '.json'
+
+    // create a JSON sting for the submitted data
+    const fileData = JSON.stringify(organisation)
+
+    // write the JSON data
+    fs.writeFileSync(filePath, fileData)
+  }
 }
 
 exports.updateOne = (params) => {
