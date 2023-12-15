@@ -27,7 +27,7 @@
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
 
         {{ govukRadios({
-          name: "organisation[type]",
+          name: "type",
           fieldset: {
             legend: {
               html: headingHtml,
@@ -35,7 +35,7 @@
               classes: "govuk-fieldset__legend--l"
             }
           },
-          value: data.organisation.type,
+          value: data.type,
           items: [
             {
               value: "provider",
