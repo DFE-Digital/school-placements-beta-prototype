@@ -29,7 +29,7 @@
         <div class="govuk-form-group {{- ' govuk-form-group--error' if (errors | getErrorMessage('school'))}}">
           {{ govukInput({
             id: "school",
-            name: "school",
+            name: "school[name]",
             label: {
               html: headingHtml,
               isPageHeading: true,

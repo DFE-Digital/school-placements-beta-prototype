@@ -27,7 +27,7 @@
         <div class="govuk-form-group {{- ' govuk-form-group--error' if (errors | getErrorMessage('school'))}}">
           {{ govukInput({
             id: "provider",
-            name: "provider",
+            name: "provider[name]",
             label: {
               html: headingHtml,
               isPageHeading: true,
