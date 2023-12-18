@@ -1,0 +1,1 @@
+{"id":"df7d272f-b42c-493b-ace8-7886bf5027a2","firstName":"Ada","lastName":"Smith","email":"ada@example.com","username":"ada@example.com","password":"bat","organisations":[{"id":"22cf3d12-91d7-459d-b8e0-4d84edc17fb4","name":"BAT School 2","permissions":["mentor"],"notifications":[]}],"createdAt":"2022-03-07T12:35:51.601Z","updatedAt":"2022-03-08T20:09:44.814Z","active":false}

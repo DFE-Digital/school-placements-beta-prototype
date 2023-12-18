@@ -5,6 +5,8 @@
     "node": "18.12.1"
   },
   "scripts": {
+    "generate-data": "node ./scripts/generate-data.js",
+    "postinstall": "npm run generate-data",
     "dev": "govuk-prototype-kit dev",
     "serve": "govuk-prototype-kit serve",
     "start": "govuk-prototype-kit start"
@@ -15,15 +17,14 @@
     "convert-csv-to-json": "^2.0.0",
     "csv-string": "^4.1.1",
     "del": "7.1.0",
-    "got": "^11.8.6",
     "govuk-frontend": "4.7.0",
-    "govuk-prototype-kit": "13.15.3",
+    "govuk-prototype-kit": "13.16.0",
     "gray-matter": "^4.0.3",
     "luxon": "^3.4.4",
-    "marked": "^9.1.6",
-    "marked-gfm-heading-id": "^3.1.1",
+    "marked": "^11.1.0",
+    "marked-gfm-heading-id": "^3.1.2",
     "numeral": "^2.0.6",
-    "passport": "^0.6.0",
+    "passport": "^0.7.0",
     "passport-local": "^1.0.0",
     "uuid": "^9.0.1"
   }
