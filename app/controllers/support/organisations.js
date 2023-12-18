@@ -4,8 +4,16 @@ const providerModel = require('../../models/providers')
 const schoolModel = require('../../models/schools')
 
 exports.list_organisations_get = (req, res) => {
+  // Clean out data from add organisation flow if present
+  delete req.session.data.organisation
+  delete req.session.data.provider
+  delete req.session.data.school
+  delete req.session.data.type
+
+  // Get list of all organisations
   const organisations = organisationModel.findMany({})
 
+  // Sort organisations alphabetically by name
   organisations.sort((a, b) => {
     return a.name.localeCompare(b.name)
   })
@@ -40,11 +48,6 @@ exports.show_organisation_get = (req, res) => {
 /// ------------------------------------------------------------------------ ///
 
 exports.new_get = (req, res) => {
-  delete req.session.data.organisation
-  delete req.session.data.provider
-  delete req.session.data.school
-  delete req.session.data.type
-
   let save = '/support/organisations/new'
   let back = '/support/organisations'
 
@@ -134,11 +137,19 @@ exports.new_provider_post = (req, res) => {
 
   const errors = []
 
+  const organisation = organisationModel.findMany({ query: req.session.data.provider.name })
+
   if (!req.session.data.provider.name.length) {
     const error = {}
     error.fieldName = 'provider'
     error.href = '#provider'
     error.text = 'Enter a provider name, UKPRN, URN or postcode'
+    errors.push(error)
+  } else if (organisation.length) {
+    const error = {}
+    error.fieldName = 'provider'
+    error.href = '#provider'
+    error.text = 'Provider already exists'
     errors.push(error)
   }
 
@@ -191,11 +202,19 @@ exports.new_school_post = (req, res) => {
 
   const errors = []
 
+  const organisation = organisationModel.findMany({ query: req.session.data.school.name })
+
   if (!req.session.data.school.name.length) {
     const error = {}
     error.fieldName = 'school'
     error.href = '#school'
     error.text = 'Enter a school name, URN or postcode'
+    errors.push(error)
+  } else if (organisation.length) {
+    const error = {}
+    error.fieldName = 'school'
+    error.href = '#school'
+    error.text = 'School already exists'
     errors.push(error)
   }
 
