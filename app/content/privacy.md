@@ -79,7 +79,7 @@ If you would like to exercise any of your rights, you can email us at [becominga
 
 You can also use our [contact form](https://form.education.gov.uk/) to get in touch with our Data Protection Officer.
 
-If we cannot resolve your issue, you have the right to raise it with the Information Commissioner's Office (ICO) at [https://ico.org.uk/make-a-complaint/](https://ico.org.uk/make-a-complaint/).
+If we cannot resolve your issue, you have the right to raise it with the Information Commissioner’s Office (ICO) at [https://ico.org.uk/make-a-complaint/](https://ico.org.uk/make-a-complaint/).
 
 ## Keeping our privacy notice up to date
 

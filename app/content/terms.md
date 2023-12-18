@@ -28,9 +28,9 @@ The Department for Education withholds the right to withdraw without notice list
 
 ## Hyperlinking to the Manage school placements website
 
-We do not object to you linking directly to pages on this site and you do not need to ask permission to do so. However, we do not permit our pages to be loaded into frames on your site. The ‘Manage school placements’ pages must be displayed in the user's entire browser window.
+We do not object to you linking directly to pages on this site and you do not need to ask permission to do so. However, we do not permit our pages to be loaded into frames on your site. The ‘Manage school placements’ pages must be displayed in the user’s entire browser window.
 
-You may not charge your website's users to click on a link to any page on the Service.
+You may not charge your website’s users to click on a link to any page on the Service.
 
 ## Third Party Content and Hyperlinking from the Service
 
@@ -56,7 +56,7 @@ The content of this Service includes both content created by us (included but no
 
 The content we create for the Service is not advice. You should verify any information on the Service yourself and use your own judgement before doing or not doing anything on the basis of the content.
 
-Unless expressly stated in writing by us, the Service and material relating to government information, products and services (or to third party information, products and services), is provided 'as is', without any representation or endorsement made and without warranty of any kind whether express or implied, including but not limited to the implied warranties of satisfactory quality, fitness for a particular purpose, non-infringement, compatibility, security and accuracy.
+Unless expressly stated in writing by us, the Service and material relating to government information, products and services (or to third party information, products and services), is provided ‘as is’, without any representation or endorsement made and without warranty of any kind whether express or implied, including but not limited to the implied warranties of satisfactory quality, fitness for a particular purpose, non-infringement, compatibility, security and accuracy.
 
 We do not warrant that the functions contained in the material contained in this site will be uninterrupted or error free, that defects will be corrected, or that this site or the server that makes it available are free of viruses or represent the full functionality, accuracy, reliability of the materials.
 
