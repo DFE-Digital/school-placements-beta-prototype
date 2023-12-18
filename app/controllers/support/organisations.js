@@ -53,7 +53,7 @@ exports.new_get = (req, res) => {
     back = '/support/organisations/new/check'
   }
 
-  res.render('../views/support/organisations/organisation-type', {
+  res.render('../views/support/organisations/new/type', {
     actions: {
       save,
       back,
@@ -82,7 +82,7 @@ exports.new_post = (req, res) => {
   }
 
   if (errors.length) {
-    res.render('../views/support/organisations/organisation-type', {
+    res.render('../views/support/organisations/new/type', {
       actions: {
         save,
         back,
@@ -114,7 +114,7 @@ exports.new_provider_get = (req, res) => {
     back = '/support/organisations/new/check'
   }
 
-  res.render('../views/support/organisations/find-provider', {
+  res.render('../views/support/organisations/new/find-provider', {
     actions: {
       save,
       back,
@@ -143,7 +143,7 @@ exports.new_provider_post = (req, res) => {
   }
 
   if (errors.length) {
-    res.render('../views/support/organisations/find-provider', {
+    res.render('../views/support/organisations/new/find-provider', {
       actions: {
         save,
         back,
@@ -171,7 +171,7 @@ exports.new_school_get = (req, res) => {
     back = '/support/organisations/new/check'
   }
 
-  res.render('../views/support/organisations/find-school', {
+  res.render('../views/support/organisations/new/find-school', {
     actions: {
       save,
       back,
@@ -200,7 +200,7 @@ exports.new_school_post = (req, res) => {
   }
 
   if (errors.length) {
-    res.render('../views/support/organisations/find-school', {
+    res.render('../views/support/organisations/new/find-school', {
       actions: {
         save,
         back,
@@ -224,7 +224,7 @@ exports.new_check_get = (req, res) => {
     back = '/support/organisations/new/school'
   }
 
-  res.render('../views/support/organisations/check-your-answers', {
+  res.render('../views/support/organisations/new/check-your-answers', {
     organisation: req.session.data.organisation,
     actions: {
       save: '/support/organisations/new/check',
