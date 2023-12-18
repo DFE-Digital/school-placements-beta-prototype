@@ -20,11 +20,13 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      {% include "_includes/page-heading.njk" %}
+      {% set headingHtml %}
+        {% include "_includes/page-heading-legend.njk" %}
+      {% endset %}
 
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
 
-        <div class="govuk-form-group {{- ' govuk-form-group--error' if (errors | getErrorMessage('school'))}}">
+        <div class="govuk-form-group {{- ' govuk-form-group--error' if (errors | getErrorMessage('provider'))}}">
           {{ govukInput({
             id: "provider",
             name: "provider[name]",

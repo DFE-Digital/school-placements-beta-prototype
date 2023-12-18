@@ -73,6 +73,14 @@ exports.new_post = (req, res) => {
 
   const errors = []
 
+  if (!req.session.data.type) {
+    const error = {}
+    error.fieldName = "type"
+    error.href = "#type"
+    error.text = "Select an organisation type"
+    errors.push(error)
+  }
+
   if (errors.length) {
     res.render('../views/support/organisations/organisation-type', {
       actions: {
@@ -126,6 +134,14 @@ exports.new_provider_post = (req, res) => {
 
   const errors = []
 
+  if (!req.session.data.provider.name.length) {
+    const error = {}
+    error.fieldName = 'provider'
+    error.href = '#provider'
+    error.text = 'Enter a provider name, UKPRN, URN or postcode'
+    errors.push(error)
+  }
+
   if (errors.length) {
     res.render('../views/support/organisations/find-provider', {
       actions: {
@@ -174,6 +190,14 @@ exports.new_school_post = (req, res) => {
   }
 
   const errors = []
+
+  if (!req.session.data.school.name.length) {
+    const error = {}
+    error.fieldName = 'school'
+    error.href = '#school'
+    error.text = 'Enter a school name, URN or postcode'
+    errors.push(error)
+  }
 
   if (errors.length) {
     res.render('../views/support/organisations/find-school', {
