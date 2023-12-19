@@ -11,8 +11,8 @@ We use cookies to make Manage school placements work and collect information abo
 Essential cookies keep your information secure while you use Manage school placements. We do not need to ask permission to use them.
 
 |Name|Purpose|Expires|
-|=====|=====|=====|
-|\_teacher\_training\_courses\_session|Stores encrypted session data|When you close your browser|
+|---|---|---|
+|\_manage\_school\_placements\_session|Stores encrypted session data|When you close your browser|
 |\_consented\_to\_anaytics\_cookies|Saves your cookie consent settings|6 months|
 
 ## Cookies that measure website use (analytics)
@@ -28,7 +28,7 @@ Google Analytics stores anonymised information about:
 - what you click on while you’re visiting the site
 
 |Name|Purpose|Expires|
-|=====|=====|=====|
+|---|---|---|
 |\_ga|Distinguishes anonymous users|2 years|
 |\_gid|Distinguishes anonymous users|24 hours|
 
