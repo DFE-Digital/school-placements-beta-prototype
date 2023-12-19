@@ -20,6 +20,10 @@ The Becoming a Teacher team (DfE) is committed to making Manage school placement
 
 This website is partially compliant with the [Web Content Accessibility Guidelines (WCAG) version 2.1](https://www.w3.org/TR/WCAG21/) AA standard, due to the non-compliances listed below.
 
+- Item 1
+- Item 2
+- Item 3
+
 The service was designed using the [GOV.UK design system](https://design-system.service.gov.uk/accessibility/), which conforms to the WCAG 2.1 AA standard. To ensure the service fully meets the WCAG 2.1 AA standard, we are currently arranging an accessibility audit. We will update this page following the audit, and publish details of any accessibility issues identified.
 
 ## Reporting accessibility problems with Manage school placements
