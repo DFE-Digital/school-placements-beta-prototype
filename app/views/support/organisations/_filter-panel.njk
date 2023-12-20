@@ -1,8 +1,8 @@
 {% set filterOptionsHtml %}
 
 {{ govukCheckboxes({
-  idPrefix: "filter-k",
-  name: "filter[k]",
+  idPrefix: "filter-organisation-type",
+  name: "filters[organisationType]",
   fieldset: {
     legend: {
       html: 'Organisation type<span class="govuk-visually-hidden"> filter</span>',
@@ -12,20 +12,7 @@
   formGroup: {
     classes: "app-filter__group"
   },
-  items: [
-    {
-      value: "school",
-      text: "School"
-    },
-    {
-      value: "scitt",
-      text: "SCITT"
-    },
-    {
-      value: "university",
-      text: "University (HEI)"
-    }
-  ],
+  items: organisationTypeFilterItems,
   classes: "govuk-checkboxes--small"
 }) }}
 
