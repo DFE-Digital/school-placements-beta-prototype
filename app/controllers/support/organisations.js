@@ -3,6 +3,8 @@ const organisationModel = require('../../models/organisations')
 const providerModel = require('../../models/providers')
 const schoolModel = require('../../models/schools')
 
+const utilsHelper = require('../../helpers/utils')
+
 exports.list_organisations_get = (req, res) => {
   // Clean out data from add organisation flow if present
   delete req.session.data.organisation
@@ -10,20 +12,95 @@ exports.list_organisations_get = (req, res) => {
   delete req.session.data.school
   delete req.session.data.type
 
+  // Search
+  const keywords = req.session.data.keywords
+  const hasSearch = !!((keywords))
+
+  // Filters
+  const organisationType = null
+
+  let organisationTypes
+  if (req.session.data.filters?.organisationType) {
+    organisationTypes = utilsHelper.getCheckboxValues(organisationType, req.session.data.filters.organisationType)
+  }
+
+  const hasFilters = !!((organisationTypes?.length > 0))
+
+  let selectedFilters = null
+
+  if (hasFilters) {
+    selectedFilters = {
+      categories: []
+    }
+
+    if (organisationTypes?.length) {
+      selectedFilters.categories.push({
+        heading: { text: 'Organisation type' },
+        items: organisationTypes.map((organisationType) => {
+          return {
+            text: utilsHelper.getOrganisationTypeLabel(organisationType),
+            href: `/support/organisations/remove-organisationType-filter/${organisationType}`
+          }
+        })
+      })
+    }
+  }
+
+  let selectedOrganisationType
+  if (req.session.data.filters?.organisationType) {
+    selectedOrganisationType = req.session.data.filters.organisationType
+  }
+
+  const organisationTypeFilterItems = utilsHelper.getOrganisationTypeFilterItems(selectedOrganisationType)
+
   // Get list of all organisations
-  const organisations = organisationModel.findMany({})
+  let organisations = organisationModel.findMany({
+    keywords,
+    organisationTypes: selectedOrganisationType
+  })
+  const organisationsCount = organisations.length
 
   // Sort organisations alphabetically by name
   organisations.sort((a, b) => {
-    return a.name.localeCompare(b.name)
+    return a.name.localeCompare(b.name) || a.type.localeCompare(b.type)
   })
 
   res.render('../views/support/organisations/list', {
     organisations,
+    organisationsCount,
+    selectedFilters,
+    hasFilters,
+    hasSearch,
+    keywords,
+    organisationTypeFilterItems,
     actions: {
-      new: '/support/organisations/new'
+      new: '/support/organisations/new',
+      view: '/support/organisations',
+      filters: {
+        apply: '/support/organisations',
+        remove: '/support/organisations/remove-all-filters'
+      },
+      search: {
+        find: '/support/organisations',
+        remove: '/support/organisations/remove-keyword-search'
+      }
     }
   })
+}
+
+exports.removeOrganisationTypeFilter = (req, res) => {
+  req.session.data.filters.organisationType = utilsHelper.removeFilter(req.params.organisationType, req.session.data.filters.organisationType)
+  res.redirect('/support/organisations')
+}
+
+exports.removeAllFilters = (req, res) => {
+  delete req.session.data.filters
+  res.redirect('/support/organisations')
+}
+
+exports.removeKeywordSearch = (req, res) => {
+  delete req.session.data.keywords
+  res.redirect('/support/organisations')
 }
 
 /// ------------------------------------------------------------------------ ///
