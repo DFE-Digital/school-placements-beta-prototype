@@ -224,7 +224,7 @@ router.post('/support/organisations/new/check', checkIsAuthenticated, supportOrg
 //   res.redirect('/organisations')
 // })
 
-router.get('/support/organisations/remove-organisationType-filter/:type', checkIsAuthenticated, supportOrganisationController.removeOrganisationTypeFilter)
+router.get('/support/organisations/remove-organisationType-filter/:organisationType', checkIsAuthenticated, supportOrganisationController.removeOrganisationTypeFilter)
 
 router.get('/support/organisations/remove-all-filters', checkIsAuthenticated, supportOrganisationController.removeAllFilters)
 
