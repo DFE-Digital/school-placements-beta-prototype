@@ -77,7 +77,7 @@ exports.getOrganisationTypeFilterItems = (selectedItems) => {
   return items
 }
 
-exports.getOrganisationTypeFilterLabel = (code) => {
+exports.getOrganisationTypeLabel = (code) => {
   const types = require('../data/organisation-types')
   let label = code
 
