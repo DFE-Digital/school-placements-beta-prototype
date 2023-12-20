@@ -1,20 +1,20 @@
 {{ appSearch({
   label: {
-    text: 'Search by organisation name or postcode',
-    classes: 'govuk-label--m'
+    text: "Search by organisation name or postcode",
+    classes: "govuk-label--m"
   },
   input: {
-    id: 'keywords',
-    name: 'keywords',
+    id: "search-keywords",
+    name: "keywords",
     value: keywords,
     spellcheck: false
   },
   action: actions.search.find,
   buttons: [{
-    text: 'Search',
-    classes: 'app-search__button'
+    text: "Search",
+    classes: "app-search__button"
   }],
-  classes: 'govuk-!-margin-bottom-4' if not keywords
+  classes: "govuk-!-margin-bottom-4" if not keywords
 }) }}
 
 {% if keywords %}
