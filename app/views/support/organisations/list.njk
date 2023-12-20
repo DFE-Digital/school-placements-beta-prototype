@@ -50,7 +50,7 @@
             <li class="app-search-results__item">
 
               <h2 class="app-search-result__item-title">
-                <a class="govuk-link" href="/support/organisations/{{ organisation.id }}">
+                <a class="govuk-link" href="{{ actions.view }}/{{ organisation.id }}">
                   <span class="app-search-result__provider-name">{{ organisation.name }}</span>
                 </a>
               </h2>
@@ -63,11 +63,6 @@
               </dl>
 
             </li>
-{#
-              <a class="app-search-result__course_name" href="/support/organisations/{{ organisation.id }}/details">
-                {{ organisation.name }}
-              </a>
-            </li> #}
           {% endfor %}
         </ul>
 
