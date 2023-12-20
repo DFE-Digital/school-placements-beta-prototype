@@ -89,7 +89,10 @@ exports.list_organisations_get = (req, res) => {
 }
 
 exports.removeOrganisationTypeFilter = (req, res) => {
-  req.session.data.filters.organisationType = utilsHelper.removeFilter(req.params.organisationType, req.session.data.filters.organisationType)
+  req.session.data.filters.organisationType = utilsHelper.removeFilter(
+    req.params.organisationType,
+    req.session.data.filters.organisationType
+  )
   res.redirect('/support/organisations')
 }
 
