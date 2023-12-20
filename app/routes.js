@@ -220,11 +220,15 @@ router.post('/support/organisations/new/school', checkIsAuthenticated, supportOr
 router.get('/support/organisations/new/check', checkIsAuthenticated, supportOrganisationController.new_check_get)
 router.post('/support/organisations/new/check', checkIsAuthenticated, supportOrganisationController.new_check_post)
 
-router.get('/support/organisations/:organisationId/details', checkIsAuthenticated, supportOrganisationController.show_organisation_get)
+router.get('/support/organisations/:organisationId', checkIsAuthenticated, supportOrganisationController.show_organisation_get)
 
 // router.get('/', checkIsAuthenticated, (req, res) => {
 //   res.redirect('/organisations')
 // })
+
+router.get('/support/organisations/remove-type-filter/:type', checkIsAuthenticated, supportOrganisationController.removeTypeFilter)
+
+router.get('/support/organisations/remove-all-filters', checkIsAuthenticated, supportOrganisationController.removeAllFilters)
 
 router.get('/support/organisations', checkIsAuthenticated, supportOrganisationController.list_organisations_get)
 
