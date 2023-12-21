@@ -3,6 +3,7 @@ const organisationModel = require('../../models/organisations')
 const providerModel = require('../../models/providers')
 const schoolModel = require('../../models/schools')
 
+const Pagination = require('../../helpers/pagination')
 const utilsHelper = require('../../helpers/utils')
 
 exports.list_organisations_get = (req, res) => {
@@ -65,9 +66,15 @@ exports.list_organisations_get = (req, res) => {
     return a.name.localeCompare(b.name) || a.type.localeCompare(b.type)
   })
 
+
+  let pageSize = 25
+  let pagination = new Pagination(organisations, req.query.page, pageSize)
+  organisations = pagination.getData()
+
   res.render('../views/support/organisations/list', {
     organisations,
     organisationsCount,
+    pagination,
     selectedFilters,
     hasFilters,
     hasSearch,
@@ -217,7 +224,7 @@ exports.new_provider_post = (req, res) => {
 
   const errors = []
 
-  const organisation = organisationModel.findMany({ query: req.session.data.provider.name })
+  const organisation = organisationModel.findMany({ keywords: req.session.data.provider.name })
 
   if (!req.session.data.provider.name.length) {
     const error = {}
@@ -282,7 +289,7 @@ exports.new_school_post = (req, res) => {
 
   const errors = []
 
-  const organisation = organisationModel.findMany({ query: req.session.data.school.name })
+  const organisation = organisationModel.findMany({ keywords: req.session.data.school.name })
 
   if (!req.session.data.school.name.length) {
     const error = {}
