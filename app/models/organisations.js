@@ -24,8 +24,8 @@ exports.findMany = (params) => {
     )
   }
 
-  if (params.keywords?.length) {
-    const keywords = params.keywords.toLowerCase()
+  if (params.keywords?.length || params.query?.length) {
+    const keywords = params.keywords?.toLowerCase() || params.query?.toLowerCase()
     organisations = organisations.filter(organisation =>
       organisation.name.toLowerCase().includes(keywords)
       || organisation.code?.toLowerCase().includes(keywords)
