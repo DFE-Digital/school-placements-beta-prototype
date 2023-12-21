@@ -66,9 +66,7 @@
           {% endfor %}
         </ul>
 
-        {% if pagination.pages > 1 %}
-          {{ appPagination( pagination ) }}
-        {% endif %}
+        {% include "_includes/pagination.njk" %}
 
       {% else %}
 
