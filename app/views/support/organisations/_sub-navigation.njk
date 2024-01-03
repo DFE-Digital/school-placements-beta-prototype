@@ -1,0 +1,30 @@
+{{ appSubNavigation({
+  label: "Sub navigation",
+  items: [
+    {
+      href: baseUrl,
+      text: "Organisation details",
+      active: primaryNavId == "settings"
+    },
+    {
+      href: baseUrl + "/users",
+      text: "Users",
+      active: primaryNavId == "users"
+    },
+    {
+      href: "#",
+      text: "Mentors",
+      active: primaryNavId == "mentors"
+    },
+    {
+      href: "#",
+      text: "Trainees",
+      active: primaryNavId == "trainees"
+    },
+    {
+      href: "#",
+      text: "Placements",
+      active: primaryNavId == "placements"
+    }
+  ]
+}) }}
