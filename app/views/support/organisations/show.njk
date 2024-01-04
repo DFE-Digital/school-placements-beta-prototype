@@ -1,8 +1,9 @@
 {% extends "layouts/support.njk" %}
 
-{% set primaryNavId = "settings" %}
+{% set primaryNavId = "organisations" %}
+{% set secondaryNavId = "details" %}
 
-{% set title = "Organisation details" %}
+{% set title = organisation.name %}
 
 {% block beforeContent %}
 {# {{ govukBackLink({
