@@ -15,16 +15,26 @@
       href: "#",
       text: "Mentors",
       active: secondaryNavId == "mentors"
-    },
-    {
-      href: "#",
-      text: "Trainees",
-      active: secondaryNavId == "trainees"
-    },
+    } if organisation.type == "school",
     {
       href: "#",
       text: "Placements",
       active: secondaryNavId == "placements"
-    }
+    } if organisation.type == "school",
+    {
+      href: "#",
+      text: "Trainees",
+      active: secondaryNavId == "trainees"
+    } if organisation.type != "school",
+    {
+      href: "#",
+      text: "Providers",
+      active: secondaryNavId == "providers"
+    } if organisation.type == "school",
+    {
+      href: "#",
+      text: "Schools",
+      active: secondaryNavId == "schools"
+    } if organisation.type != "school"
   ]
 }) }}
