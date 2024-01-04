@@ -38,51 +38,21 @@
       text: "Prototype"
     },
     html: 'This is a new service – your <a class="govuk-link" href="/feedback">feedback</a> will help us to improve it.',
-    classes: "govuk-width-container"
+    classes: "govuk-width-container " + ("govuk-phase-banner--no-border-bottom" if not hidePrimaryNavigation)
   }) }}
-
-  {% if not hideOrganisationSwitcher %}
-    {{ appOrganisationActions({
-      text: organisation.name,
-      actions: {
-        items: [
-          {
-            text: "Change organisation",
-            href: "/support/organisations"
-          }
-        ]
-      },
-      classes: "govuk-width-container"
-    }) }}
-  {% endif %}
 
   {% if not hidePrimaryNavigation %}
     {{ appPrimaryNavigation({
       items: [
         {
-          href: baseUrl,
-          text: "Organisation details",
-          active: primaryNavId == "settings"
+          href: "/support/organisations",
+          text: "Organisations",
+          active: primaryNavId == "organisations"
         },
         {
-          href: baseUrl + "/users",
+          href: "#",
           text: "Users",
           active: primaryNavId == "users"
-        },
-        {
-          href: "#",
-          text: "Mentors",
-          active: primaryNavId == "mentors"
-        },
-        {
-          href: "#",
-          text: "Trainees",
-          active: primaryNavId == "trainees"
-        },
-        {
-          href: "#",
-          text: "Placements",
-          active: primaryNavId == "placements"
         }
       ]
     }) }}
