@@ -84,34 +84,16 @@ exports.new_user_post = (req, res) => {
     errors.push(error)
   }
 
-  const user = userModel.findOne({
-    organisationId: req.params.organisationId,
-    email: req.session.data.user.email
-  })
+  const isValidEmail = !!(
+    validationHelper.isValidEmail(req.session.data.user.email)
+    && validationHelper.isValidEducationEmail(req.session.data.user.email)
+  )
 
-  if (!req.session.data.user.email.length) {
-    const error = {}
-    error.fieldName = 'email'
-    error.href = '#email'
-    error.text = 'Enter an email address'
-    errors.push(error)
-  } else if (!validationHelper.isValidEmail(req.session.data.user.email)) {
-    const error = {}
-    error.fieldName = 'email'
-    error.href = '#email'
-    error.text = 'Enter an email address in the correct format, like name@example.com'
-    errors.push(error)
-  } else if (!validationHelper.isValidEducationEmail(req.session.data.user.email)) {
+  if (!isValidEmail) {
     const error = {}
     error.fieldName = 'email'
     error.href = '#email'
     error.text = 'Enter a Department for Education email address in the correct format, like name@education.gov.uk'
-    errors.push(error)
-  } else if (user) {
-    const error = {}
-    error.fieldName = 'email'
-    error.href = '#email'
-    error.text = 'Email address already in use'
     errors.push(error)
   }
 
@@ -196,34 +178,16 @@ exports.edit_user_post = (req, res) => {
     errors.push(error)
   }
 
-  const user = userModel.findOne({
-    organisationId: req.params.organisationId,
-    email: req.session.data.user.email
-  })
+  const isValidEmail = !!(
+    validationHelper.isValidEmail(req.session.data.user.email)
+    && validationHelper.isValidEducationEmail(req.session.data.user.email)
+  )
 
-  if (!req.session.data.user.email.length) {
-    const error = {}
-    error.fieldName = 'email'
-    error.href = '#email'
-    error.text = 'Enter an email address'
-    errors.push(error)
-  } else if (!validationHelper.isValidEmail(req.session.data.user.email)) {
-    const error = {}
-    error.fieldName = 'email'
-    error.href = '#email'
-    error.text = 'Enter an email address in the correct format, like name@example.com'
-    errors.push(error)
-  } else if (!validationHelper.isValidEducationEmail(req.session.data.user.email)) {
+  if (!isValidEmail) {
     const error = {}
     error.fieldName = 'email'
     error.href = '#email'
     error.text = 'Enter a Department for Education email address in the correct format, like name@education.gov.uk'
-    errors.push(error)
-  } else if (user) {
-    const error = {}
-    error.fieldName = 'email'
-    error.href = '#email'
-    error.text = 'Email address already in use'
     errors.push(error)
   }
 
