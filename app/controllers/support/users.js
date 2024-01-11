@@ -89,7 +89,13 @@ exports.new_user_post = (req, res) => {
     && validationHelper.isValidEducationEmail(req.session.data.user.email)
   )
 
-  if (!isValidEmail) {
+  if (!req.session.data.user.email.length) {
+    const error = {}
+    error.fieldName = 'email'
+    error.href = '#email'
+    error.text = 'Enter an email address'
+    errors.push(error)
+  } else if (!isValidEmail) {
     const error = {}
     error.fieldName = 'email'
     error.href = '#email'
@@ -183,7 +189,13 @@ exports.edit_user_post = (req, res) => {
     && validationHelper.isValidEducationEmail(req.session.data.user.email)
   )
 
-  if (!isValidEmail) {
+  if (!req.session.data.user.email.length) {
+    const error = {}
+    error.fieldName = 'email'
+    error.href = '#email'
+    error.text = 'Enter an email address'
+    errors.push(error)
+  } else if (!isValidEmail) {
     const error = {}
     error.fieldName = 'email'
     error.href = '#email'
