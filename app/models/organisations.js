@@ -4,7 +4,6 @@ const fs = require('fs')
 const directoryPath = path.join(__dirname, '../data/organisations/')
 
 exports.findMany = (params) => {
-  console.log(params);
   let organisations = []
 
   let documents = fs.readdirSync(directoryPath, 'utf8')

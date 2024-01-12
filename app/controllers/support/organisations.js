@@ -269,7 +269,6 @@ exports.new_provider_post = (req, res) => {
         })
       } else {
         const organisation = providerModel.findOne({ query: req.session.data.provider.name })
-        organisation.type = 'provider'
 
         req.session.data.organisation = organisation
 
@@ -608,6 +607,7 @@ exports.new_choose_school_post = (req, res) => {
     })
   } else {
     const organisation = schoolModel.findOne({ query: req.session.data.school.id })
+    organisation.type = 'school'
 
     req.session.data.organisation = organisation
 
