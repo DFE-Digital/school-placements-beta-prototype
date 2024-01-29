@@ -84,7 +84,25 @@
                 }
               ]
             } if 1==0
-          }
+          },
+          {
+            key: {
+              text: "Accredited provider ID"
+            },
+            value: {
+              text: organisation.accreditedProviderId if organisation.accreditedProviderId else "Not entered",
+              classes: "govuk-hint" if not organisation.accreditedProviderId
+            },
+            actions: {
+              items: [
+                {
+                  href: actions.change + "?referrer=check",
+                  text: "Change",
+                  visuallyHiddenText: "accredited provider ID"
+                }
+              ]
+            } if 1==0
+          } if organisation.type != "school"
         ]
       }) }}
 
