@@ -17,13 +17,20 @@ exports.findMany = (params) => {
     organisations.push(data)
   })
 
-  if (params.query?.length) {
-    const query = params.query.toLowerCase()
-    return organisations.filter(organisation =>
-      organisation.name.toLowerCase().includes(query)
-      || organisation.code.toLowerCase().includes(query)
-      || organisation.ukprn?.toString().includes(query)
-      || organisation.address?.postcode?.toLowerCase().includes(query)
+  if (params.organisationTypes?.length) {
+    organisations = organisations.filter(
+      organisation => params.organisationTypes.includes(organisation.type)
+    )
+  }
+
+  if (params.keywords?.length || params.query?.length) {
+    const keywords = params.keywords?.toLowerCase() || params.query?.toLowerCase()
+    organisations = organisations.filter(organisation =>
+      organisation.name.toLowerCase().includes(keywords)
+      || organisation.code?.toLowerCase().includes(keywords)
+      || organisation.ukprn?.toString().includes(keywords)
+      || organisation.urn?.toString().includes(keywords)
+      || organisation.address?.postcode?.toLowerCase().includes(keywords)
      )
   }
 
@@ -44,7 +51,21 @@ exports.findOne = (params) => {
 }
 
 exports.insertOne = (params) => {
+  let organisation
 
+  if (params.organisation) {
+    organisation = params.organisation
+
+    organisation.createdAt = new Date()
+
+    const filePath = directoryPath + '/' + organisation.id + '.json'
+
+    // create a JSON sting for the submitted data
+    const fileData = JSON.stringify(organisation)
+
+    // write the JSON data
+    fs.writeFileSync(filePath, fileData)
+  }
 }
 
 exports.updateOne = (params) => {
