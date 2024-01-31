@@ -47,7 +47,7 @@
             {% for user in users %}
               <tr class="govuk-table__row">
                 <td class="govuk-table__cell app-table--courses__course-name">
-                  <a class="govuk-link govuk-!-margin-bottom-0" href="{{ actions.view }}/{{ user.id }}">
+                  <a class="govuk-link" href="{{ actions.view }}/{{ user.id }}">
                     {{ user.firstName }} {{ user.lastName }}
                   </a>
                 </td>
