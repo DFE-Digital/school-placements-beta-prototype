@@ -2,7 +2,7 @@
   "name": "school-placements-beta-prototype",
   "description": "A prototype service for training providers and schools to manage their participation in ITT, view mentors and ITT partnerships",
   "engines": {
-    "node": "18.12.1"
+    "node": "20.11.0"
   },
   "scripts": {
     "generate-data": "node ./scripts/generate-data.js",
