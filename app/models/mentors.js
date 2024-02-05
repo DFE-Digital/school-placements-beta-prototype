@@ -30,6 +30,7 @@ exports.findMany = (params) => {
 }
 
 exports.findOne = (params) => {
+  console.log(params);
   const mentors = this.findMany({ organisationId: params.organisationId })
   let mentor = {}
 
@@ -37,8 +38,8 @@ exports.findOne = (params) => {
     mentor = mentors.find(mentor => mentor.id === params.mentorId)
   }
 
-  if (params.trn) {
-    mentor = mentors.find(mentor => mentor.trn === params.trn)
+  if (parseInt(params.trn)) {
+    mentor = mentors.find(mentor => mentor.trn === parseInt(params.trn))
   }
 
   return mentor
