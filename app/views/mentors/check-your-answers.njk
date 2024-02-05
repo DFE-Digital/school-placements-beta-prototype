@@ -2,7 +2,11 @@
 
 {% set primaryNavId = "mentors" %}
 
-{% set title = "Check your answers" %}
+{% if mentor.id %}
+  {% set title = "Check your answers" %}
+{% else %}
+  {% set title = "No results found for ‘" + data.mentor.trn + "’" %}
+{% endif %}
 
 {% if referrer == "change" or currentMentor %}
   {% set caption = currentMentor.firstName + " " + currentMentor.lastName %}
@@ -30,19 +34,25 @@
 
       {% include "_includes/page-heading.njk" %}
 
-      <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
+      {% if mentor.id %}
+        <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
 
-        {% include "_includes/mentors/check-your-answers.njk" %}
+          {% include "_includes/mentors/check-your-answers.njk" %}
 
-        {{ govukButton({
-          text: "Update mentor" if referrer == "change" else "Add mentor"
-        }) }}
+          {{ govukButton({
+            text: "Update mentor" if referrer == "change" else "Add mentor"
+          }) }}
 
-      </form>
+        </form>
 
-      <p class="govuk-body">
-        <a class="govuk-link" href="{{ actions.cancel }}">Cancel</a>
-      </p>
+        <p class="govuk-body">
+          <a class="govuk-link" href="{{ actions.cancel }}">Cancel</a>
+        </p>
+      {% else %}
+        <p class="govuk-body">
+          <a class="govuk-link" href="{{ actions.change }}">Change your search</a>
+        </p>
+      {% endif %}
 
     </div>
   </div>
