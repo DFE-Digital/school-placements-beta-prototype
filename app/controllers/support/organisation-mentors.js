@@ -88,7 +88,7 @@ exports.new_mentor_post = (req, res) => {
     const error = {}
     error.fieldName = 'mentor'
     error.href = '#mentor'
-    error.text = 'Mentor has already been added'
+    error.text = 'The mentor has already been added'
     errors.push(error)
   }
 
