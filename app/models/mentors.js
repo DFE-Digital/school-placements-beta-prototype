@@ -30,7 +30,6 @@ exports.findMany = (params) => {
 }
 
 exports.findOne = (params) => {
-  console.log(params);
   const mentors = this.findMany({ organisationId: params.organisationId })
   let mentor = {}
 
