@@ -71,7 +71,7 @@
           href: baseUrl + "/mentors",
           text: "Mentors",
           active: primaryNavId == "mentors"
-        },
+        } if organisation.type === "school",
         {
           href: baseUrl + "/users",
           text: "Users",
