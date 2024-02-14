@@ -12,7 +12,7 @@
 {% if referrer == "change" or currentMentor %}
   {% set caption = currentMentor.firstName + " " + currentMentor.lastName %}
 {% else %}
-  {% set caption = "Add mentor" %}
+  {% set caption = "Add mentor - " + organisation.name %}
 {% endif %}
 
 {% block pageTitle %}
