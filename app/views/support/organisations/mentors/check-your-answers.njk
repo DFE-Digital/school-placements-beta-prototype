@@ -9,11 +9,7 @@
   {% set title = "No results found for ‘" + data.mentor.trn + "’" %}
 {% endif %}
 
-{% if referrer == "change" or currentMentor %}
-  {% set caption = currentMentor.firstName + " " + currentMentor.lastName %}
-{% else %}
-  {% set caption = "Add mentor - " + organisation.name %}
-{% endif %}
+{% set caption = "Add mentor - " + organisation.name %}
 
 {% block pageTitle %}
   {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
@@ -41,7 +37,7 @@
           {% include "_includes/mentors/check-your-answers.njk" %}
 
           {{ govukButton({
-            text: "Update mentor" if referrer == "change" else "Add mentor"
+            text: "Add mentor"
           }) }}
 
         </form>
