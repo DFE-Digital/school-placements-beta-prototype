@@ -7,6 +7,7 @@ const { gfmHeadingId } = require('marked-gfm-heading-id')
 const numeral = require('numeral')
 
 const giasHelper = require('./helpers/gias')
+const subjectHelper = require('./helpers/subjects')
 const utilsHelper = require('./helpers/utils')
 
 /* ------------------------------------------------------------------
@@ -128,3 +129,10 @@ addFilter('getUrbanRuralLabel', giasHelper.getUrbanRuralLabel)
 addFilter('getOfstedRatingLabel', giasHelper.getOfstedRatingLabel)
 
 addFilter('getSENDProvisionLabel', giasHelper.getSENDProvisionLabel)
+
+/* ------------------------------------------------------------------
+Subject utility functions
+------------------------------------------------------------------ */
+addFilter('getSubjectLabel', subjectHelper.getSubjectLabel)
+
+addFilter('getSubjectLevelLabel', subjectHelper.getSubjectLevelLabel)
