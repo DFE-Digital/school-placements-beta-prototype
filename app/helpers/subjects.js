@@ -1,6 +1,6 @@
 exports.getSubjectLevelOptions = () => { // selectedItem
   const items = []
-  const subjectLevels = require('../data/subject-levels')
+  const subjectLevels = require('../data/subjects/subject-levels')
 
   subjectLevels.forEach((subjectLevel, i) => {
     const item = {}
@@ -17,7 +17,7 @@ exports.getSubjectLevelOptions = () => { // selectedItem
 }
 
 exports.getSubjectLevelLabel = (code) => {
-  const subjectLevels = require('../data/subject-levels')
+  const subjectLevels = require('../data/subjects/subject-levels')
   const subjectLevel = subjectLevels.find(subjectLevel => subjectLevel.code === code)
 
   let label = code
@@ -32,7 +32,7 @@ exports.getSubjectLevelLabel = (code) => {
 exports.getSubjectOptions = (subjectLevel) => { //, selectedItem
   const items = []
 
-  let subjects = require('../data/subjects')
+  let subjects = require('../data/subjects/subjects')
   subjects = subjects.filter(subject => subject.level === subjectLevel &&
     subject.code !== '24' &&
     subject.parentCode === undefined)
@@ -56,7 +56,7 @@ exports.getSubjectOptions = (subjectLevel) => { //, selectedItem
 }
 
 exports.getSubjectLabel = (code) => {
-  const subjects = require('../data/subjects')
+  const subjects = require('../data/subjects/subjects')
   const subject = subjects.find(subject => subject.code === code)
 
   let label = code
