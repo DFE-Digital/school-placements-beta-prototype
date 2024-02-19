@@ -52,6 +52,7 @@ const contentController = require('./controllers/content')
 const mentorController = require('./controllers/mentors')
 const organisationController = require('./controllers/organisations')
 const userController = require('./controllers/users')
+const placementController = require('./controllers/placements')
 
 const supportOrganisationController = require('./controllers/support/organisations')
 const supportOrganisationMentorController = require('./controllers/support/organisation-mentors')
@@ -193,6 +194,12 @@ router.post('/organisations/:organisationId/mentors/:mentorId/delete', checkIsAu
 router.get('/organisations/:organisationId/mentors/:mentorId', checkIsAuthenticated, mentorController.mentor_details)
 
 router.get('/organisations/:organisationId/mentors', checkIsAuthenticated, mentorController.mentor_list)
+
+/// ------------------------------------------------------------------------ ///
+/// PLACEMENT ROUTES
+/// ------------------------------------------------------------------------ ///
+
+router.get('/organisations/:organisationId/placements', checkIsAuthenticated, placementController.placement_list)
 
 /// ------------------------------------------------------------------------ ///
 /// ------------------------------------------------------------------------ ///

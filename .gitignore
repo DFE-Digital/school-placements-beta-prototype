@@ -9,6 +9,7 @@ app/data/providers/
 app/data/schools/
 app/data/teachers/
 app/data/users/
+app/data/placements/
 
 # Prototype ignores - per-user
 .tmp/
