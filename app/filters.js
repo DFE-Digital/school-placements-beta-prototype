@@ -8,6 +8,7 @@ const numeral = require('numeral')
 
 const giasHelper = require('./helpers/gias')
 const utilsHelper = require('./helpers/utils')
+const mentorHelper = require('./helpers/mentors')
 
 /* ------------------------------------------------------------------
   numeral filter for use in Nunjucks
@@ -128,3 +129,8 @@ addFilter('getUrbanRuralLabel', giasHelper.getUrbanRuralLabel)
 addFilter('getOfstedRatingLabel', giasHelper.getOfstedRatingLabel)
 
 addFilter('getSENDProvisionLabel', giasHelper.getSENDProvisionLabel)
+
+/* ------------------------------------------------------------------
+Mentor utility functions
+------------------------------------------------------------------ */
+addFilter('getMentorName', mentorHelper.getMentorName)

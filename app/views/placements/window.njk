@@ -1,0 +1,74 @@
+{% extends "layouts/main.njk" %}
+
+{% set primaryNavId = "placements" %}
+
+{% set title = "Window" %}
+{% set caption = "Add placement" %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: actions.back
+}) }}
+{% endblock %}
+
+{% block content %}
+
+  {% include "_includes/notification-banner.njk" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      {% set headingHtml %}
+        {% include "_includes/page-heading-legend.njk" %}
+      {% endset %}
+
+      <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
+
+        {{ govukRadios({
+            name: "placement[window]",
+            fieldset: {
+                legend: {
+                html: headingHtml,
+                isPageHeading: true,
+                classes: "govuk-fieldset__legend--l"
+                }
+            },
+            value: placement.window,
+            items: [
+                {
+                value: "autumn",
+                text: "Autumn term (September to December)"
+                },
+                {
+                value: "spring",
+                text: "Spring term (January to March)"
+                },
+                {
+                value: "summer",
+                text: "Summer term (April to July)"
+                },
+                {
+                divider: "or"
+                },
+                {
+                value: "other",
+                text: "Other window"
+                }
+            ]
+            }) }}
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+
+      </form>
+
+      <p class="govuk-body">
+        <a class="govuk-link" href="{{ actions.cancel }}">Cancel</a>
+      </p>
+
+    </div>
+  </div>
+
+{% endblock %}
