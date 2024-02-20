@@ -7,6 +7,7 @@ const { gfmHeadingId } = require('marked-gfm-heading-id')
 const numeral = require('numeral')
 
 const giasHelper = require('./helpers/gias')
+const subjectHelper = require('./helpers/subjects')
 const utilsHelper = require('./helpers/utils')
 const mentorHelper = require('./helpers/mentors')
 
@@ -134,3 +135,10 @@ addFilter('getSENDProvisionLabel', giasHelper.getSENDProvisionLabel)
 Mentor utility functions
 ------------------------------------------------------------------ */
 addFilter('getMentorName', mentorHelper.getMentorName)
+
+/* ------------------------------------------------------------------
+Subject utility functions
+------------------------------------------------------------------ */
+addFilter('getSubjectLabel', subjectHelper.getSubjectLabel)
+
+addFilter('getSubjectLevelLabel', subjectHelper.getSubjectLevelLabel)
