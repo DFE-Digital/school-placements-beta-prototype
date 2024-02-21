@@ -35,7 +35,8 @@
                 }
             },
             value: placement.phase,
-            items: subjectLevelOptions
+            items: subjectLevelOptions,
+            errorMessage: errors | getErrorMessage("subjectLevel")
         }) }}
 
         {{ govukButton({

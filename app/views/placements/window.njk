@@ -25,6 +25,38 @@
 
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
 
+
+        {% set otherHtml %}
+          {{ govukDateInput({
+            id: "start-date",
+            namePrefix: "start-date",
+            fieldset: {
+              legend: {
+                text: "Start date",
+                isPageHeading: true,
+                classes: "govuk-fieldset__legend--s"
+              }
+            },
+            hint: {
+              text: "For example, 3 2007"
+            }
+          }) }}
+           {{ govukDateInput({
+            id: "end-date",
+            namePrefix: "end-date",
+            fieldset: {
+              legend: {
+                text: "End date",
+                isPageHeading: true,
+                classes: "govuk-fieldset__legend--s"
+              }
+            },
+            hint: {
+              text: "For example, 3 2007"
+            }
+          }) }}
+          {% endset -%}
+
         {{ govukRadios({
             name: "placement[window]",
             fieldset: {
@@ -53,7 +85,10 @@
                 },
                 {
                 value: "other",
-                text: "Other window"
+                text: "Other",
+                conditional: {
+                      html: otherHtml
+                    }
                 }
             ]
             }) }}

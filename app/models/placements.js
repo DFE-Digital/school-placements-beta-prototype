@@ -19,169 +19,90 @@ exports.findMany = (params) => {
     })
 
     if (params.organisationId) {
-        placements = placements.filter(placement => {
-          return placement.organisations.find(organisation => organisation.id === params.organisationId)
-        })
-      }
+      placements = placements.filter(placement => placement.organisationId === params.organisationId)
+    }
 
     return placements
   }
 
-// exports.findOne = (params) => {
-//   let placements = []
+  exports.insertOne = (params) => {
+    let placement = {}
 
-//   if (params.organisationId) {
-//     placements = this.findMany({ organisationId: params.organisationId })
-//   } else {
-//     placements = this.findMany({})
-//   }
+    if (params.organisationId) {
+      placement.id = uuid()
 
-//   let placement = {}
+      placement.organisationId = params.organisationId
 
-//   if (params.placementId) {
-//     placement = placements.find(placement => placement.id === params.placementId)
-//   }
+      if (params.placement.subjectLevel) {
+        placement.subjectLevel = params.placement.subjectLevel
+      }
 
-//   if (parseInt(params.trn)) {
-//     placement = placements.find(placement => placement.trn === parseInt(params.trn))
-//   }
+      if (params.placement.subjects) {
+        placement.subjects = params.placement.subjects
+      }
 
-//   return placement
-// }
+      if (params.placement.mentors) {
+        placement.mentors = params.placement.mentors
+      }
 
-// exports.saveOne = (params) => {
-//   let placement = {}
+      if (params.placement.window) {
+        placement.window = params.placement.window
+      }
 
-//   if (params.organisationId) {
-//     if (params.placementId) {
-//       placement = this.updateOne(params)
-//     } else {
-//       const placementExists = this.findOne({ trn: params.placement.trn })
+      if (params.placement.status) {
+        placement.status = params.placement.status
+      }
 
-//       if (placementExists) {
-//         placement = this.updateOne(params)
-//       } else {
-//         placement = this.insertOne(params)
-//       }
-//     }
-//   }
+      placement.createdAt = new Date()
 
-//   return placement
-// }
+      const filePath = directoryPath + '/' + placement.id + '.json'
 
-// exports.insertOne = (params) => {
-//   const placement = {}
+      // create a JSON sting for the submitted data
+      const fileData = JSON.stringify(placement)
 
-//   if (params.organisationId) {
-//     placement.id = uuid()
+      // write the JSON data
+      fs.writeFileSync(filePath, fileData)
+    }
 
-//     if (params.placement.firstName) {
-//       placement.firstName = params.placement.firstName
-//     }
+    return placement
+  }
 
-//     if (params.placement.lastName) {
-//       placement.lastName = params.placement.lastName
-//     }
+  exports.updateOne = (params) => {
+    let placement = {}
 
-//     if (params.placement.trn) {
-//       placement.trn = params.placement.trn
-//     }
+    if (params.organisationId && params.placementId) {
+      placement = this.findOne({
+        organisationId: params.organisationId,
+        placementId: params.placementId,
+      })
 
-//     placement.organisations = []
+      if (params.placement.subjectLevel) {
+        placement.subjectLevel = params.placement.subjectLevel
+      }
 
-//     const o = organisationModel.findOne({ organisationId: params.organisationId })
+      if (params.placement.subjects) {
+        placement.subjects = params.placement.subjects
+      }
 
-//     const organisation = {}
-//     organisation.id = o.id
-//     organisation.name = o.name
+      if (params.placement.mentors) {
+        placement.mentors = params.placement.mentors
+      }
 
-//     placement.organisations.push(organisation)
+      if (params.placement.window) {
+        placement.window = params.placement.window
+      }
 
-//     placement.createdAt = new Date()
+      placement.updatedAt = new Date()
 
-//     const filePath = directoryPath + '/' + placement.id + '.json'
+      const filePath = directoryPath + '/' + placement.id + '.json'
 
-//     // create a JSON sting for the submitted data
-//     const fileData = JSON.stringify(placement)
+      // create a JSON sting for the submitted data
+      const fileData = JSON.stringify(placement)
 
-//     // write the JSON data
-//     fs.writeFileSync(filePath, fileData)
-//   }
+      // write the JSON data
+      fs.writeFileSync(filePath, fileData)
+    }
 
-//   return placement
-// }
-
-// exports.updateOne = (params) => {
-//   let placement
-//   if (params.placementId) {
-//     placement = this.findOne({ placementId: params.placementId })
-//   } else {
-//     placement = this.findOne({ trn: params.placement.trn })
-//   }
-
-//   if (placement) {
-//     if (params.placement.firstName) {
-//       placement.firstName = params.placement.firstName
-//     }
-
-//     if (params.placement.lastName) {
-//       placement.lastName = params.placement.lastName
-//     }
-
-//     if (params.placement.trn) {
-//       placement.trn = params.placement.trn
-//     }
-
-//     const organisationExists = placement.organisations.find(
-//       organisation => organisation.id === params.organisationId
-//     )
-
-//     if (!organisationExists) {
-//       const o = organisationModel.findOne({ organisationId: params.organisationId })
-
-//       const organisation = {}
-//       organisation.id = o.id
-//       organisation.name = o.name
-
-//       placement.organisations.push(organisation)
-//     }
-
-//     placement.updatedAt = new Date()
-
-//     const filePath = directoryPath + '/' + placement.id + '.json'
-
-//     // create a JSON sting for the submitted data
-//     const fileData = JSON.stringify(placement)
-
-//     // write the JSON data
-//     fs.writeFileSync(filePath, fileData)
-//   }
-
-//   return placement
-// }
-
-// exports.deleteOne = (params) => {
-//   if (params.organisationId && params.placementId) {
-//     const placement = this.findOne({ placementId: params.placementId })
-
-//     placement.organisations = placement.organisations.filter(
-//       organisation => organisation.id !== params.organisationId
-//     )
-
-//     placement.updatedAt = new Date()
-
-//     const filePath = directoryPath + '/' + placement.id + '.json'
-
-//     if (placement.organisations.length) {
-//       // create a JSON sting for the submitted data
-//       const fileData = JSON.stringify(placement)
-//       // write the JSON data
-//       fs.writeFileSync(filePath, fileData)
-//     } else {
-//       // remove the placement altogether since they're no longer associated with an
-//       // organisation
-//       fs.unlinkSync(filePath)
-//     }
-//   }
-// }
+    return placement
+  }
 

@@ -14,7 +14,7 @@
 
 {% block content %}
 
-  {% include "_includes/notification-banner.njk" %}
+  {% include "_includes/error-summary.njk" %}
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
@@ -26,7 +26,7 @@
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
 
         {{ govukCheckboxes({
-            name: "placement[mentor][]",
+            name: "placement[mentors][]",
             fieldset: {
                 legend: {
                 html: headingHtml,
@@ -38,7 +38,8 @@
                 text: "Select all that apply."
             },
             values: placement.mentor,
-            items: mentorOptions
+            items: mentorOptions,
+            errorMessage: errors | getErrorMessage("mentors")
             }) }}
 
         {{ govukButton({
