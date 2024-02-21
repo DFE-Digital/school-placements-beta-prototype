@@ -16,8 +16,6 @@ exports.user_list = (req, res) => {
     return a.firstName.localeCompare(b.firstName) || a.lastName.localeCompare(b.lastName)
   })
 
-  const usersCount = users.length
-
   // TODO: get pageSize from settings
   let pageSize = 25
   let pagination = new Pagination(users, req.query.page, pageSize)
@@ -28,7 +26,6 @@ exports.user_list = (req, res) => {
   res.render('../views/users/list', {
     organisation,
     users,
-    usersCount,
     pagination,
     actions: {
       new: `/organisations/${req.params.organisationId}/users/new`,
