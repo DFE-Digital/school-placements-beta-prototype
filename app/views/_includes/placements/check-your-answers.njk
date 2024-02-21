@@ -2,51 +2,68 @@
   rows: [
     {
       key: {
-        text: "First name"
+        text: "Subject level"
       },
       value: {
-        text: mentor.firstName
+        text: placement.subjectLevel
       },
       actions: {
         items: [
           {
             href: actions.change,
             text: "Change",
-            visuallyHiddenText: "first name"
+            visuallyHiddenText: "subject level"
           }
         ]
-      } if 1==0
+      }
     },
     {
       key: {
-        text: "Last name"
+        text: "Subject"
       },
       value: {
-        text: mentor.lastName
+        text: placement.subject
       },
       actions: {
         items: [
           {
             href: actions.change,
             text: "Change",
-            visuallyHiddenText: "last name"
+            visuallyHiddenText: "subject"
           }
         ]
-      } if 1==0
+      }
     },
     {
       key: {
-        text: "Teacher reference number (TRN)"
+        text: "Mentor" + ("s" if claim.mentors.length > 1)
       },
       value: {
-        text: mentor.trn
+        text: placement.mentor
       },
       actions: {
         items: [
           {
             href: actions.change,
             text: "Change",
-            visuallyHiddenText: "teacher reference number (TRN)"
+            visuallyHiddenText: "mentor"
+          }
+        ]
+      }
+    },
+        {
+      key: {
+        text: "Window"
+      },
+      value: {
+        text: placement.window
+      },
+      actions: {
+        items: [
+          {
+            href: actions.change,
+            text: "Change",
+            visuallyHiddenText: "window"
           }
         ]
       }

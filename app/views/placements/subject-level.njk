@@ -2,7 +2,7 @@
 
 {% set primaryNavId = "placements" %}
 
-{% set title = "Phase" %}
+{% set title = "Subject level" %}
 {% set caption = "Add placement" %}
 
 {% block beforeContent %}
@@ -14,7 +14,7 @@
 
 {% block content %}
 
-  {% include "_includes/notification-banner.njk" %}
+  {% include "_includes/error-summary.njk" %}
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
@@ -26,7 +26,7 @@
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
 
         {{ govukRadios({
-            name: "placement[phase]",
+            name: "placement[subjectLevel]",
             fieldset: {
                 legend: {
                 html: headingHtml,
@@ -35,16 +35,7 @@
                 }
             },
             value: placement.phase,
-            items: [
-                {
-                value: "primary",
-                text: "Primary"
-                },
-                {
-                value: "secondary",
-                text: "Secondary"
-                }
-            ]
+            items: subjectLevelOptions
         }) }}
 
         {{ govukButton({
