@@ -10,7 +10,7 @@ const validationHelper = require('../helpers/validators')
 
 exports.user_list = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-  const users = userModel.findMany({ organisationId: req.params.organisationId })
+  let users = userModel.findMany({ organisationId: req.params.organisationId })
 
   users.sort((a, b) => {
     return a.firstName.localeCompare(b.firstName) || a.lastName.localeCompare(b.lastName)
@@ -18,6 +18,7 @@ exports.user_list = (req, res) => {
 
   const usersCount = users.length
 
+  // TODO: get pageSize from settings
   let pageSize = 25
   let pagination = new Pagination(users, req.query.page, pageSize)
   users = pagination.getData()
