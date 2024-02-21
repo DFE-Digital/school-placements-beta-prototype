@@ -1,4 +1,5 @@
 {
   "useLogin": "false",
-  "useLoginFallback": "false"
+  "useLoginFallback": "false",
+  "pageSize": 25
 }
