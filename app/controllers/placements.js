@@ -24,6 +24,12 @@ exports.placement_list = (req, res) => {
     })
   }
 
+/// ------------------------------------------------------------------------ ///
+/// SHOW PLACEMENT
+/// ------------------------------------------------------------------------ ///
+
+
+
 
 /// ------------------------------------------------------------------------ ///
 /// NEW PLACEMENT
@@ -58,33 +64,7 @@ exports.new_placement_get = (req, res) => {
 }
 
 exports.new_placement_post = (req, res) => {
-  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-  const subjectLevelOptions = subjectHelper.getSubjectLevelOptions(req.session.data.placement.subjectLevel)
-  const errors = []
-  console.log(req.session.placement)
-
-    if (!req.session.data.placement.subjectLevel) {
-      const error = {}
-      error.fieldName = 'subjectLevel'
-      error.href = '#subjectLevel'
-      error.text = 'Select a subject level'
-      errors.push(error)
-    }
-
-    if (errors.length) {
-      res.render('../views/placements/subject-level', {
-        organisation,
-        placement: req.session.data.placement,
-        subjectLevelOptions,
-        actions: {
-          save: `/organisations/${req.params.organisationId}/placements/new`,
-          back: `/organisations/${req.params.organisationId}/placements`
-        },
-        errors
-      })
-    } else {
-      res.redirect(`/organisations/${req.params.organisationId}/placements/new/subject`)
-    }
+    res.redirect(`/organisations/${req.params.organisationId}/placements/new/subject`)
 }
 
 exports.new_placement_subject_get = (req, res) => {
@@ -124,7 +104,7 @@ exports.new_placement_mentor_post = (req, res) => {
   const mentorOptions = mentorHelper.getMentorOptions({ organisationId: req.params.organisationId })
   const errors = []
 
-  if (!req.session.data.placement.mentors.length) {
+  if (!req.session.data.placement.mentor.length) {
     const error = {}
     error.fieldName = 'mentors'
     error.href = '#mentors'

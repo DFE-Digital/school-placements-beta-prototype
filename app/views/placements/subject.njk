@@ -38,7 +38,8 @@
                 text: "Select all that apply."
             },
             values: placement.subject,
-            items: subjectOptions
+            items: subjectOptions,
+            errorMessage: errors | getErrorMessage("subject")
             }) }}
 
         {{ govukButton({

@@ -1,20 +1,30 @@
 <table class="govuk-table app-table--vertical-align-middle">
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
-      <th class="govuk-table__header govuk-!-width-one-third">Header</th>
-      <th class="govuk-table__header">Header</th>
+      <th class="govuk-table__header govuk-!-width-one-third">Subject</th>
+      <th class="govuk-table__header">Mentor</th>
+      <th class="govuk-table__header">Window</th>
+      <th class="govuk-table__header">Status</th>
     </tr>
   </thead>
   <tbody class="govuk-table__body">
     {% for placement in placements %}
       <tr class="govuk-table__row">
         <td class="govuk-table__cell app-table--courses__course-name">
-          <a class="govuk-link" href="{{ actions.view }}/{{ claim.id }}">
-            {{ claim.id }} 
+          <a class="govuk-link" href="{{ actions.view }}/{{ placement.id }}">
+            {{ placement.id }}
           </a>
         </td>
         <td class="govuk-table__cell">
-          Something
+          {{ placement.mentor }}
+        </td>
+        <td class="govuk-table__cell">
+          {{ placement.window }}
+        </td>
+        <td class="govuk-table__cell">
+          {{ govukTag({
+            text: "Published"
+          }) }}
         </td>
       </tr>
     {% endfor %}
