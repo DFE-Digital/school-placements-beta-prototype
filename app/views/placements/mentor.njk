@@ -26,21 +26,21 @@
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
 
         {{ govukCheckboxes({
-            name: "placement[mentors][]",
-            fieldset: {
-                legend: {
-                html: headingHtml,
-                isPageHeading: true,
-                classes: "govuk-fieldset__legend--l"
-                }
-            },
-            hint: {
-                text: "Select all that apply."
-            },
-            values: placement.mentors,
-            items: mentorOptions,
-            errorMessage: errors | getErrorMessage("mentors")
-            }) }}
+          name: "placement[mentors][]",
+          fieldset: {
+            legend: {
+              html: headingHtml,
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--l"
+            }
+          },
+          hint: {
+            text: "Select all that apply"
+          },
+          errorMessage: errors | getErrorMessage("mentors"),
+          values: placement.mentors,
+          items: mentorOptions
+        }) }}
 
         {{ govukButton({
           text: "Continue"

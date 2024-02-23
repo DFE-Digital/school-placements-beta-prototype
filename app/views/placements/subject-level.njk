@@ -26,17 +26,17 @@
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
 
         {{ govukRadios({
-            name: "placement[subjectLevel]",
-            fieldset: {
-                legend: {
-                html: headingHtml,
-                isPageHeading: true,
-                classes: "govuk-fieldset__legend--l"
-                }
-            },
-            value: placement.subjectLevel,
-            items: subjectLevelOptions,
-            errorMessage: errors | getErrorMessage("subjectLevel")
+          name: "placement[subjectLevel]",
+          fieldset: {
+            legend: {
+              html: headingHtml,
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--l"
+            }
+          },
+          value: placement.subjectLevel,
+          items: subjectLevelOptions,
+          errorMessage: errors | getErrorMessage("subjectLevel")
         }) }}
 
         {{ govukButton({

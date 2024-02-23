@@ -2,7 +2,7 @@
 
 {% set primaryNavId = "placements" %}
 
-{% set title = "Window" %}
+{% set title = "Placement window" %}
 {% set caption = "Add placement" %}
 
 {% block beforeContent %}
@@ -25,43 +25,41 @@
 
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
 
-
-
         {{ govukRadios({
-            name: "placement[window]",
-            fieldset: {
-                legend: {
-                html: headingHtml,
-                isPageHeading: true,
-                classes: "govuk-fieldset__legend--l"
-                }
-            },
-            value: placement.window,
-            items: [
-                {
-                value: "autumn",
-                text: "Autumn term",
-                hint: {
+          name: "placement[window]",
+          fieldset: {
+              legend: {
+              html: headingHtml,
+              isPageHeading: true,
+              classes: "govuk-fieldset__legend--l"
+              }
+          },
+          errorMessage: errors | getErrorMessage("window"),
+          value: placement.window,
+          items: [
+            {
+              value: "autumn",
+              text: "Autumn term",
+              hint: {
                 text: "September to December"
-                }
-                },
-                {
-                value: "spring",
-                text: "Spring term",
-                hint: {
+              }
+            },
+            {
+              value: "spring",
+              text: "Spring term",
+              hint: {
                 text: "January to March"
-                }
-                },
-                {
-                value: "summer",
-                text: "Summer term",
-                hint: {
+              }
+            },
+            {
+              value: "summer",
+              text: "Summer term",
+              hint: {
                 text: "April to July"
-                }
-                }
-            ],
-            errorMessage: errors | getErrorMessage("window")
-            }) }}
+              }
+            }
+          ]
+          }) }}
 
         {{ govukButton({
           text: "Continue"

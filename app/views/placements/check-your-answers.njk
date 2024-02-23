@@ -2,12 +2,8 @@
 
 {% set primaryNavId = "placements" %}
 
-
-{% set title = "Check your answers before publishing your placement" %}
-
-
+{% set title = "Check your answers" %}
 {% set caption = "Add placement" %}
-
 
 {% block pageTitle %}
   {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
@@ -34,11 +30,11 @@
           {% include "_includes/placements/check-your-answers.njk" %}
 
           {{ govukInsetText({
-            text: "When a placement is published, it will be visible to accredited providers. "
+            text: "When a placement is published, it will be visible to accredited providers."
             }) }}
 
           {{ govukButton({
-            text: "Update placement" if referrer == "change" else "Publish placement"
+            text: "Publish placement"
           }) }}
 
         </form>
