@@ -30,17 +30,17 @@
           {{ govukCheckboxes({
             name: "placement[subjects][]",
             fieldset: {
-                legend: {
+              legend: {
                 html: headingHtml,
                 isPageHeading: true,
                 classes: "govuk-fieldset__legend--l"
-                }
+              }
             },
             hint: {
                 text: "Select all that apply"
             },
             errorMessage: errors | getErrorMessage("subject"),
-            values: placement.subject,
+            values: placement.subjects,
             items: subjectOptions
           }) }}
 
@@ -49,14 +49,14 @@
           {{ govukRadios({
             name: "placement[subjects]",
             fieldset: {
-                legend: {
+              legend: {
                 html: headingHtml,
                 isPageHeading: true,
                 classes: "govuk-fieldset__legend--l"
-                }
+              }
             },
             errorMessage: errors | getErrorMessage("subject"),
-            values: placement.subject,
+            value: placement.subjects,
             items: subjectOptions
           }) }}
 
