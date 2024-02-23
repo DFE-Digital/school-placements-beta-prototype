@@ -12,14 +12,26 @@
       <tr class="govuk-table__row">
         <td class="govuk-table__cell app-table--courses__course-name">
           <a class="govuk-link" href="{{ actions.view }}/{{ placement.id }}">
-            {{ placement.id }}
+            {% if placement.subjectLevel == "secondary" %}
+              <ul class="govuk-list">
+                {% for subject in placement.subjects %}
+                  <li>{{ subject | getSubjectLabel }}</li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <p class="govuk-body">{{ placement.subjects | getSubjectLabel }}</p>
+            {% endif %}
           </a>
         </td>
         <td class="govuk-table__cell">
-          {{ placement.mentor }} {{ mentor.firstName }} {{ mentor.lastName }}
+            <ul class="govuk-list">
+            {% for mentor in placement.mentors %}
+            <li>{{ mentor | getMentorName }}</li>
+            {% endfor %}
+            </ul>
         </td>
         <td class="govuk-table__cell">
-          {{ placement.window }}
+          {{ placement.window | capitalize }}
         </td>
         <td class="govuk-table__cell">
           {{ govukTag({

@@ -2,7 +2,7 @@
 
 {% set primaryNavId = "placements" %}
 
-{% set title = mentor.subject %}
+{% set title = placement.id %}
 
 {% block beforeContent %}
 {{ govukBackLink({
@@ -20,10 +20,10 @@
 
       {% include "_includes/page-heading.njk" %}
 
-      {% include "_includes/mentors/details.njk" %}
+      {% include "_includes/placements/details.njk" %}
 
       <p class="govuk-body">
-        <a class="govuk-link app-link--destructive" href="{{ actions.delete }}">Remove mentor</a>
+        <a class="govuk-link app-link--destructive" href="{{ actions.delete }}">Delete placement</a>
       </p>
 
     </div>

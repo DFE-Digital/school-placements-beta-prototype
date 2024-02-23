@@ -25,6 +25,17 @@ exports.findMany = (params) => {
     return placements
   }
 
+  exports.findOne = (params) => {
+    const placements = this.findMany({ organisationId: params.organisationId })
+    let placement = {}
+
+    if (params.placementId) {
+      placement = placements.find(placement => placement.id === params.placementId)
+    }
+
+    return placement
+  }
+
   exports.insertOne = (params) => {
     let placement = {}
 

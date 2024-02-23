@@ -28,7 +28,21 @@ exports.placement_list = (req, res) => {
 /// SHOW PLACEMENT
 /// ------------------------------------------------------------------------ ///
 
+exports.placement_details = (req, res) => {
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+  const placement = placementModel.findOne({ placementId: req.params.placementId })
 
+  res.render('../views/placements/show', {
+    organisation,
+    placement,
+    actions: {
+      change: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}/edit?referrer=change`,
+      delete: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}/delete`,
+      back: `/organisations/${req.params.organisationId}/placements`,
+      cancel: `/organisations/${req.params.organisationId}/placements`
+    }
+  })
+}
 
 
 /// ------------------------------------------------------------------------ ///
@@ -49,6 +63,13 @@ exports.new_placement_get = (req, res) => {
     // redirect to secondary subjects
     res.redirect(`/organisations/${req.params.organisationId}/placements/new/subject`)
     } else {
+    let back = `/organisations/${req.params.organisationId}/placements`
+    let save = `/organisations/${req.params.organisationId}/placements/new`
+    if (req.query.referrer === 'check') {
+      back = `/organisations/${req.params.organisationId}/placements/new/check`
+      save += '?referrer=check'
+      req.session.data.currentSubjectLevel = req.session.data.placement.subjectLevel
+    }
     // show subject level form
     const subjectLevelOptions = subjectHelper.getSubjectLevelOptions()
     res.render('../views/placements/subject-level', {
@@ -56,8 +77,8 @@ exports.new_placement_get = (req, res) => {
         placement: req.session.data.placement,
         subjectLevelOptions,
         actions: {
-          save: `/organisations/${req.params.organisationId}/placements/new`,
-          back: `/organisations/${req.params.organisationId}/placements`
+          save,
+          back
         }
       })
     }
@@ -67,6 +88,13 @@ exports.new_placement_post = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
   const subjectLevelOptions = subjectHelper.getSubjectLevelOptions()
   const errors = []
+
+  let back = `/organisations/${req.params.organisationId}/placements`
+  let save = `/organisations/${req.params.organisationId}/placements/new`
+  if (req.query.referrer === 'check') {
+    back = `/organisations/${req.params.organisationId}/placements/new/check`
+    save += '?referrer=check'
+  }
 
   if (!req.session.data.placement.subjectLevel) {
     const error = {}
@@ -82,19 +110,33 @@ exports.new_placement_post = (req, res) => {
       placement: req.session.data.placement,
       subjectLevelOptions,
       actions: {
-        save: `/organisations/${req.params.organisationId}/placements/new`,
-        back: `/organisations/${req.params.organisationId}/placements`
+        save,
+        back
       },
       errors
     })
   } else {
-    res.redirect(`/organisations/${req.params.organisationId}/placements/new/subject`)
+    if (req.query.referrer === 'check') {
+      if (req.session.data.placement.subjectLevel === req.session.data.currentSubjectLevel) {
+        res.redirect(`/organisations/${req.params.organisationId}/placements/new/check`)
+      } else {
+        res.redirect(`/organisations/${req.params.organisationId}/placements/new/subject?referrer=check`)
+      }
+    } else {
+      res.redirect(`/organisations/${req.params.organisationId}/placements/new/subject`)
+    }
   }
 }
 
 exports.new_placement_subject_get = (req, res) => {
     const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
     const subjectOptions = subjectHelper.getSubjectOptions(req.session.data.placement.subjectLevel)
+    let back = `/organisations/${req.params.organisationId}/placements/new`
+    let save = `/organisations/${req.params.organisationId}/placements/new/subject`
+    if (req.query.referrer === 'check') {
+      back = `/organisations/${req.params.organisationId}/placements/new/check`
+      save += '?referrer=check'
+    }
     res.render('../views/placements/subject', {
         organisation,
         placement: req.session.data.placement,
@@ -109,6 +151,13 @@ exports.new_placement_subject_get = (req, res) => {
 exports.new_placement_subject_post = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
   const subjectOptions = subjectHelper.getSubjectOptions(req.session.data.placement.subjectLevel)
+  let back = `/organisations/${req.params.organisationId}/placements/new`
+  let save = `/organisations/${req.params.organisationId}/placements/new/subject`
+  if (req.query.referrer === 'check') {
+    back = `/organisations/${req.params.organisationId}/placements/new/check`
+    save += '?referrer=check'
+  }
+
   const errors = []
 
   if (req.session.data.placement.subjectLevel === 'secondary') {
@@ -141,7 +190,11 @@ exports.new_placement_subject_post = (req, res) => {
       errors
     })
   } else {
-    res.redirect(`/organisations/${req.params.organisationId}/placements/new/mentor`)
+    if (req.query.referrer === 'check') {
+      res.redirect(`/organisations/${req.params.organisationId}/placements/new/check`)
+    } else {
+      res.redirect(`/organisations/${req.params.organisationId}/placements/new/mentor`)
+    }
   }
 }
 
@@ -239,7 +292,7 @@ exports.new_placement_check_get = (req, res) => {
         actions: {
           save: `/organisations/${req.params.organisationId}/placements/new/check`,
           back: `/organisations/${req.params.organisationId}/placements/new/window`,
-          change: `/organisations/${req.params.organisationId}/mentors/new?referrer=check`
+          change: `/organisations/${req.params.organisationId}/placements/new`
         }
       })
 }
