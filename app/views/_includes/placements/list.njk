@@ -12,15 +12,7 @@
       <tr class="govuk-table__row">
         <td class="govuk-table__cell app-table--courses__course-name">
           <a class="govuk-link" href="{{ actions.view }}/{{ placement.id }}">
-            {% if placement.subjectLevel == "secondary" %}
-              <ul class="govuk-list">
-                {% for subject in placement.subjects %}
-                  <li>{{ subject | getSubjectLabel }}</li>
-                {% endfor %}
-              </ul>
-            {% else %}
-              <p class="govuk-body">{{ placement.subjects | getSubjectLabel }}</p>
-            {% endif %}
+            {{ placement.subjects | getPlacementLabel }}
           </a>
         </td>
         <td class="govuk-table__cell">

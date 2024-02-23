@@ -2,7 +2,7 @@
 
 {% set primaryNavId = "placements" %}
 
-{% set title = placement.id %}
+{% set title = placement.subjects | getPlacementLabel %}
 
 {% block beforeContent %}
 {{ govukBackLink({
