@@ -9,7 +9,7 @@ exports.getMentorOptions = (params) => {
     const item = {}
 
     item.text = `${mentor.firstName} ${mentor.lastName}`
-    item.value = mentor.trn
+    item.value = mentor.trn.toString()
     item.id = mentor.id
 
     // item.hint = {}
