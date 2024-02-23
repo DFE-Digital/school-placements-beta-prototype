@@ -7,9 +7,10 @@ const { gfmHeadingId } = require('marked-gfm-heading-id')
 const numeral = require('numeral')
 
 const giasHelper = require('./helpers/gias')
+const mentorHelper = require('./helpers/mentors')
+const placementHelper = require('./helpers/placements')
 const subjectHelper = require('./helpers/subjects')
 const utilsHelper = require('./helpers/utils')
-const mentorHelper = require('./helpers/mentors')
 
 /* ------------------------------------------------------------------
   numeral filter for use in Nunjucks
@@ -142,3 +143,8 @@ Subject utility functions
 addFilter('getSubjectLabel', subjectHelper.getSubjectLabel)
 
 addFilter('getSubjectLevelLabel', subjectHelper.getSubjectLevelLabel)
+
+/* ------------------------------------------------------------------
+Placement utility functions
+------------------------------------------------------------------ */
+addFilter('getPlacementLabel', placementHelper.getPlacementLabel)
