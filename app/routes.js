@@ -214,6 +214,9 @@ router.post('/organisations/:organisationId/placements/new/window', checkIsAuthe
 router.get('/organisations/:organisationId/placements/new/check', checkIsAuthenticated, placementController.new_placement_check_get)
 router.post('/organisations/:organisationId/placements/new/check', checkIsAuthenticated, placementController.new_placement_check_post)
 
+router.get('/organisations/:organisationId/placements/:placementId/delete', checkIsAuthenticated, placementController.delete_placement_get)
+router.post('/organisations/:organisationId/placements/:placementId/delete', checkIsAuthenticated, placementController.delete_placement_post)
+
 router.get('/organisations/:organisationId/placements/:placementId', checkIsAuthenticated, placementController.placement_details)
 
 router.get('/organisations/:organisationId/placements', checkIsAuthenticated, placementController.placement_list)

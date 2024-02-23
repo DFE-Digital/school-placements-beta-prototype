@@ -206,7 +206,6 @@ exports.new_placement_subject_post = (req, res) => {
   }
 }
 
-
 exports.new_placement_mentor_get = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
   const mentorOptions = mentorHelper.getMentorOptions({ organisationId: req.params.organisationId })
@@ -334,5 +333,37 @@ exports.new_placement_check_post = (req, res) => {
   delete req.session.data.currentSubjectLevel
 
   req.flash('success', 'Placement added')
+  res.redirect(`/organisations/${req.params.organisationId}/placements`)
+}
+
+/// ------------------------------------------------------------------------ ///
+/// DELETE PLACEMENT
+/// ------------------------------------------------------------------------ ///
+
+exports.delete_placement_get = (req, res) => {
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+  const placement = placementModel.findOne({
+    organisationId: req.params.organisationId,
+    placementId: req.params.placementId
+  })
+
+  res.render('../views/placements/delete', {
+    organisation,
+    placement,
+    actions: {
+      save: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}/delete`,
+      back: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`,
+      cancel: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`
+    }
+  })
+}
+
+exports.delete_placement_post = (req, res) => {
+  placementModel.deleteOne({
+    organisationId: req.params.organisationId,
+    placementId: req.params.placementId
+  })
+
+  req.flash('success', 'Placement deleted')
   res.redirect(`/organisations/${req.params.organisationId}/placements`)
 }

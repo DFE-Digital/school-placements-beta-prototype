@@ -3,6 +3,7 @@
 {% set primaryNavId = "placements" %}
 
 {% set title = "Are you sure you want to delete this placement?" %}
+{% set caption = placement.subjects | getPlacementLabel %}
 
 {% block pageTitle %}
   {{ "Error: " if errors.length }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
