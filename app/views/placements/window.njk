@@ -14,7 +14,7 @@
 
 {% block content %}
 
-  {% include "_includes/notification-banner.njk" %}
+  {% include "_includes/error-summary.njk" %}
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
@@ -26,36 +26,6 @@
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
 
 
-        {% set otherHtml %}
-          {{ govukDateInput({
-            id: "start-date",
-            namePrefix: "start-date",
-            fieldset: {
-              legend: {
-                text: "Start date",
-                isPageHeading: true,
-                classes: "govuk-fieldset__legend--s"
-              }
-            },
-            hint: {
-              text: "For example, 3 2007"
-            }
-          }) }}
-           {{ govukDateInput({
-            id: "end-date",
-            namePrefix: "end-date",
-            fieldset: {
-              legend: {
-                text: "End date",
-                isPageHeading: true,
-                classes: "govuk-fieldset__legend--s"
-              }
-            },
-            hint: {
-              text: "For example, 3 2007"
-            }
-          }) }}
-          {% endset -%}
 
         {{ govukRadios({
             name: "placement[window]",
@@ -88,18 +58,9 @@
                 hint: {
                 text: "April to July"
                 }
-                },
-                {
-                divider: "or"
-                },
-                {
-                value: "other",
-                text: "Other",
-                conditional: {
-                      html: otherHtml
-                    }
                 }
-            ]
+            ],
+            errorMessage: errors | getErrorMessage("window")
             }) }}
 
         {{ govukButton({

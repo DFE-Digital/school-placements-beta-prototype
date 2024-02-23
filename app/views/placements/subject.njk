@@ -25,6 +25,7 @@
 
       <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
 
+      {% if placement.subjectLevel == "secondary" %}
         {{ govukCheckboxes({
             name: "placement[subjects][]",
             fieldset: {
@@ -41,6 +42,27 @@
             items: subjectOptions,
             errorMessage: errors | getErrorMessage("subject")
             }) }}
+
+          {% else %}
+
+          {{ govukRadios({
+            name: "placement[subjects]",
+            fieldset: {
+                legend: {
+                html: headingHtml,
+                isPageHeading: true,
+                classes: "govuk-fieldset__legend--l"
+                }
+            },
+            hint: {
+                text: "Select all that apply."
+            },
+            values: placement.subject,
+            items: subjectOptions,
+            errorMessage: errors | getErrorMessage("subject")
+            }) }}
+
+          {% endif %}
 
         {{ govukButton({
           text: "Continue"

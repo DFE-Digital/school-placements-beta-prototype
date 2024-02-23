@@ -1,3 +1,23 @@
+{% set subjectHtml %}
+{% if placement.subjectLevel == "secondary" %}
+  <ul class="govuk-list">
+    {% for subject in placement.subjects %}
+      <li>{{ subject | getSubjectLabel }}</li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p class="govuk-body">{{ placement.subjects | getSubjectLabel }}</p>
+{% endif %}
+{% endset %}
+
+{% set mentorHtml %}
+  <ul class="govuk-list">
+  {% for mentor in placement.mentors %}
+  <li>{{ mentor | getMentorName }}</li>
+  {% endfor %}
+  </ul>
+{% endset %}
+
 {{ govukSummaryList({
   rows: [
     {
@@ -5,7 +25,7 @@
         text: "Subject level"
       },
       value: {
-        text: placement.subjectLevel
+        text: placement.subjectLevel | getSubjectLevelLabel
       },
       actions: {
         items: [
@@ -22,7 +42,7 @@
         text: "Subject"
       },
       value: {
-        text: placement.subject
+        html: subjectHtml
       },
       actions: {
         items: [
@@ -39,7 +59,7 @@
         text: "Mentor" + ("s" if claim.mentors.length > 1)
       },
       value: {
-        text: placement.mentor
+        html: mentorHtml
       },
       actions: {
         items: [
@@ -56,7 +76,7 @@
         text: "Window"
       },
       value: {
-        text: placement.window
+        text: placement.window | capitalize
       },
       actions: {
         items: [

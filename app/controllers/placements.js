@@ -50,7 +50,7 @@ exports.new_placement_get = (req, res) => {
     res.redirect(`/organisations/${req.params.organisationId}/placements/new/subject`)
     } else {
     // show subject level form
-    const subjectLevelOptions = subjectHelper.getSubjectLevelOptions(req.session.data.placement.subjectLevel)
+    const subjectLevelOptions = subjectHelper.getSubjectLevelOptions()
     res.render('../views/placements/subject-level', {
         organisation,
         placement: req.session.data.placement,
@@ -64,7 +64,32 @@ exports.new_placement_get = (req, res) => {
 }
 
 exports.new_placement_post = (req, res) => {
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+  const subjectLevelOptions = subjectHelper.getSubjectLevelOptions()
+  const errors = []
+
+  if (!req.session.data.placement.subjectLevel) {
+    const error = {}
+    error.fieldName = 'subjectLevel'
+    error.href = '#subjectLevel'
+    error.text = 'Select a subject level'
+    errors.push(error)
+  }
+
+  if (errors.length) {
+    res.render('../views/placements/subject-level', {
+      organisation,
+      placement: req.session.data.placement,
+      subjectLevelOptions,
+      actions: {
+        save: `/organisations/${req.params.organisationId}/placements/new`,
+        back: `/organisations/${req.params.organisationId}/placements`
+      },
+      errors
+    })
+  } else {
     res.redirect(`/organisations/${req.params.organisationId}/placements/new/subject`)
+  }
 }
 
 exports.new_placement_subject_get = (req, res) => {
@@ -82,8 +107,44 @@ exports.new_placement_subject_get = (req, res) => {
 }
 
 exports.new_placement_subject_post = (req, res) => {
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+  const subjectOptions = subjectHelper.getSubjectOptions(req.session.data.placement.subjectLevel)
+  const errors = []
+
+  if (req.session.data.placement.subjectLevel === 'secondary') {
+    if (!req.session.data.placement.subjects.length) {
+      const error = {}
+      error.fieldName = 'subject'
+      error.href = '#subject'
+      error.text = 'Select a subject'
+      errors.push(error)
+    }
+  } else {
+    if (!req.session.data.placement.subjects) {
+      const error = {}
+      error.fieldName = 'subject'
+      error.href = '#subject'
+      error.text = 'Select a subject'
+      errors.push(error)
+    }
+  }
+
+  if (errors.length) {
+    res.render('../views/placements/subject', {
+      organisation,
+      placement: req.session.data.placement,
+      subjectOptions,
+      actions: {
+        save: `/organisations/${req.params.organisationId}/placements/new/subject`,
+        back: `/organisations/${req.params.organisationId}/placements/new`
+      },
+      errors
+    })
+  } else {
     res.redirect(`/organisations/${req.params.organisationId}/placements/new/mentor`)
+  }
 }
+
 
 exports.new_placement_mentor_get = (req, res) => {
     const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
@@ -104,7 +165,7 @@ exports.new_placement_mentor_post = (req, res) => {
   const mentorOptions = mentorHelper.getMentorOptions({ organisationId: req.params.organisationId })
   const errors = []
 
-  if (!req.session.data.placement.mentor.length) {
+  if (!req.session.data.placement.mentors.length) {
     const error = {}
     error.fieldName = 'mentors'
     error.href = '#mentors'
@@ -143,7 +204,30 @@ exports.new_placement_window_get = (req, res) => {
 }
 
 exports.new_placement_window_post = (req, res) => {
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+  const errors = []
+
+  if (!req.session.data.placement.window) {
+    const error = {}
+    error.fieldName = 'window'
+    error.href = '#window'
+    error.text = 'Select a window'
+    errors.push(error)
+  }
+
+  if (errors.length) {
+    res.render('../views/placements/window', {
+      organisation,
+      placement: req.session.data.placement,
+      actions: {
+        save: `/organisations/${req.params.organisationId}/placements/new/window`,
+        back: `/organisations/${req.params.organisationId}/placements/new/mentor`
+      },
+      errors
+    })
+  } else {
     res.redirect(`/organisations/${req.params.organisationId}/placements/new/check`)
+  }
 }
 
 exports.new_placement_check_get = (req, res) => {
