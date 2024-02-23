@@ -314,7 +314,7 @@ exports.new_placement_window_post = (req, res) => {
 exports.new_placement_check_get = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
 
-  res.render('../views/placements/check', {
+  res.render('../views/placements/check-your-answers', {
     organisation,
     placement: req.session.data.placement,
     actions: {
