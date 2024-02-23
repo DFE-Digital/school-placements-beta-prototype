@@ -24,11 +24,11 @@
           </a>
         </td>
         <td class="govuk-table__cell">
-            <ul class="govuk-list">
+          <ul class="govuk-list">
             {% for mentor in placement.mentors %}
-            <li>{{ mentor | getMentorName }}</li>
+              <li>{{ mentor | getMentorName }}</li>
             {% endfor %}
-            </ul>
+          </ul>
         </td>
         <td class="govuk-table__cell">
           {{ placement.window | capitalize }}
