@@ -1,5 +1,7 @@
 const placementModel = require('../models/placements')
 const organisationModel = require('../models/organisations')
+
+const Pagination = require('../helpers/pagination')
 const mentorHelper = require('../helpers/mentors')
 const subjectHelper = require('../helpers/subjects')
 
@@ -9,14 +11,20 @@ const subjectHelper = require('../helpers/subjects')
 
 exports.placement_list = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-  const placements = placementModel.findMany({ organisationId: req.params.organisationId })
+  let placements = placementModel.findMany({ organisationId: req.params.organisationId })
 
   delete req.session.data.placement
   delete req.session.data.currentSubjectLevel
 
+  // TODO: get pageSize from settings
+  let pageSize = 25
+  let pagination = new Pagination(placements, req.query.page, pageSize)
+  placements = pagination.getData()
+
   res.render('../views/placements/list', {
     organisation,
     placements,
+    pagination,
     actions: {
       new: `/organisations/${req.params.organisationId}/placements/new`,
       view: `/organisations/${req.params.organisationId}/placements`,

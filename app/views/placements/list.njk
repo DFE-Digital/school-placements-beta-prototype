@@ -24,6 +24,7 @@
 
       {% if placements.length %}
         {% include "_includes/placements/list.njk" %}
+        {% include "_includes/pagination.njk" %}
       {% else %}
         <p class="govuk-body">There are no placements for {{ organisation.name if organisation.name else "your organisation" }}.</p>
       {% endif %}
