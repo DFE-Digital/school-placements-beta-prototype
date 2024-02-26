@@ -146,25 +146,25 @@ exports.new_placement_post = (req, res) => {
 }
 
 exports.new_placement_subject_get = (req, res) => {
-    const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-    const subjectOptions = subjectHelper.getSubjectOptions(req.session.data.placement.subjectLevel)
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+  const subjectOptions = subjectHelper.getSubjectOptions(req.session.data.placement.subjectLevel)
 
-    let back = `/organisations/${req.params.organisationId}/placements/new`
-    let save = `/organisations/${req.params.organisationId}/placements/new/subject`
-    if (req.query.referrer === 'check') {
-      back = `/organisations/${req.params.organisationId}/placements/new/check`
-      save += '?referrer=check'
+  let back = `/organisations/${req.params.organisationId}/placements/new`
+  let save = `/organisations/${req.params.organisationId}/placements/new/subject`
+  if (req.query.referrer === 'check') {
+    back = `/organisations/${req.params.organisationId}/placements/new/check`
+    save += '?referrer=check'
+  }
+
+  res.render('../views/placements/subject', {
+    organisation,
+    placement: req.session.data.placement,
+    subjectOptions,
+    actions: {
+      save,
+      back
     }
-
-    res.render('../views/placements/subject', {
-      organisation,
-      placement: req.session.data.placement,
-      subjectOptions,
-      actions: {
-        save,
-        back
-      }
-    })
+  })
 }
 
 exports.new_placement_subject_post = (req, res) => {
@@ -346,6 +346,34 @@ exports.new_placement_check_post = (req, res) => {
 
   req.flash('success', 'Placement added')
   res.redirect(`/organisations/${req.params.organisationId}/placements`)
+}
+
+/// ------------------------------------------------------------------------ ///
+/// EDIT PLACEMENT
+/// ------------------------------------------------------------------------ ///
+
+exports.edit_placement_subject_get = (req, res) => {
+  res.send('Not implemented')
+}
+
+exports.edit_placement_subject_post = (req, res) => {
+  res.send('Not implemented')
+}
+
+exports.edit_placement_mentor_get = (req, res) => {
+  res.send('Not implemented')
+}
+
+exports.edit_placement_mentor_post = (req, res) => {
+  res.send('Not implemented')
+}
+
+exports.edit_placement_window_get = (req, res) => {
+  res.send('Not implemented')
+}
+
+exports.edit_placement_window_post = (req, res) => {
+  res.send('Not implemented')
 }
 
 /// ------------------------------------------------------------------------ ///
