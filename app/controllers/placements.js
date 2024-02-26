@@ -364,7 +364,8 @@ exports.edit_placement_subject_get = (req, res) => {
     subjectOptions,
     actions: {
       save: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}/subject`,
-      back: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`
+      back: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`,
+      cancel: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`
     }
   })
 }
@@ -405,7 +406,8 @@ exports.edit_placement_subject_post = (req, res) => {
       subjectOptions,
       actions: {
         save: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}/subject`,
-        back: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`
+        back: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`,
+        cancel: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`
       },
       errors
     })
@@ -433,7 +435,8 @@ exports.edit_placement_mentor_get = (req, res) => {
     mentorOptions,
     actions: {
       save: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}/mentor`,
-      back: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`
+      back: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`,
+      cancel: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`
     }
   })
 }
@@ -464,7 +467,8 @@ exports.edit_placement_mentor_post = (req, res) => {
       mentorOptions,
       actions: {
         save: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}/mentor`,
-        back: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`
+        back: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`,
+        cancel: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`
       },
       errors
     })
@@ -490,7 +494,8 @@ exports.edit_placement_window_get = (req, res) => {
     placement: currentPlacement,
     actions: {
       save: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}/window`,
-      back: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`
+      back: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`,
+      cancel: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`
     }
   })
 }
@@ -518,7 +523,8 @@ exports.edit_placement_window_post = (req, res) => {
       placement,
       actions: {
         save: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}/window`,
-        back: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`
+        back: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`,
+        cancel: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`
       },
       errors
     })
