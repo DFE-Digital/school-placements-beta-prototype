@@ -481,11 +481,57 @@ exports.edit_placement_mentor_post = (req, res) => {
 }
 
 exports.edit_placement_window_get = (req, res) => {
-  res.send('Not implemented')
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+  const currentPlacement = placementModel.findOne({ placementId: req.params.placementId })
+
+  res.render('../views/placements/window', {
+    organisation,
+    currentPlacement,
+    placement: currentPlacement,
+    actions: {
+      save: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}/window`,
+      back: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`
+    }
+  })
 }
 
 exports.edit_placement_window_post = (req, res) => {
-  res.send('Not implemented')
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+  const currentPlacement = placementModel.findOne({ placementId: req.params.placementId })
+  // combine submitted data with current placement data
+  const placement = {...currentPlacement, ...req.session.data.placement}
+
+  const errors = []
+
+  if (!req.session.data.placement.window) {
+    const error = {}
+    error.fieldName = 'window'
+    error.href = '#window'
+    error.text = 'Select a window'
+    errors.push(error)
+  }
+
+  if (errors.length) {
+    res.render('../views/placements/window', {
+      organisation,
+      currentPlacement,
+      placement,
+      actions: {
+        save: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}/window`,
+        back: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`
+      },
+      errors
+    })
+  } else {
+    placementModel.updateOne({
+      organisationId: req.params.organisationId,
+      placementId: req.params.placementId,
+      placement: req.session.data.placement,
+    })
+
+    req.flash('success', 'Window updated')
+    res.redirect(`/organisations/${req.params.organisationId}/placements/${req.params.placementId}`)
+  }
 }
 
 /// ------------------------------------------------------------------------ ///
