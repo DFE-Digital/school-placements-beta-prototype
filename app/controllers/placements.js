@@ -1,5 +1,6 @@
-const placementModel = require('../models/placements')
+const mentorModel = require('../models/mentors')
 const organisationModel = require('../models/organisations')
+const placementModel = require('../models/placements')
 
 const Pagination = require('../helpers/pagination')
 const mentorHelper = require('../helpers/mentors')
@@ -11,6 +12,7 @@ const subjectHelper = require('../helpers/subjects')
 
 exports.placement_list = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+  const mentors = mentorModel.findMany({ organisationId: req.params.organisationId })
   let placements = placementModel.findMany({ organisationId: req.params.organisationId })
 
   delete req.session.data.placement
@@ -23,11 +25,13 @@ exports.placement_list = (req, res) => {
 
   res.render('../views/placements/list', {
     organisation,
+    mentors,
     placements,
     pagination,
     actions: {
       new: `/organisations/${req.params.organisationId}/placements/new`,
       view: `/organisations/${req.params.organisationId}/placements`,
+      mentors: `/organisations/${req.params.organisationId}/mentors`,
       back: '/'
     }
   })
