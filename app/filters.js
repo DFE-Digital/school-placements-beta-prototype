@@ -7,6 +7,8 @@ const { gfmHeadingId } = require('marked-gfm-heading-id')
 const numeral = require('numeral')
 
 const giasHelper = require('./helpers/gias')
+const mentorHelper = require('./helpers/mentors')
+const placementHelper = require('./helpers/placements')
 const subjectHelper = require('./helpers/subjects')
 const utilsHelper = require('./helpers/utils')
 
@@ -131,8 +133,18 @@ addFilter('getOfstedRatingLabel', giasHelper.getOfstedRatingLabel)
 addFilter('getSENDProvisionLabel', giasHelper.getSENDProvisionLabel)
 
 /* ------------------------------------------------------------------
+Mentor utility functions
+------------------------------------------------------------------ */
+addFilter('getMentorName', mentorHelper.getMentorName)
+
+/* ------------------------------------------------------------------
 Subject utility functions
 ------------------------------------------------------------------ */
 addFilter('getSubjectLabel', subjectHelper.getSubjectLabel)
 
 addFilter('getSubjectLevelLabel', subjectHelper.getSubjectLevelLabel)
+
+/* ------------------------------------------------------------------
+Placement utility functions
+------------------------------------------------------------------ */
+addFilter('getPlacementLabel', placementHelper.getPlacementLabel)

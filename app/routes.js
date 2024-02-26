@@ -52,6 +52,7 @@ const contentController = require('./controllers/content')
 const mentorController = require('./controllers/mentors')
 const organisationController = require('./controllers/organisations')
 const userController = require('./controllers/users')
+const placementController = require('./controllers/placements')
 
 const supportOrganisationController = require('./controllers/support/organisations')
 const supportOrganisationMentorController = require('./controllers/support/organisation-mentors')
@@ -193,6 +194,32 @@ router.post('/organisations/:organisationId/mentors/:mentorId/delete', checkIsAu
 router.get('/organisations/:organisationId/mentors/:mentorId', checkIsAuthenticated, mentorController.mentor_details)
 
 router.get('/organisations/:organisationId/mentors', checkIsAuthenticated, mentorController.mentor_list)
+
+/// ------------------------------------------------------------------------ ///
+/// PLACEMENT ROUTES
+/// ------------------------------------------------------------------------ ///
+
+router.get('/organisations/:organisationId/placements/new', checkIsAuthenticated, placementController.new_placement_get)
+router.post('/organisations/:organisationId/placements/new', checkIsAuthenticated, placementController.new_placement_post)
+
+router.get('/organisations/:organisationId/placements/new/subject', checkIsAuthenticated, placementController.new_placement_subject_get)
+router.post('/organisations/:organisationId/placements/new/subject', checkIsAuthenticated, placementController.new_placement_subject_post)
+
+router.get('/organisations/:organisationId/placements/new/mentor', checkIsAuthenticated, placementController.new_placement_mentor_get)
+router.post('/organisations/:organisationId/placements/new/mentor', checkIsAuthenticated, placementController.new_placement_mentor_post)
+
+router.get('/organisations/:organisationId/placements/new/window', checkIsAuthenticated, placementController.new_placement_window_get)
+router.post('/organisations/:organisationId/placements/new/window', checkIsAuthenticated, placementController.new_placement_window_post)
+
+router.get('/organisations/:organisationId/placements/new/check', checkIsAuthenticated, placementController.new_placement_check_get)
+router.post('/organisations/:organisationId/placements/new/check', checkIsAuthenticated, placementController.new_placement_check_post)
+
+router.get('/organisations/:organisationId/placements/:placementId/delete', checkIsAuthenticated, placementController.delete_placement_get)
+router.post('/organisations/:organisationId/placements/:placementId/delete', checkIsAuthenticated, placementController.delete_placement_post)
+
+router.get('/organisations/:organisationId/placements/:placementId', checkIsAuthenticated, placementController.placement_details)
+
+router.get('/organisations/:organisationId/placements', checkIsAuthenticated, placementController.placement_list)
 
 /// ------------------------------------------------------------------------ ///
 /// ------------------------------------------------------------------------ ///
