@@ -11,11 +11,16 @@
 {% endset %}
 
 {% set mentorHtml %}
+{% if placement.mentors == "unknown" %}
+  <p class="govuk-body">Not known yet</p>
+{% else %}
   <ul class="govuk-list">
-  {% for mentor in placement.mentors %}
-  <li>{{ mentor | getMentorName }}</li>
-  {% endfor %}
+    {% for mentor in placement.mentors %}
+      <li>{{ mentor | getMentorName }}</li>
+    {% endfor %}
   </ul>
+{% endif %}
+
 {% endset %}
 
 {{ govukSummaryList({
