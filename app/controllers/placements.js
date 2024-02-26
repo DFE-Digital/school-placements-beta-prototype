@@ -220,7 +220,11 @@ exports.new_placement_subject_post = (req, res) => {
 
 exports.new_placement_mentor_get = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-  const mentorOptions = mentorHelper.getMentorOptions({ organisationId: req.params.organisationId })
+  const mentorOptions = mentorHelper.getMentorOptions({
+    organisationId: req.params.organisationId,
+    otherOption: true,
+    otherOptionLabel: 'Not known yet'
+  })
 
   let back = `/organisations/${req.params.organisationId}/placements/new/subject`
   let save = `/organisations/${req.params.organisationId}/placements/new/mentor`
@@ -242,7 +246,11 @@ exports.new_placement_mentor_get = (req, res) => {
 
 exports.new_placement_mentor_post = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-  const mentorOptions = mentorHelper.getMentorOptions({ organisationId: req.params.organisationId })
+  const mentorOptions = mentorHelper.getMentorOptions({
+    organisationId: req.params.organisationId,
+    otherOption: true,
+    otherOptionLabel: 'Not known yet'
+  })
 
   let back = `/organisations/${req.params.organisationId}/placements/new/subject`
   let save = `/organisations/${req.params.organisationId}/placements/new/mentor`
@@ -426,7 +434,11 @@ exports.edit_placement_subject_post = (req, res) => {
 exports.edit_placement_mentor_get = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
   const currentPlacement = placementModel.findOne({ placementId: req.params.placementId })
-  const mentorOptions = mentorHelper.getMentorOptions({ organisationId: req.params.organisationId })
+  const mentorOptions = mentorHelper.getMentorOptions({
+    organisationId: req.params.organisationId,
+    otherOption: true,
+    otherOptionLabel: 'Not known yet'
+  })
 
   res.render('../views/placements/mentor', {
     organisation,
@@ -447,7 +459,11 @@ exports.edit_placement_mentor_post = (req, res) => {
   // combine submitted data with current placement data
   const placement = {...currentPlacement, ...req.session.data.placement}
 
-  const mentorOptions = mentorHelper.getMentorOptions({ organisationId: req.params.organisationId })
+  const mentorOptions = mentorHelper.getMentorOptions({
+    organisationId: req.params.organisationId,
+    otherOption: true,
+    otherOptionLabel: 'Not known yet'
+  })
 
   const errors = []
 
