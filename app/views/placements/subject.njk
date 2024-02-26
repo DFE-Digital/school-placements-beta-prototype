@@ -3,7 +3,12 @@
 {% set primaryNavId = "placements" %}
 
 {% set title = "Subject" %}
-{% set caption = "Add placement" %}
+{% if currentPlacement %}
+  {% set caption = currentPlacement.subjects | getPlacementLabel %}
+{% else %}
+  {% set caption = "Add placement" %}
+{% endif %}
+
 
 {% block beforeContent %}
 {{ govukBackLink({
@@ -63,7 +68,7 @@
         {% endif %}
 
         {{ govukButton({
-          text: "Continue"
+          text: "Update subject" if currentPlacement else "Continue"
         }) }}
 
       </form>

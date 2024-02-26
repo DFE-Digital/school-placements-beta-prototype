@@ -49,7 +49,7 @@ exports.placement_details = (req, res) => {
     organisation,
     placement,
     actions: {
-      change: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}/edit?referrer=change`,
+      change: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`,
       delete: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}/delete`,
       back: `/organisations/${req.params.organisationId}/placements`,
       cancel: `/organisations/${req.params.organisationId}/placements`
@@ -353,11 +353,72 @@ exports.new_placement_check_post = (req, res) => {
 /// ------------------------------------------------------------------------ ///
 
 exports.edit_placement_subject_get = (req, res) => {
-  res.send('Not implemented')
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+  const currentPlacement = placementModel.findOne({ placementId: req.params.placementId })
+  const subjectOptions = subjectHelper.getSubjectOptions(currentPlacement.subjectLevel)
+
+  res.render('../views/placements/subject', {
+    organisation,
+    currentPlacement,
+    placement: currentPlacement,
+    subjectOptions,
+    actions: {
+      save: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}/subject`,
+      back: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`
+    }
+  })
 }
 
 exports.edit_placement_subject_post = (req, res) => {
-  res.send('Not implemented')
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+  const currentPlacement = placementModel.findOne({ placementId: req.params.placementId })
+  // combine submitted data with current placement data
+  const placement = {...currentPlacement, ...req.session.data.placement}
+
+  const subjectOptions = subjectHelper.getSubjectOptions(placement.subjectLevel)
+
+  const errors = []
+
+  if (placement.subjectLevel === 'secondary') {
+    if (!req.session.data.placement.subjects.length) {
+      const error = {}
+      error.fieldName = 'subject'
+      error.href = '#subject'
+      error.text = 'Select a subject'
+      errors.push(error)
+    }
+  } else {
+    if (!req.session.data.placement.subjects) {
+      const error = {}
+      error.fieldName = 'subject'
+      error.href = '#subject'
+      error.text = 'Select a subject'
+      errors.push(error)
+    }
+  }
+
+  if (errors.length) {
+    res.render('../views/placements/subject', {
+      organisation,
+      currentPlacement,
+      placement,
+      subjectOptions,
+      actions: {
+        save: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}/subject`,
+        back: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`
+      },
+      errors
+    })
+  } else {
+    placementModel.updateOne({
+      organisationId: req.params.organisationId,
+      placementId: req.params.placementId,
+      placement: req.session.data.placement,
+    })
+
+    req.flash('success', 'Placement updated')
+    res.redirect(`/organisations/${req.params.organisationId}/placements/${req.params.placementId}`)
+  }
 }
 
 exports.edit_placement_mentor_get = (req, res) => {
