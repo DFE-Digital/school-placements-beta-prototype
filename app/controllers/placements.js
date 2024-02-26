@@ -416,17 +416,68 @@ exports.edit_placement_subject_post = (req, res) => {
       placement: req.session.data.placement,
     })
 
-    req.flash('success', 'Placement updated')
+    req.flash('success', 'Subject updated')
     res.redirect(`/organisations/${req.params.organisationId}/placements/${req.params.placementId}`)
   }
 }
 
 exports.edit_placement_mentor_get = (req, res) => {
-  res.send('Not implemented')
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+  const currentPlacement = placementModel.findOne({ placementId: req.params.placementId })
+  const mentorOptions = mentorHelper.getMentorOptions({ organisationId: req.params.organisationId })
+
+  res.render('../views/placements/mentor', {
+    organisation,
+    currentPlacement,
+    placement: currentPlacement,
+    mentorOptions,
+    actions: {
+      save: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}/mentor`,
+      back: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`
+    }
+  })
 }
 
 exports.edit_placement_mentor_post = (req, res) => {
-  res.send('Not implemented')
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+  const currentPlacement = placementModel.findOne({ placementId: req.params.placementId })
+  // combine submitted data with current placement data
+  const placement = {...currentPlacement, ...req.session.data.placement}
+
+  const mentorOptions = mentorHelper.getMentorOptions({ organisationId: req.params.organisationId })
+
+  const errors = []
+
+  if (!req.session.data.placement.mentors.length) {
+    const error = {}
+    error.fieldName = 'mentors'
+    error.href = '#mentors'
+    error.text = 'Select a mentor'
+    errors.push(error)
+  }
+
+  if (errors.length) {
+    res.render('../views/placements/mentor', {
+      organisation,
+      currentPlacement,
+      placement,
+      mentorOptions,
+      actions: {
+        save: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}/mentor`,
+        back: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`
+      },
+      errors
+    })
+  } else {
+    placementModel.updateOne({
+      organisationId: req.params.organisationId,
+      placementId: req.params.placementId,
+      placement: req.session.data.placement,
+    })
+
+    req.flash('success', 'Mentor updated')
+    res.redirect(`/organisations/${req.params.organisationId}/placements/${req.params.placementId}`)
+  }
 }
 
 exports.edit_placement_window_get = (req, res) => {
