@@ -11,11 +11,15 @@
 {% endset %}
 
 {% set mentorHtml %}
+{% if placement.mentors == "unknown" %}
+  <p class="govuk-body">Not known yet</p>
+{% else %}
   <ul class="govuk-list">
-  {% for mentor in placement.mentors %}
-  <li>{{ mentor | getMentorName }}</li>
-  {% endfor %}
+    {% for mentor in placement.mentors %}
+      <li>{{ mentor | getMentorName }}</li>
+    {% endfor %}
   </ul>
+{% endif %}
 {% endset %}
 
 {{ govukSummaryList({
@@ -38,7 +42,7 @@
       actions: {
         items: [
           {
-            href: "#",
+            href: actions.change + "/subject",
             text: "Change",
             visuallyHiddenText: "subject"
           }
@@ -55,16 +59,16 @@
       actions: {
         items: [
           {
-            href: "#",
+            href: actions.change + "/mentor",
             text: "Change",
             visuallyHiddenText: "mentor"
           }
         ]
       }
     },
-        {
+    {
       key: {
-        text: "Placement window"
+        text: "Window"
       },
       value: {
         text: placement.window | capitalize
@@ -72,11 +76,21 @@
       actions: {
         items: [
           {
-            href: "#",
+            href: actions.change + "/window",
             text: "Change",
             visuallyHiddenText: "window"
           }
         ]
+      }
+    },
+    {
+      key: {
+        text: "Status"
+      },
+      value: {
+        html: govukTag({
+          text: "Published"
+        })
       }
     }
   ]

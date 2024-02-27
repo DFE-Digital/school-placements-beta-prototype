@@ -49,7 +49,7 @@ exports.placement_details = (req, res) => {
     organisation,
     placement,
     actions: {
-      change: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}/edit?referrer=change`,
+      change: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`,
       delete: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}/delete`,
       back: `/organisations/${req.params.organisationId}/placements`,
       cancel: `/organisations/${req.params.organisationId}/placements`
@@ -146,25 +146,25 @@ exports.new_placement_post = (req, res) => {
 }
 
 exports.new_placement_subject_get = (req, res) => {
-    const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-    const subjectOptions = subjectHelper.getSubjectOptions(req.session.data.placement.subjectLevel)
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+  const subjectOptions = subjectHelper.getSubjectOptions(req.session.data.placement.subjectLevel)
 
-    let back = `/organisations/${req.params.organisationId}/placements/new`
-    let save = `/organisations/${req.params.organisationId}/placements/new/subject`
-    if (req.query.referrer === 'check') {
-      back = `/organisations/${req.params.organisationId}/placements/new/check`
-      save += '?referrer=check'
+  let back = `/organisations/${req.params.organisationId}/placements/new`
+  let save = `/organisations/${req.params.organisationId}/placements/new/subject`
+  if (req.query.referrer === 'check') {
+    back = `/organisations/${req.params.organisationId}/placements/new/check`
+    save += '?referrer=check'
+  }
+
+  res.render('../views/placements/subject', {
+    organisation,
+    placement: req.session.data.placement,
+    subjectOptions,
+    actions: {
+      save,
+      back
     }
-
-    res.render('../views/placements/subject', {
-      organisation,
-      placement: req.session.data.placement,
-      subjectOptions,
-      actions: {
-        save,
-        back
-      }
-    })
+  })
 }
 
 exports.new_placement_subject_post = (req, res) => {
@@ -220,7 +220,11 @@ exports.new_placement_subject_post = (req, res) => {
 
 exports.new_placement_mentor_get = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-  const mentorOptions = mentorHelper.getMentorOptions({ organisationId: req.params.organisationId })
+  const mentorOptions = mentorHelper.getMentorOptions({
+    organisationId: req.params.organisationId,
+    otherOption: true,
+    otherOptionLabel: 'Not known yet'
+  })
 
   let back = `/organisations/${req.params.organisationId}/placements/new/subject`
   let save = `/organisations/${req.params.organisationId}/placements/new/mentor`
@@ -242,7 +246,11 @@ exports.new_placement_mentor_get = (req, res) => {
 
 exports.new_placement_mentor_post = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-  const mentorOptions = mentorHelper.getMentorOptions({ organisationId: req.params.organisationId })
+  const mentorOptions = mentorHelper.getMentorOptions({
+    organisationId: req.params.organisationId,
+    otherOption: true,
+    otherOptionLabel: 'Not known yet'
+  })
 
   let back = `/organisations/${req.params.organisationId}/placements/new/subject`
   let save = `/organisations/${req.params.organisationId}/placements/new/mentor`
@@ -346,6 +354,206 @@ exports.new_placement_check_post = (req, res) => {
 
   req.flash('success', 'Placement added')
   res.redirect(`/organisations/${req.params.organisationId}/placements`)
+}
+
+/// ------------------------------------------------------------------------ ///
+/// EDIT PLACEMENT
+/// ------------------------------------------------------------------------ ///
+
+exports.edit_placement_subject_get = (req, res) => {
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+  const currentPlacement = placementModel.findOne({ placementId: req.params.placementId })
+  const subjectOptions = subjectHelper.getSubjectOptions(currentPlacement.subjectLevel)
+
+  res.render('../views/placements/subject', {
+    organisation,
+    currentPlacement,
+    placement: currentPlacement,
+    subjectOptions,
+    actions: {
+      save: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}/subject`,
+      back: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`,
+      cancel: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`
+    }
+  })
+}
+
+exports.edit_placement_subject_post = (req, res) => {
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+  const currentPlacement = placementModel.findOne({ placementId: req.params.placementId })
+  // combine submitted data with current placement data
+  const placement = {...currentPlacement, ...req.session.data.placement}
+
+  const subjectOptions = subjectHelper.getSubjectOptions(placement.subjectLevel)
+
+  const errors = []
+
+  if (placement.subjectLevel === 'secondary') {
+    if (!req.session.data.placement.subjects.length) {
+      const error = {}
+      error.fieldName = 'subject'
+      error.href = '#subject'
+      error.text = 'Select a subject'
+      errors.push(error)
+    }
+  } else {
+    if (!req.session.data.placement.subjects) {
+      const error = {}
+      error.fieldName = 'subject'
+      error.href = '#subject'
+      error.text = 'Select a subject'
+      errors.push(error)
+    }
+  }
+
+  if (errors.length) {
+    res.render('../views/placements/subject', {
+      organisation,
+      currentPlacement,
+      placement,
+      subjectOptions,
+      actions: {
+        save: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}/subject`,
+        back: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`,
+        cancel: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`
+      },
+      errors
+    })
+  } else {
+    placementModel.updateOne({
+      organisationId: req.params.organisationId,
+      placementId: req.params.placementId,
+      placement: req.session.data.placement,
+    })
+
+    req.flash('success', 'Subject updated')
+    res.redirect(`/organisations/${req.params.organisationId}/placements/${req.params.placementId}`)
+  }
+}
+
+exports.edit_placement_mentor_get = (req, res) => {
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+  const currentPlacement = placementModel.findOne({ placementId: req.params.placementId })
+  const mentorOptions = mentorHelper.getMentorOptions({
+    organisationId: req.params.organisationId,
+    otherOption: true,
+    otherOptionLabel: 'Not known yet'
+  })
+
+  res.render('../views/placements/mentor', {
+    organisation,
+    currentPlacement,
+    placement: currentPlacement,
+    mentorOptions,
+    actions: {
+      save: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}/mentor`,
+      back: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`,
+      cancel: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`
+    }
+  })
+}
+
+exports.edit_placement_mentor_post = (req, res) => {
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+  const currentPlacement = placementModel.findOne({ placementId: req.params.placementId })
+  // combine submitted data with current placement data
+  const placement = {...currentPlacement, ...req.session.data.placement}
+
+  const mentorOptions = mentorHelper.getMentorOptions({
+    organisationId: req.params.organisationId,
+    otherOption: true,
+    otherOptionLabel: 'Not known yet'
+  })
+
+  const errors = []
+
+  if (!req.session.data.placement.mentors.length) {
+    const error = {}
+    error.fieldName = 'mentors'
+    error.href = '#mentors'
+    error.text = 'Select a mentor'
+    errors.push(error)
+  }
+
+  if (errors.length) {
+    res.render('../views/placements/mentor', {
+      organisation,
+      currentPlacement,
+      placement,
+      mentorOptions,
+      actions: {
+        save: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}/mentor`,
+        back: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`,
+        cancel: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`
+      },
+      errors
+    })
+  } else {
+    placementModel.updateOne({
+      organisationId: req.params.organisationId,
+      placementId: req.params.placementId,
+      placement: req.session.data.placement,
+    })
+
+    req.flash('success', 'Mentor updated')
+    res.redirect(`/organisations/${req.params.organisationId}/placements/${req.params.placementId}`)
+  }
+}
+
+exports.edit_placement_window_get = (req, res) => {
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+  const currentPlacement = placementModel.findOne({ placementId: req.params.placementId })
+
+  res.render('../views/placements/window', {
+    organisation,
+    currentPlacement,
+    placement: currentPlacement,
+    actions: {
+      save: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}/window`,
+      back: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`,
+      cancel: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`
+    }
+  })
+}
+
+exports.edit_placement_window_post = (req, res) => {
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+  const currentPlacement = placementModel.findOne({ placementId: req.params.placementId })
+  // combine submitted data with current placement data
+  const placement = {...currentPlacement, ...req.session.data.placement}
+
+  const errors = []
+
+  if (!req.session.data.placement.window) {
+    const error = {}
+    error.fieldName = 'window'
+    error.href = '#window'
+    error.text = 'Select a window'
+    errors.push(error)
+  }
+
+  if (errors.length) {
+    res.render('../views/placements/window', {
+      organisation,
+      currentPlacement,
+      placement,
+      actions: {
+        save: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}/window`,
+        back: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`,
+        cancel: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`
+      },
+      errors
+    })
+  } else {
+    placementModel.updateOne({
+      organisationId: req.params.organisationId,
+      placementId: req.params.placementId,
+      placement: req.session.data.placement,
+    })
+
+    req.flash('success', 'Window updated')
+    res.redirect(`/organisations/${req.params.organisationId}/placements/${req.params.placementId}`)
+  }
 }
 
 /// ------------------------------------------------------------------------ ///

@@ -22,6 +22,19 @@ exports.getMentorOptions = (params) => {
     return a.text.localeCompare(b.text)
   })
 
+  if (params.otherOption) {
+    const divider = {}
+    divider.divider = 'or'
+    items.push(divider)
+
+    const unknown = {}
+    unknown.text = params.otherOptionLabel ? params.otherOptionLabel : 'Not known yet'
+    unknown.value = 'unknown'
+    unknown.id = 'a9495469-9ddc-4db0-9d2d-9f2891886dbe'
+    unknown.behaviour = 'exclusive'
+    items.push(unknown)
+  }
+
   return items
 }
 
