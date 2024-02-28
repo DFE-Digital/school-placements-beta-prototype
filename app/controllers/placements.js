@@ -309,12 +309,19 @@ exports.new_placement_mentor_post = (req, res) => {
 exports.new_placement_window_get = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
 
+  let back = `/organisations/${req.params.organisationId}/placements/new/mentor`
+  let save = `/organisations/${req.params.organisationId}/placements/new/window`
+  if (req.query.referrer === 'check') {
+    back = `/organisations/${req.params.organisationId}/placements/new/check`
+    save += '?referrer=check'
+  }
+
   res.render('../views/placements/window', {
     organisation,
     placement: req.session.data.placement,
     actions: {
-      save: `/organisations/${req.params.organisationId}/placements/new/window`,
-      back: `/organisations/${req.params.organisationId}/placements/new/mentor`,
+      save,
+      back,
       cancel: `/organisations/${req.params.organisationId}/placements`
     }
   })
@@ -322,6 +329,14 @@ exports.new_placement_window_get = (req, res) => {
 
 exports.new_placement_window_post = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+
+  let back = `/organisations/${req.params.organisationId}/placements/new/mentor`
+  let save = `/organisations/${req.params.organisationId}/placements/new/window`
+  if (req.query.referrer === 'check') {
+    back = `/organisations/${req.params.organisationId}/placements/new/check`
+    save += '?referrer=check'
+  }
+
   const errors = []
 
   if (!req.session.data.placement.window) {
@@ -337,8 +352,8 @@ exports.new_placement_window_post = (req, res) => {
       organisation,
       placement: req.session.data.placement,
       actions: {
-        save: `/organisations/${req.params.organisationId}/placements/new/window`,
-        back: `/organisations/${req.params.organisationId}/placements/new/mentor`,
+        save,
+        back,
         cancel: `/organisations/${req.params.organisationId}/placements`
       },
       errors
