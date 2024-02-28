@@ -246,10 +246,12 @@ exports.new_placement_mentor_get = (req, res) => {
 
 exports.new_placement_mentor_post = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+
+  const otherOptionLabel = 'Not known yet'
   const mentorOptions = mentorHelper.getMentorOptions({
     organisationId: req.params.organisationId,
     otherOption: true,
-    otherOptionLabel: 'Not known yet'
+    otherOptionLabel
   })
 
   let back = `/organisations/${req.params.organisationId}/placements/new/subject`
@@ -261,11 +263,20 @@ exports.new_placement_mentor_post = (req, res) => {
 
   const errors = []
 
-  if (!req.session.data.placement.mentors.length) {
+  if (!req.session.data.placement.mentors?.length) {
     const error = {}
     error.fieldName = 'mentors'
     error.href = '#mentors'
     error.text = 'Select a mentor'
+    errors.push(error)
+  } else if (
+    req.session.data.placement.mentors.length > 1
+    && req.session.data.placement.mentors.includes('unknown')
+  ) {
+    const error = {}
+    error.fieldName = 'mentors'
+    error.href = '#mentors'
+    error.text = `Select a mentor, or select ‘${otherOptionLabel}’`
     errors.push(error)
   }
 
@@ -459,19 +470,29 @@ exports.edit_placement_mentor_post = (req, res) => {
   // combine submitted data with current placement data
   const placement = {...currentPlacement, ...req.session.data.placement}
 
+  const otherOptionLabel = 'Not known yet'
   const mentorOptions = mentorHelper.getMentorOptions({
     organisationId: req.params.organisationId,
     otherOption: true,
-    otherOptionLabel: 'Not known yet'
+    otherOptionLabel
   })
 
   const errors = []
 
-  if (!req.session.data.placement.mentors.length) {
+  if (!req.session.data.placement?.mentors?.length) {
     const error = {}
     error.fieldName = 'mentors'
     error.href = '#mentors'
     error.text = 'Select a mentor'
+    errors.push(error)
+  } else if (
+    req.session.data.placement.mentors.length > 1
+    && req.session.data.placement.mentors.includes('unknown')
+  ) {
+    const error = {}
+    error.fieldName = 'mentors'
+    error.href = '#mentors'
+    error.text = `Select a mentor, or select ‘${otherOptionLabel}’`
     errors.push(error)
   }
 
