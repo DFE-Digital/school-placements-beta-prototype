@@ -94,7 +94,8 @@ exports.new_placement_get = (req, res) => {
       subjectLevelOptions,
       actions: {
         save,
-        back
+        back,
+        cancel: `/organisations/${req.params.organisationId}/placements`
       }
     })
   }
@@ -128,7 +129,8 @@ exports.new_placement_post = (req, res) => {
       subjectLevelOptions,
       actions: {
         save,
-        back
+        back,
+        cancel: `/organisations/${req.params.organisationId}/placements`
       },
       errors
     })
@@ -162,7 +164,8 @@ exports.new_placement_subject_get = (req, res) => {
     subjectOptions,
     actions: {
       save,
-      back
+      back,
+      cancel: `/organisations/${req.params.organisationId}/placements`
     }
   })
 }
@@ -205,7 +208,8 @@ exports.new_placement_subject_post = (req, res) => {
       subjectOptions,
       actions: {
         save,
-        back
+        back,
+        cancel: `/organisations/${req.params.organisationId}/placements`
       },
       errors
     })
@@ -239,7 +243,8 @@ exports.new_placement_mentor_get = (req, res) => {
     mentorOptions,
     actions: {
       save,
-      back
+      back,
+      cancel: `/organisations/${req.params.organisationId}/placements`
     }
   })
 }
@@ -287,7 +292,8 @@ exports.new_placement_mentor_post = (req, res) => {
       mentorOptions,
       actions: {
         save,
-        back
+        back,
+        cancel: `/organisations/${req.params.organisationId}/placements`
       },
       errors
     })
@@ -308,7 +314,8 @@ exports.new_placement_window_get = (req, res) => {
     placement: req.session.data.placement,
     actions: {
       save: `/organisations/${req.params.organisationId}/placements/new/window`,
-      back: `/organisations/${req.params.organisationId}/placements/new/mentor`
+      back: `/organisations/${req.params.organisationId}/placements/new/mentor`,
+      cancel: `/organisations/${req.params.organisationId}/placements`
     }
   })
 }
@@ -331,7 +338,8 @@ exports.new_placement_window_post = (req, res) => {
       placement: req.session.data.placement,
       actions: {
         save: `/organisations/${req.params.organisationId}/placements/new/window`,
-        back: `/organisations/${req.params.organisationId}/placements/new/mentor`
+        back: `/organisations/${req.params.organisationId}/placements/new/mentor`,
+        cancel: `/organisations/${req.params.organisationId}/placements`
       },
       errors
     })
@@ -349,7 +357,8 @@ exports.new_placement_check_get = (req, res) => {
     actions: {
       save: `/organisations/${req.params.organisationId}/placements/new/check`,
       back: `/organisations/${req.params.organisationId}/placements/new/window`,
-      change: `/organisations/${req.params.organisationId}/placements/new`
+      change: `/organisations/${req.params.organisationId}/placements/new`,
+      cancel: `/organisations/${req.params.organisationId}/placements`
     }
   })
 }
