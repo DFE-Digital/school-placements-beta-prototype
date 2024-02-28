@@ -29,13 +29,11 @@ exports.getSubjectLevelLabel = (code) => {
   return label
 }
 
-exports.getSubjectOptions = (subjectLevel) => { //, selectedItem
+exports.getSubjectOptions = (subjectLevel, active = true) => { //, selectedItem
   const items = []
 
   let subjects = require('../data/subjects/subjects')
-  subjects = subjects.filter(subject => subject.level === subjectLevel &&
-    subject.code !== '24' &&
-    subject.parentCode === undefined)
+  subjects = subjects.filter(subject => subject.level === subjectLevel && subject.active === active)
 
   subjects.forEach((subject, i) => {
     const item = {}
