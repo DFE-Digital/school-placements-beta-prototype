@@ -94,7 +94,8 @@ exports.new_placement_get = (req, res) => {
       subjectLevelOptions,
       actions: {
         save,
-        back
+        back,
+        cancel: `/organisations/${req.params.organisationId}/placements`
       }
     })
   }
@@ -128,7 +129,8 @@ exports.new_placement_post = (req, res) => {
       subjectLevelOptions,
       actions: {
         save,
-        back
+        back,
+        cancel: `/organisations/${req.params.organisationId}/placements`
       },
       errors
     })
@@ -162,7 +164,8 @@ exports.new_placement_subject_get = (req, res) => {
     subjectOptions,
     actions: {
       save,
-      back
+      back,
+      cancel: `/organisations/${req.params.organisationId}/placements`
     }
   })
 }
@@ -205,7 +208,8 @@ exports.new_placement_subject_post = (req, res) => {
       subjectOptions,
       actions: {
         save,
-        back
+        back,
+        cancel: `/organisations/${req.params.organisationId}/placements`
       },
       errors
     })
@@ -239,17 +243,20 @@ exports.new_placement_mentor_get = (req, res) => {
     mentorOptions,
     actions: {
       save,
-      back
+      back,
+      cancel: `/organisations/${req.params.organisationId}/placements`
     }
   })
 }
 
 exports.new_placement_mentor_post = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+
+  const otherOptionLabel = 'Not known yet'
   const mentorOptions = mentorHelper.getMentorOptions({
     organisationId: req.params.organisationId,
     otherOption: true,
-    otherOptionLabel: 'Not known yet'
+    otherOptionLabel
   })
 
   let back = `/organisations/${req.params.organisationId}/placements/new/subject`
@@ -261,11 +268,20 @@ exports.new_placement_mentor_post = (req, res) => {
 
   const errors = []
 
-  if (!req.session.data.placement.mentors.length) {
+  if (!req.session.data.placement.mentors?.length) {
     const error = {}
     error.fieldName = 'mentors'
     error.href = '#mentors'
     error.text = 'Select a mentor'
+    errors.push(error)
+  } else if (
+    req.session.data.placement.mentors.length > 1
+    && req.session.data.placement.mentors.includes('unknown')
+  ) {
+    const error = {}
+    error.fieldName = 'mentors'
+    error.href = '#mentors'
+    error.text = `Select a mentor, or select ‘${otherOptionLabel}’`
     errors.push(error)
   }
 
@@ -276,7 +292,8 @@ exports.new_placement_mentor_post = (req, res) => {
       mentorOptions,
       actions: {
         save,
-        back
+        back,
+        cancel: `/organisations/${req.params.organisationId}/placements`
       },
       errors
     })
@@ -292,18 +309,34 @@ exports.new_placement_mentor_post = (req, res) => {
 exports.new_placement_window_get = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
 
+  let back = `/organisations/${req.params.organisationId}/placements/new/mentor`
+  let save = `/organisations/${req.params.organisationId}/placements/new/window`
+  if (req.query.referrer === 'check') {
+    back = `/organisations/${req.params.organisationId}/placements/new/check`
+    save += '?referrer=check'
+  }
+
   res.render('../views/placements/window', {
     organisation,
     placement: req.session.data.placement,
     actions: {
-      save: `/organisations/${req.params.organisationId}/placements/new/window`,
-      back: `/organisations/${req.params.organisationId}/placements/new/mentor`
+      save,
+      back,
+      cancel: `/organisations/${req.params.organisationId}/placements`
     }
   })
 }
 
 exports.new_placement_window_post = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+
+  let back = `/organisations/${req.params.organisationId}/placements/new/mentor`
+  let save = `/organisations/${req.params.organisationId}/placements/new/window`
+  if (req.query.referrer === 'check') {
+    back = `/organisations/${req.params.organisationId}/placements/new/check`
+    save += '?referrer=check'
+  }
+
   const errors = []
 
   if (!req.session.data.placement.window) {
@@ -319,8 +352,9 @@ exports.new_placement_window_post = (req, res) => {
       organisation,
       placement: req.session.data.placement,
       actions: {
-        save: `/organisations/${req.params.organisationId}/placements/new/window`,
-        back: `/organisations/${req.params.organisationId}/placements/new/mentor`
+        save,
+        back,
+        cancel: `/organisations/${req.params.organisationId}/placements`
       },
       errors
     })
@@ -338,7 +372,8 @@ exports.new_placement_check_get = (req, res) => {
     actions: {
       save: `/organisations/${req.params.organisationId}/placements/new/check`,
       back: `/organisations/${req.params.organisationId}/placements/new/window`,
-      change: `/organisations/${req.params.organisationId}/placements/new`
+      change: `/organisations/${req.params.organisationId}/placements/new`,
+      cancel: `/organisations/${req.params.organisationId}/placements`
     }
   })
 }
@@ -459,19 +494,29 @@ exports.edit_placement_mentor_post = (req, res) => {
   // combine submitted data with current placement data
   const placement = {...currentPlacement, ...req.session.data.placement}
 
+  const otherOptionLabel = 'Not known yet'
   const mentorOptions = mentorHelper.getMentorOptions({
     organisationId: req.params.organisationId,
     otherOption: true,
-    otherOptionLabel: 'Not known yet'
+    otherOptionLabel
   })
 
   const errors = []
 
-  if (!req.session.data.placement.mentors.length) {
+  if (!req.session.data.placement?.mentors?.length) {
     const error = {}
     error.fieldName = 'mentors'
     error.href = '#mentors'
     error.text = 'Select a mentor'
+    errors.push(error)
+  } else if (
+    req.session.data.placement.mentors.length > 1
+    && req.session.data.placement.mentors.includes('unknown')
+  ) {
+    const error = {}
+    error.fieldName = 'mentors'
+    error.href = '#mentors'
+    error.text = `Select a mentor, or select ‘${otherOptionLabel}’`
     errors.push(error)
   }
 
