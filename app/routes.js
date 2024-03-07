@@ -55,8 +55,8 @@ const userController = require('./controllers/users')
 const placementController = require('./controllers/placements')
 
 const supportOrganisationController = require('./controllers/support/organisations')
-const supportOrganisationMentorController = require('./controllers/support/organisation-mentors')
-const supportOrganisationUserController = require('./controllers/support/organisation-users')
+const supportOrganisationMentorController = require('./controllers/support/organisations/mentors')
+const supportOrganisationUserController = require('./controllers/support/organisations/users')
 const supportUserController = require('./controllers/support/users')
 
 // Authentication middleware
