@@ -4,9 +4,14 @@ const { v4: uuid } = require('uuid')
 
 const organisationModel = require('./organisations')
 
-const directoryPath = path.join(__dirname, '../data/mentors/')
+const directoryPath = path.join(__dirname, '../data/dist/mentors/')
 
 exports.findMany = (params) => {
+  // to prevent errors, check if directoryPath exists and if not, create
+  if (!fs.existsSync(directoryPath)) {
+    fs.mkdirSync(directoryPath)
+  }
+
   let mentors = []
 
   let documents = fs.readdirSync(directoryPath, 'utf8')
@@ -30,7 +35,14 @@ exports.findMany = (params) => {
 }
 
 exports.findOne = (params) => {
-  const mentors = this.findMany({ organisationId: params.organisationId })
+  let mentors = []
+
+  if (params.organisationId) {
+    mentors = this.findMany({ organisationId: params.organisationId })
+  } else {
+    mentors = this.findMany({})
+  }
+
   let mentor = {}
 
   if (params.mentorId) {

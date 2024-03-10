@@ -8,7 +8,10 @@ const numeral = require('numeral')
 
 const giasHelper = require('./helpers/gias')
 const mentorHelper = require('./helpers/mentors')
+const ofstedHelper = require('./helpers/ofsted')
+const onsHelper = require('./helpers/ons')
 const placementHelper = require('./helpers/placements')
+const providerHelper = require('./helpers/providers')
 const subjectHelper = require('./helpers/subjects')
 const utilsHelper = require('./helpers/utils')
 
@@ -128,14 +131,31 @@ addFilter('getSpecialClassesLabel', giasHelper.getSpecialClassesLabel)
 
 addFilter('getUrbanRuralLabel', giasHelper.getUrbanRuralLabel)
 
-addFilter('getOfstedRatingLabel', giasHelper.getOfstedRatingLabel)
-
 addFilter('getSENDProvisionLabel', giasHelper.getSENDProvisionLabel)
+
+/* ------------------------------------------------------------------
+Ofsted utility functions
+------------------------------------------------------------------ */
+addFilter('getOfstedRatingLabel', ofstedHelper.getOfstedRatingLabel)
+
+/* ------------------------------------------------------------------
+ONS utility functions
+------------------------------------------------------------------ */
+addFilter('getLocalAuthorityDistrictLabel', onsHelper.getLocalAuthorityDistrictLabel)
+
+addFilter('getParliamentaryConstituencyLabel', onsHelper.getParliamentaryConstituencyLabel)
+
+addFilter('getRegionLabel', onsHelper.getRegionLabel)
 
 /* ------------------------------------------------------------------
 Mentor utility functions
 ------------------------------------------------------------------ */
 addFilter('getMentorName', mentorHelper.getMentorName)
+
+/* ------------------------------------------------------------------
+Provider utility functions
+------------------------------------------------------------------ */
+addFilter('getProviderName', providerHelper.getProviderName)
 
 /* ------------------------------------------------------------------
 Subject utility functions
