@@ -1,0 +1,83 @@
+{% extends "layouts/main.njk" %}
+
+{% set primaryNavId = "placements" %}
+
+{% if filter.subjectLevel == "secondary" %}
+  {% set title = "Secondary subject" %}
+{% else %}
+  {% set title = "Primary subject specialism" %}
+{% endif %}
+
+{% set caption = "Find placement" %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: actions.back
+}) }}
+{% endblock %}
+
+{% block content %}
+
+  {% include "_includes/error-summary.njk" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      {% set headingHtml %}
+        {% include "_includes/page-heading-legend.njk" %}
+      {% endset %}
+
+      <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
+
+        {# {% if questions.subjectLevel == "secondary" %} #}
+
+          {{ govukCheckboxes({
+            name: "questions[subjects][]",
+            fieldset: {
+              legend: {
+                html: headingHtml,
+                isPageHeading: true,
+                classes: "govuk-fieldset__legend--l"
+              }
+            },
+            hint: {
+                text: "Select all that apply"
+            },
+            errorMessage: errors | getErrorMessage("subject"),
+            values: questions.subjects,
+            items: subjectOptions
+          }) }}
+
+        {# {% else %}
+
+          {{ govukRadios({
+            name: "questions[subjects]",
+            fieldset: {
+              legend: {
+                html: headingHtml,
+                isPageHeading: true,
+                classes: "govuk-fieldset__legend--l"
+              }
+            },
+            errorMessage: errors | getErrorMessage("subject"),
+            value: questions.subjects,
+            items: subjectOptions
+          }) }}
+
+        {% endif %} #}
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+
+      </form>
+
+      <p class="govuk-body">
+        <a class="govuk-link" href="{{ actions.cancel }}">Cancel</a>
+      </p>
+
+    </div>
+  </div>
+
+{% endblock %}
