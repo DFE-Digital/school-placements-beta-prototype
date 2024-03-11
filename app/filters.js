@@ -13,6 +13,7 @@ const onsHelper = require('./helpers/ons')
 const placementHelper = require('./helpers/placements')
 const providerHelper = require('./helpers/providers')
 const subjectHelper = require('./helpers/subjects')
+const teacherHelper = require('./helpers/teachers')
 const utilsHelper = require('./helpers/utils')
 
 /* ------------------------------------------------------------------
@@ -151,6 +152,11 @@ addFilter('getRegionLabel', onsHelper.getRegionLabel)
 Mentor utility functions
 ------------------------------------------------------------------ */
 addFilter('getMentorName', mentorHelper.getMentorName)
+
+/* ------------------------------------------------------------------
+Teacher utility functions
+------------------------------------------------------------------ */
+addFilter('getTeacherName', teacherHelper.getTeacherName)
 
 /* ------------------------------------------------------------------
 Provider utility functions
