@@ -32,6 +32,12 @@
           text: "Add placement",
           href: actions.new
         }) }}
+
+        {{ govukButton({
+          text: "Find placement",
+          href: actions.find,
+          classes: "govuk-button--secondary"
+        }) }}
       {% endif %}
 
       {% if placements.length %}
