@@ -10,7 +10,7 @@ const subjectHelper = require('../helpers/subjects')
 /// LIST PLACEMENT
 /// ------------------------------------------------------------------------ ///
 
-exports.placement_list = (req, res) => {
+exports.placements_list = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
   const mentors = mentorModel.findMany({ organisationId: req.params.organisationId })
   let placements = placementModel.findMany({ organisationId: req.params.organisationId })
@@ -31,6 +31,7 @@ exports.placement_list = (req, res) => {
     actions: {
       new: `/organisations/${req.params.organisationId}/placements/new`,
       view: `/organisations/${req.params.organisationId}/placements`,
+      find: `/organisations/${req.params.organisationId}/placements/find`,
       mentors: `/organisations/${req.params.organisationId}/mentors`,
       back: '/'
     }
