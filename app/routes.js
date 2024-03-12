@@ -57,6 +57,7 @@ const findPlacementController = require('./controllers/find-placements')
 
 const supportOrganisationController = require('./controllers/support/organisations')
 const supportOrganisationMentorController = require('./controllers/support/organisations/mentors')
+const supportOrganisationPlacementController = require('./controllers/support/organisations/placements')
 const supportOrganisationUserController = require('./controllers/support/organisations/users')
 const supportUserController = require('./controllers/support/users')
 
@@ -303,6 +304,14 @@ router.post('/support/organisations/:organisationId/mentors/:mentorId/delete', c
 router.get('/support/organisations/:organisationId/mentors/:mentorId', checkIsAuthenticated, supportOrganisationMentorController.mentor_details)
 
 router.get('/support/organisations/:organisationId/mentors', checkIsAuthenticated, supportOrganisationMentorController.mentor_list)
+
+/// ------------------------------------------------------------------------ ///
+/// SUPPORT - ORGANISATION PLACEMENT ROUTES
+/// ------------------------------------------------------------------------ ///
+
+router.get('/support/organisations/:organisationId/placements/:placementId', checkIsAuthenticated, supportOrganisationPlacementController.placement_details)
+
+router.get('/support/organisations/:organisationId/placements', checkIsAuthenticated, supportOrganisationPlacementController.placements_list)
 
 /// ------------------------------------------------------------------------ ///
 /// SUPPORT - USER ROUTES
