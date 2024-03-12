@@ -67,7 +67,6 @@ exports.list_organisations_get = (req, res) => {
     return a.name.localeCompare(b.name) || a.type.localeCompare(b.type)
   })
 
-
   let pageSize = 25
   let pagination = new Pagination(organisations, req.query.page, pageSize)
   organisations = pagination.getData()
