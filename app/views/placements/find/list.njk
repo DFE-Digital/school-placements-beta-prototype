@@ -4,22 +4,33 @@
 
 {% set title %}
   {% if resultsCount > 0 %}
-    {{ resultsCount | numeral('0,0') }} school placement {{- "s" if resultsCount > 1 }} found
+    {{ resultsCount | numeral('0,0') }} placement {{- "s" if resultsCount > 1 }} found
   {% else %}
     No school placements found
   {% endif %}
 {% endset %}
+
+{% set caption = "Find placement" %}
+
+{% block pageTitle %}
+{{ "Error: " if errors }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
+{% endblock %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: actions.back
+}) }}
+{% endblock %}
 
 {% block content %}
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
 
-      {% include "./_search-terms.njk" %}
+      {% include "_includes/page-heading.njk" %}
 
-      <h1 class="govuk-heading-xl">
-        {{ title }}
-      </h1>
+      {% include "./_search-terms.njk" %}
 
     </div>
   </div>
