@@ -97,7 +97,7 @@ exports.list_organisations_get = (req, res) => {
 }
 
 exports.removeOrganisationTypeFilter = (req, res) => {
-  req.session.data.filters.organisationType = utilsHelper.removeFilter(
+  req.session.data.filters.organisationType = filterHelper.removeFilter(
     req.params.organisationType,
     req.session.data.filters.organisationType
   )
