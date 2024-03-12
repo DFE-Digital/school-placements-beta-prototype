@@ -5,6 +5,7 @@ const schoolModel = require('../../models/schools')
 
 const Pagination = require('../../helpers/pagination')
 const utilsHelper = require('../../helpers/utils')
+const filtersHelper = require('../../helpers/filters')
 
 exports.list_organisations_get = (req, res) => {
   // Clean out data from add organisation flow if present
@@ -22,7 +23,7 @@ exports.list_organisations_get = (req, res) => {
 
   let organisationTypes
   if (req.session.data.filters?.organisationType) {
-    organisationTypes = utilsHelper.getCheckboxValues(organisationType, req.session.data.filters.organisationType)
+    organisationTypes = filtersHelper.getCheckboxValues(organisationType, req.session.data.filters.organisationType)
   }
 
   const hasFilters = !!((organisationTypes?.length > 0))
