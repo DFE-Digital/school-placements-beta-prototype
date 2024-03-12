@@ -302,17 +302,17 @@ exports.placements_list = (req, res) => {
   // const perPage = 20
 
   // let selectedSubject
-  // if (req.session.data.filters?.subject) {
-  //   selectedSubject = req.session.data.questions.subject
+  // if (req.session.data.questions?.subjects) {
+  //   selectedSubject = req.session.data.questions.subjects
   // }
   // else {
   //   selectedSubject = defaults.subject
   // }
 
-  // const subjectItems = subjectHelper.getSubjectOptions(req.session.data.questions.subjectLevel, selectedSubject)
+  // const subjectItems = filterHelper.getSubjectOptions(req.session.data.questions.subjectLevel, selectedSubject)
 
   // get an array of selected subjects for use in the search terms subject list
-  // const selectedSubjects = utilsHelper.getSelectedSubjectItems(subjectItems.filter(subject => subject.checked === 'checked'))
+  // const selectedSubjects = filterHelper.getSelectedSubjectItems(subjectItems.filter(subject => subject.checked === 'checked'))
 
   const results = placementModel.findMany({})
   const resultsCount = results.length
@@ -333,9 +333,10 @@ exports.placements_list = (req, res) => {
     filterCItems,
     filters: req.session.data.filters,
     questions: req.session.data.questions,
-    // selectedSubjects,
+    selectedSubjects: req.session.data.questions.subjects,
     actions: {
       view: `/organisations/${req.params.organisationId}/placements/find/results`,
+      back: `/organisations/${req.params.organisationId}/placements/find/subject`,
       change: `/organisations/${req.params.organisationId}/placements/find`,
       filters: {
         apply: `/organisations/${req.params.organisationId}/placements/find/results`,
