@@ -16,7 +16,6 @@ exports.removeFilter = (value, data) => {
   }
 }
 
-
 exports.getFilterAItems = () => {
   const options = [
     {
@@ -171,4 +170,44 @@ exports.getFilterCLabel = (value) => {
   }
 
   return label
+}
+
+exports.getSelectedSubjectItems = (selectedItems, baseHref = '/results') => {
+  const items = []
+
+  selectedItems.forEach((item) => {
+    const subject = {}
+    subject.text = item.text
+    subject.href = `${baseHref}/remove-subject-filter/${item.value}`
+
+    items.push(subject)
+  })
+
+  return items
+}
+
+exports.getSubjectOptions = (subjectLevel, selectedItem) => {
+  const items = []
+
+  let subjects = require('../data/dist/subjects/subjects')
+  subjects = subjects.filter(subject => subject.level === subjectLevel &&
+    !['ML','24'].includes(subject.code))
+
+  subjects.forEach((subject, i) => {
+    const item = {}
+
+    item.text = subject.name
+    // item.text += ' (' + subject.code + ')'
+    item.value = subject.code
+    item.id = subject.id
+    item.checked = (selectedItem && selectedItem.includes(subject.code)) ? 'checked' : ''
+
+    items.push(item)
+  })
+
+  items.sort((a, b) => {
+    return a.text.localeCompare(b.text)
+  })
+
+  return items
 }
