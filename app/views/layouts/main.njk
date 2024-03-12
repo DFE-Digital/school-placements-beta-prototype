@@ -72,7 +72,12 @@
           href: baseUrl + "/mentors",
           text: "Mentors",
           active: primaryNavId == "mentors"
-        } if organisation.type === "school",
+        } if organisation.type == "school",
+        {
+          href: baseUrl + "/schools",
+          text: "Partner schools",
+          active: primaryNavId == "schools"
+        } if organisation.type in ["university","scitt"],
         {
           href: baseUrl + "/users",
           text: "Users",
