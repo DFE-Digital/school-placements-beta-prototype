@@ -17,34 +17,37 @@
 
       {% include "_includes/page-heading.njk" %}
 
-      {% if not mentors.length %}
-        {% set mentorHtml %}
-          <p class="govuk-body">
-            You need to <a href="{{ actions.mentors }}" class="govuk-link">add a mentor</a> before creating a placement.
-          </p>
-        {% endset %}
-
-        {{ govukInsetText({
-          html: mentorHtml
-        }) }}
-      {% else %}
-        {{ govukButton({
-          text: "Add placement",
-          href: actions.new
-        }) }}
-
+      {% if organisation.type in ["university","scitt"] %}
         {{ govukButton({
           text: "Find placement",
-          href: actions.find,
-          classes: "govuk-button--secondary"
+          href: actions.find
         }) }}
-      {% endif %}
 
-      {% if placements.length %}
-        {% include "_includes/placements/list.njk" %}
-        {% include "_includes/pagination.njk" %}
+        <p class="govuk-body">There are no placements for your partner schools.</p>
       {% else %}
-        <p class="govuk-body">There are no placements for {{ organisation.name if organisation.name else "your organisation" }}.</p>
+        {% if not mentors.length %}
+          {% set mentorHtml %}
+            <p class="govuk-body">
+              You need to <a href="{{ actions.mentors }}" class="govuk-link">add a mentor</a> before creating a placement.
+            </p>
+          {% endset %}
+
+          {{ govukInsetText({
+            html: mentorHtml
+          }) }}
+        {% else %}
+          {{ govukButton({
+            text: "Add placement",
+            href: actions.new
+          }) }}
+        {% endif %}
+
+        {% if placements.length %}
+          {% include "_includes/placements/list.njk" %}
+          {% include "_includes/pagination.njk" %}
+        {% else %}
+          <p class="govuk-body">There are no placements for {{ organisation.name if organisation.name else "your organisation" }}.</p>
+        {% endif %}
       {% endif %}
 
     </div>
