@@ -222,7 +222,7 @@ router.get('/organisations/:organisationId/placements/find/results/remove-c-filt
 
 router.get('/organisations/:organisationId/placements/find/results/remove-all-filters', findPlacementController.removeAllFilters)
 
-router.get('/organisations/:organisationId/placements/find/placements/:placementId', findPlacementController.show)
+router.get('/organisations/:organisationId/placements/find/results/:placementId', findPlacementController.show)
 
 /// ------------------------------------------------------------------------ ///
 
