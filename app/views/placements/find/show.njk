@@ -1,11 +1,17 @@
 {% extends "layouts/main.njk" %}
 
-{% set title = placement.subject.name %}
+{% set primaryNavId = "placements" %}
+
+{% set title = placement.name %}
 {% set caption = placement.school.name %}
+
+{% block pageTitle %}
+{{ "Error: " if errors }}{{ title + " - " if title }}{{ caption + " - " if caption }}{{ serviceName }} - GOV.UK
+{% endblock %}
 
 {% block beforeContent %}
 {{ govukBackLink({
-  text: "Back to search results",
+  text: "Back to results",
   href: actions.back
 }) }}
 {% endblock %}
@@ -15,29 +21,18 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-      <h1 class="govuk-heading-xl">
-        <span class="govuk-caption-xl">{{ caption }}</span>
-        {{ title }}
-      </h1>
+      {% include "_includes/page-heading.njk" %}
 
-      {% set keyStageHtml %}
-        <ul class="govuk-list">
-          {% for keyStage in placement.keyStage %}
-            <li>
-              {{ keyStage | getKeyStageLabel }}
-            </li>
-          {% endfor %}
-        </ul>
-      {% endset %}
-
-      {% set mentorAvailabilityHtml %}
-        <ul class="govuk-list">
-          {% for mentorAvailability in placement.mentorAvailability %}
-            <li>
-              {{ mentorAvailability | capitalize }}
-            </li>
-          {% endfor %}
-        </ul>
+      {% set mentorHtml %}
+        {% if placement.mentors != "unknown" %}
+          <ul class="govuk-list">
+            {% for mentor in placements.mentors %}
+              <li>{{ mentor | getTeacherName }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="govuk-body">Not known yet</p>
+        {% endif %}
       {% endset %}
 
       {{ govukSummaryList({
@@ -47,15 +42,7 @@
               text: "Age range"
             },
             value: {
-              text: placement.ageRange | getAgeRangeLabel
-            }
-          },
-          {
-            key: {
-              text: "Key stage"
-            },
-            value: {
-              html: keyStageHtml
+              text: placement.school.minAge + " to " + placement.school.maxAge
             }
           },
           {
@@ -63,23 +50,31 @@
               text: "School gender"
             },
             value: {
-              text: placement.gender | capitalize
+              text: placement.school.gender | getGenderLabel
             }
           },
           {
             key: {
-              text: "Mentor"
+              text: "Religious character"
             },
             value: {
-              text: placement.mentor
+              text: placement.school.religiousCharacter | getReligiousCharacterLabel
             }
           },
           {
             key: {
-              text: "Mentor availability"
+              text: "Urban or rural"
             },
             value: {
-              html: mentorAvailabilityHtml
+              text: placement.school.urbanRural | getUrbanRuralLabel
+            }
+          },
+          {
+            key: {
+              text: "Mentor" + ("s" if placement.mentors.length > 1)
+            },
+            value: {
+              html: mentorHtml
             }
           }
         ]
@@ -88,23 +83,23 @@
       <h2 class="govuk-heading-m govuk-!-margin-top-5">Contact details</h2>
 
       {% set addressHtml %}
-        {% if organisation.address.addressLine1.length %}
-          {{ organisation.address.addressLine1 }}<br>
+        {% if placement.school.address.addressLine1.length %}
+          {{ placement.school.address.addressLine1 }}<br>
         {% endif %}
-        {% if organisation.address.addressLine2.length %}
-          {{ organisation.address.addressLine2 }}<br>
+        {% if placement.school.address.addressLine2.length %}
+          {{ placement.school.address.addressLine2 }}<br>
         {% endif %}
-        {% if organisation.address.addressLine3.length %}
-          {{ organisation.address.addressLine3 }}<br>
+        {% if placement.school.address.addressLine3.length %}
+          {{ placement.school.address.addressLine3 }}<br>
         {% endif %}
-        {% if organisation.address.town.length %}
-          {{ organisation.address.town }}<br>
+        {% if placement.school.address.town.length %}
+          {{ placement.school.address.town }}<br>
         {% endif %}
-        {% if organisation.address.county.length %}
-          {{ organisation.address.county }}<br>
+        {% if placement.school.address.county.length %}
+          {{ placement.school.address.county }}<br>
         {% endif %}
-        {% if organisation.address.postcode.length %}
-          {{ organisation.address.postcode }}<br>
+        {% if placement.school.address.postcode.length %}
+          {{ placement.school.address.postcode }}<br>
         {% endif %}
       {% endset %}
 
@@ -115,8 +110,8 @@
               text: "Email address"
             },
             value: {
-              text: (organisation.contact.email | urlize | safe) if organisation.contact.email.length else "Not entered",
-              classes: "govuk-hint" if not organisation.contact.email.length
+              text: (placement.school.contact.email | urlize | safe) if placement.school.contact.email.length else "Not entered",
+              classes: "govuk-hint" if not placement.school.contact.email.length
             }
           },
           {
@@ -124,8 +119,8 @@
               text: "Telephone number"
             },
             value: {
-              text: organisation.contact.telephone if organisation.contact.telephone.length else "Not entered",
-              classes: "govuk-hint" if not organisation.contact.telephone.length
+              text: placement.school.contact.telephone if placement.school.contact.telephone.length else "Not entered",
+              classes: "govuk-hint" if not placement.school.contact.telephone.length
             }
           },
           {
@@ -133,8 +128,8 @@
               text: "Website"
             },
             value: {
-              text: (organisation.contact.website | urlize | safe) if organisation.contact.website.length else "Not entered",
-              classes: "govuk-hint" if not organisation.contact.website.length
+              text: (placement.school.contact.website | urlize | safe) if placement.school.contact.website.length else "Not entered",
+              classes: "govuk-hint" if not placement.school.contact.website.length
             }
           },
           {
@@ -148,10 +143,6 @@
           }
         ]
       }) }}
-
-      <h2 class="govuk-heading-m govuk-!-margin-top-5">Training with disabilities and other needs</h2>
-
-      {{ organisation.trainWithDisability | nl2br | markdownToHtml | safe }}
 
     </div>
   </div>

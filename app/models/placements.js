@@ -1,6 +1,7 @@
 const path = require('path')
 const fs = require('fs')
 const { v4: uuid } = require('uuid')
+const { log } = require('console')
 
 const directoryPath = path.join(__dirname, '../data/dist/placements/')
 
@@ -41,11 +42,11 @@ exports.findMany = (params) => {
 }
 
 exports.findOne = (params) => {
-  const placements = this.findMany({ organisationId: params.organisationId })
   let placement = {}
 
   if (params.placementId) {
-    placement = placements.find(placement => placement.id === params.placementId)
+    const raw = fs.readFileSync(directoryPath + '/' + params.placementId + '.json')
+    placement = JSON.parse(raw)
   }
 
   return placement
