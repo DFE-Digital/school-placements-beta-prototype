@@ -406,8 +406,8 @@ exports.show = (req, res) => {
   // TODO append filter data to back link???
 
   res.render('../views/placements/find/show', {
-    placement,
     organisation,
+    placement,
     actions: {
       back: `/organisations/${req.params.organisationId}/placements/find/results`
     }

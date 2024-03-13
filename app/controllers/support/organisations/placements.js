@@ -48,10 +48,7 @@ exports.placements_list = (req, res) => {
 
 exports.placement_details = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-  const placement = placementModel.findOne({
-    organisationId: req.params.organisationId,
-    placementId: req.params.placementId
-  })
+  const placement = placementModel.findOne({ placementId: req.params.placementId })
 
   res.render('../views/support/organisations/placements/show', {
     organisation,
