@@ -31,6 +31,12 @@ exports.findMany = (params) => {
     placements = placements.filter(placement => placement.subjectLevel === params.subjectLevel)
   }
 
+  if (params.subjects) {
+    placements = placements.filter(placement => {
+      return placement.subjects.some(subject => params.subjects.includes(subject))
+    })
+  }
+
   return placements
 }
 
