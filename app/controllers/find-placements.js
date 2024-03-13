@@ -317,7 +317,8 @@ exports.placements_list = (req, res) => {
   // const selectedSubjects = filterHelper.getSelectedSubjectItems(subjectItems.filter(subject => subject.checked === 'checked'))
 
   let results = placementModel.findMany({
-    subjectLevel: req.session.data.questions.subjectLevel
+    subjectLevel: req.session.data.questions.subjectLevel,
+    subjects: req.session.data.questions.subjects
   })
 
   // add details of school to each placement result
@@ -395,12 +396,14 @@ exports.removeAllFilters = (req, res) => {
 
 exports.show = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-  const placement = placementModel.findOne({
-    organisationId: req.params.organisationId,
+  let placement = placementModel.findOne({
     placementId: req.params.placementId
   })
 
-  // TODO append filter data to back link
+  // add details of the schooll to the placement
+  placement = placementDecorator.decorate(placement)
+
+  // TODO append filter data to back link???
 
   res.render('../views/placements/find/show', {
     placement,
