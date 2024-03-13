@@ -23,6 +23,94 @@
 
       {% include "_includes/page-heading.njk" %}
 
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: {
+              text: "School type"
+            },
+            value: {
+              text: placement.school.establishmentType | getEstablishmentTypeLabel if placement.school.establishmentType else "Not entered",
+              classes: "govuk-hint" if not placement.school.establishmentType
+            }
+          },
+          {
+            key: {
+              text: "School phase"
+            },
+            value: {
+              text: placement.school.establishmentPhase | getEstablishmentPhaseLabel if placement.school.establishmentPhase else "Not entered",
+              classes: "govuk-hint" if not placement.school.establishmentPhase
+            }
+          },
+          {
+            key: {
+              text: "School gender"
+            },
+            value: {
+              text: placement.school.gender | getGenderLabel if placement.school.gender else "Not entered",
+              classes: "govuk-hint" if not placement.school.gender
+            }
+          },
+          {
+            key: {
+              text: "Age range"
+            },
+            value: {
+              text: placement.school.minAge + " to " + placement.school.maxAge if placement.school.minAge and placement.school.maxAge else "Not entered",
+              classes: "govuk-hint" if not placement.school.minAge and placement.school.maxAge
+            }
+          },
+          {
+            key: {
+              text: "Religious character"
+            },
+            value: {
+              text: placement.school.religiousCharacter | getReligiousCharacterLabel if placement.school.religiousCharacter else "Not entered",
+              classes: "govuk-hint" if not placement.school.religiousCharacter
+            }
+          },
+          {
+            key: {
+              text: "Urban or rural"
+            },
+            value: {
+              text: placement.school.urbanRural | getUrbanRuralLabel if placement.school.urbanRural else "Not entered",
+              classes: "govuk-hint" if not placement.school.urbanRural
+            }
+          },
+          {
+            key: {
+              text: "Admissions policy"
+            },
+            value: {
+              text: placement.school.admissionsPolicy | getAdmissionsPolicyLabel if placement.school.admissionsPolicy else "Not entered",
+              classes: "govuk-hint" if not placement.school.admissionsPolicy
+            }
+          },
+          {
+            key: {
+              text: "Percentage free school meals"
+            },
+            value: {
+              text: placement.school.percentageFreeSchoolMeals | numeral('0.0') + "%" if placement.school.percentageFreeSchoolMeals else "Not entered",
+              classes: "govuk-hint" if not placement.school.percentageFreeSchoolMeals
+            }
+          },
+          {
+            key: {
+              text: "Ofsted rating"
+            },
+            value: {
+              text: placement.school.ofsted.rating | getOfstedRatingLabel if placement.school.ofsted.rating else "Not entered",
+              classes: "govuk-hint" if not placement.school.ofstedRating
+            }
+          }
+        ]
+      }) }}
+
+      <h2 class="govuk-heading-m govuk-!-margin-top-5">Mentor details</h2>
+
       {% set mentorHtml %}
         {% if placement.mentors != "unknown" %}
           <ul class="govuk-list">
@@ -37,38 +125,6 @@
 
       {{ govukSummaryList({
         rows: [
-          {
-            key: {
-              text: "Age range"
-            },
-            value: {
-              text: placement.school.minAge + " to " + placement.school.maxAge
-            }
-          },
-          {
-            key: {
-              text: "School gender"
-            },
-            value: {
-              text: placement.school.gender | getGenderLabel
-            }
-          },
-          {
-            key: {
-              text: "Religious character"
-            },
-            value: {
-              text: placement.school.religiousCharacter | getReligiousCharacterLabel
-            }
-          },
-          {
-            key: {
-              text: "Urban or rural"
-            },
-            value: {
-              text: placement.school.urbanRural | getUrbanRuralLabel
-            }
-          },
           {
             key: {
               text: "Mentor" + ("s" if placement.mentors.length > 1)
@@ -107,11 +163,18 @@
         rows: [
           {
             key: {
+              text: "Placement organiser"
+            },
+            value: {
+              text: "Jane Doe"
+            }
+          },
+          {
+            key: {
               text: "Email address"
             },
             value: {
-              text: (placement.school.contact.email | urlize | safe) if placement.school.contact.email.length else "Not entered",
-              classes: "govuk-hint" if not placement.school.contact.email.length
+              text: "placements@example.com" | urlize | safe
             }
           },
           {
@@ -122,7 +185,7 @@
               text: placement.school.contact.telephone if placement.school.contact.telephone.length else "Not entered",
               classes: "govuk-hint" if not placement.school.contact.telephone.length
             }
-          },
+          } if 1==0,
           {
             key: {
               text: "Website"
