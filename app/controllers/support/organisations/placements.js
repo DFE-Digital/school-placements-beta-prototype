@@ -3,6 +3,8 @@ const placementModel = require('../../../models/placements')
 
 const Pagination = require('../../../helpers/pagination')
 
+const placementDecorator = require('../../../decorators/placements.js')
+
 /// ------------------------------------------------------------------------ ///
 /// LIST PLACEMENT
 /// ------------------------------------------------------------------------ ///
@@ -10,6 +12,18 @@ const Pagination = require('../../../helpers/pagination')
 exports.placements_list = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
   let placements = placementModel.findMany({ organisationId: req.params.organisationId })
+
+  // add details of school to each placement result
+  if (placements.length) {
+    placements = placements.map(placement => {
+      return placement = placementDecorator.decorate(placement)
+    })
+
+    // sort placements
+    placements.sort((a, b) => {
+      return a.name.localeCompare(b.name)
+    })
+  }
 
   // TODO: get pageSize from settings
   let pageSize = 25

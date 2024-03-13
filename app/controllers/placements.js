@@ -6,6 +6,8 @@ const Pagination = require('../helpers/pagination')
 const mentorHelper = require('../helpers/mentors')
 const subjectHelper = require('../helpers/subjects')
 
+const placementDecorator = require('../decorators/placements.js')
+
 /// ------------------------------------------------------------------------ ///
 /// LIST PLACEMENT
 /// ------------------------------------------------------------------------ ///
@@ -17,6 +19,18 @@ exports.placements_list = (req, res) => {
 
   delete req.session.data.placement
   delete req.session.data.currentSubjectLevel
+
+  // add details of school to each placement result
+  if (placements.length) {
+    placements = placements.map(placement => {
+      return placement = placementDecorator.decorate(placement)
+    })
+
+    // sort placements
+    placements.sort((a, b) => {
+      return a.name.localeCompare(b.name)
+    })
+  }
 
   // TODO: get pageSize from settings
   let pageSize = 25
