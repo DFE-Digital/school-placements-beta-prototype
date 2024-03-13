@@ -56,14 +56,14 @@
           {% for result in results %}
             <li class="app-search-results__item">
               {{ appResultDetail({
-                href: "/find/placements/" + result.id,
+                href: baseUrl + "/placements/find/" + result.id,
                 schoolName: result.school.name,
-                placementName: result.subject.name,
-                ageRange: result.ageRange,
-                keyStage: result.keyStage,
-                gender: result.gender | capitalize,
-                mentor: result.mentor,
-                mentorAvailability: result.mentorAvailability
+                placementName: result.name,
+                minAge: result.school.minAge,
+                maxAge: result.school.maxAge,
+                gender: result.school.gender | getGenderLabel,
+                religiousCharacter: result.school.religiousCharacter | getReligiousCharacterLabel,
+                mentors: result.mentors
               })}}
             </li>
           {% endfor %}

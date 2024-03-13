@@ -8,17 +8,17 @@
     </a>
   {% endif %} #}
   <a class="govuk-link" href="{{ params.href }}">
-    <span class="app-search-result__provider-name">{{ params.schoolName }}</span><br>
-    <span class="app-search-result__course-name">{{ params.placementName }}</span>
+    <span class="app-search-result__school-name">{{ params.schoolName }}</span><br>
+    <span class="app-search-result__placement-name">{{ params.placementName }}</span>
   </a>
 </h2>
 
 <dl class="app-result-detail">
   <div class="app-result-detail__row">
     <dt class="app-result-detail__key">Age range</dt>
-    <dd class="app-result-detail__value">{{ params.ageRange }}</dd>
+    <dd class="app-result-detail__value">{{ params.minAge }} to {{ params.maxAge }}</dd>
   </div>
-  <div class="app-result-detail__row">
+  {# <div class="app-result-detail__row">
     <dt class="app-result-detail__key">Key stage</dt>
     <dd class="app-result-detail__value">
       <ul class="govuk-list govuk-!-margin-bottom-0">
@@ -29,27 +29,30 @@
         {% endfor %}
       </ul>
     </dd>
-  </div>
+  </div> #}
   <div class="app-result-detail__row">
     <dt class="app-result-detail__key">School gender</dt>
     <dd class="app-result-detail__value">{{ params.gender }}</dd>
   </div>
   <div class="app-result-detail__row">
-    <dt class="app-result-detail__key">Mentor</dt>
-    <dd class="app-result-detail__value">{{ params.mentor }}</dd>
+    <dt class="app-result-detail__key">Religious character</dt>
+    <dd class="app-result-detail__value">{{ params.religiousCharacter }}</dd>
   </div>
   <div class="app-result-detail__row">
-    <dt class="app-result-detail__key">Mentor availability</dt>
+    <dt class="app-result-detail__key">Mentor</dt>
     <dd class="app-result-detail__value">
-      <ul class="govuk-list govuk-!-margin-bottom-0">
-        {% for day in params.mentorAvailability %}
-          <li>
-            {{ day | capitalize }}
-          </li>
+      {% if params.mentors != "unknown" %}
+        <ul class="govuk-list">
+        {% for mentor in params.mentor %}
+          <li>{{ mentor | getTeacherName }}</li>
         {% endfor %}
-      </ul>
+        </ul>
+      {% else %}
+        Not known yet
+      {% endif %}
     </dd>
   </div>
+
   {# <div class="app-result-detail__row">
     <dt class="app-result-detail__key">Item name</dt>
     <dd class="app-result-detail__value">Item value</dd>
