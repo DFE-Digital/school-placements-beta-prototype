@@ -5,6 +5,8 @@ const Pagination = require('../helpers/pagination')
 const subjectHelper = require('../helpers/subjects')
 const filterHelper = require('../helpers/filters.js')
 
+const placementDecorator = require('../decorators/placements.js')
+
 /// ------------------------------------------------------------------------ ///
 /// Find
 /// ------------------------------------------------------------------------ ///
@@ -314,16 +316,31 @@ exports.placements_list = (req, res) => {
   // get an array of selected subjects for use in the search terms subject list
   // const selectedSubjects = filterHelper.getSelectedSubjectItems(subjectItems.filter(subject => subject.checked === 'checked'))
 
-  const results = placementModel.findMany({})
-  const resultsCount = results.length
+  let results = placementModel.findMany({
+    subjectLevel: req.session.data.questions.subjectLevel
+  })
 
-  // results.sort((a, b) => {
-  //   return a.subject.name.localeCompare(b.subject.name) || a.school.name.localeCompare(b.school.name)
-  // })
+  // add details of school to each placement result
+  if (results.length) {
+
+    results = results.map(result => {
+      return result = placementDecorator.decorate(result)
+    })
+
+  }
+
+  // sort results
+  results.sort((a, b) => {
+    return a.name.localeCompare(b.name) || a.school.name.localeCompare(b.school.name)
+  })
+
+  let pageSize = 25
+  let pagination = new Pagination(results, req.query.page, pageSize)
+  results = pagination.getData()
 
   res.render('../views/placements/find/list', {
     results,
-    resultsCount,
+    pagination,
     selectedFilters,
     hasFilters,
     hasSearch,
