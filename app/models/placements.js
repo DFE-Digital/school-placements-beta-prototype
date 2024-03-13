@@ -27,6 +27,10 @@ exports.findMany = (params) => {
     placements = placements.filter(placement => placement.organisationId === params.organisationId)
   }
 
+  if (params.subjectLevel) {
+    placements = placements.filter(placement => placement.subjectLevel === params.subjectLevel)
+  }
+
   return placements
 }
 
