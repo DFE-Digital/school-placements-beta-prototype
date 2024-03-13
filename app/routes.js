@@ -214,15 +214,15 @@ router.post('/organisations/:organisationId/placements/find/subject', checkIsAut
 
 router.get('/organisations/:organisationId/placements/find/results', checkIsAuthenticated, findPlacementController.placements_list)
 
-router.get('/organisations/:organisationId/placements/find/results/remove-keyword-search', findPlacementController.removeKeywordSearch)
+router.get('/organisations/:organisationId/placements/find/results/remove-keyword-search', checkIsAuthenticated, findPlacementController.removeKeywordSearch)
 
-router.get('/organisations/:organisationId/placements/find/results/remove-a-filter/:a', findPlacementController.removeFilterA)
-router.get('/organisations/:organisationId/placements/find/results/remove-b-filter/:b', findPlacementController.removeFilterB)
-router.get('/organisations/:organisationId/placements/find/results/remove-c-filter/:c', findPlacementController.removeFilterC)
+router.get('/organisations/:organisationId/placements/find/results/remove-a-filter/:a', checkIsAuthenticated, findPlacementController.removeFilterA)
+router.get('/organisations/:organisationId/placements/find/results/remove-b-filter/:b',  checkIsAuthenticated,findPlacementController.removeFilterB)
+router.get('/organisations/:organisationId/placements/find/results/remove-c-filter/:c', checkIsAuthenticated, findPlacementController.removeFilterC)
 
-router.get('/organisations/:organisationId/placements/find/results/remove-all-filters', findPlacementController.removeAllFilters)
+router.get('/organisations/:organisationId/placements/find/results/remove-all-filters',  checkIsAuthenticated,findPlacementController.removeAllFilters)
 
-router.get('/organisations/:organisationId/placements/find/results/:placementId', findPlacementController.show)
+router.get('/organisations/:organisationId/placements/find/results/:placementId', checkIsAuthenticated, findPlacementController.show)
 
 /// ------------------------------------------------------------------------ ///
 
