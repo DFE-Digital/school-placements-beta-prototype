@@ -47,7 +47,7 @@
     <dd class="app-result-detail__value">
       {% if params.mentors != "unknown" %}
         <ul class="govuk-list">
-        {% for mentor in params.mentor %}
+        {% for mentor in params.mentors %}
           <li>{{ mentor | getTeacherName }}</li>
         {% endfor %}
         </ul>
