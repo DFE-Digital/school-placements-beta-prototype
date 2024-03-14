@@ -2,6 +2,8 @@ const organisationModel = require('../models/organisations.js')
 const placementModel = require('../models/placements.js')
 
 const Pagination = require('../helpers/pagination')
+const giasHelper = require('../helpers/gias')
+const ofstedHelper = require('../helpers/ofsted')
 const subjectHelper = require('../helpers/subjects')
 const filterHelper = require('../helpers/filters.js')
 
@@ -180,37 +182,57 @@ exports.placements_list = (req, res) => {
   const hasSearch = !!((keywords))
 
   // Filters
-  const a = null
-  const b = null
-  const c = null
+  const ageRange = null
+  const establishmentType = null
+  const gender = null
+  const religiousCharacter = null
+  const ofstedRating = null
 
-  let as
-  if (req.session.data.filters?.a) {
-    as = filterHelper.getCheckboxValues(a, req.session.data.filters.a)
+  let ageRanges
+  if (req.session.data.filters?.ageRange) {
+    ageRanges = filterHelper.getCheckboxValues(ageRange, req.session.data.filters.ageRange)
   }
   // else {
-  //   as = defaults.a
+  //   ageRanges = defaults.ageRange
   // }
 
-  let bs
-  if (req.session.data.filters?.b) {
-    bs = filterHelper.getCheckboxValues(b, req.session.data.filters.b)
+  let establishmentTypes
+  if (req.session.data.filters?.establishmentType) {
+    establishmentTypes = filterHelper.getCheckboxValues(establishmentType, req.session.data.filters.establishmentType)
   }
   // else {
-  //   bs = defaults.b
+  //   establishmentTypes = defaults.establishmentType
   // }
 
-  let cs
-  if (req.session.data.filters?.c) {
-    cs = filterHelper.getCheckboxValues(c, req.session.data.filters.c)
+  let genders
+  if (req.session.data.filters?.gender) {
+    genders = filterHelper.getCheckboxValues(gender, req.session.data.filters.gender)
   }
   // else {
-  //   cs = defaults.c
+  //   genders = defaults.gender
   // }
 
-  const hasFilters = !!((as?.length > 0)
-    || (bs?.length > 0)
-    || (cs?.length > 0)
+  let religiousCharacters
+  if (req.session.data.filters?.religiousCharacter) {
+    religiousCharacters = filterHelper.getCheckboxValues(religiousCharacter, req.session.data.filters.religiousCharacter)
+  }
+  // else {
+  //   religiousCharacters = defaults.religiousCharacter
+  // }
+
+  let ofstedRatings
+  if (req.session.data.filters?.ofstedRating) {
+    ofstedRatings = filterHelper.getCheckboxValues(ofstedRating, req.session.data.filters.ofstedRating)
+  }
+  // else {
+  //   ofstedRatings = defaults.ofstedRating
+  // }
+
+  const hasFilters = !!((ageRanges?.length > 0)
+    || (establishmentTypes?.length > 0)
+    || (genders?.length > 0)
+    || (religiousCharacters?.length > 0)
+    || (ofstedRatings?.length > 0)
   )
 
   let selectedFilters = null
@@ -220,72 +242,76 @@ exports.placements_list = (req, res) => {
       categories: []
     }
 
-    if (as?.length) {
+    if (ageRanges?.length) {
       selectedFilters.categories.push({
-        heading: { text: 'Filter A' },
-        items: as.map((a) => {
+        heading: { text: 'Age range' },
+        items: ageRanges.map((ageRange) => {
           return {
-            text: filterHelper.getFilterALabel(a),
-            href: `/organisations/${req.params.organisationId}/placements/find/results/remove-a-filter/${a}`
+            text: filterHelper.getFilterALabel(ageRange),
+            href: `/organisations/${req.params.organisationId}/placements/find/results/remove-age-range-filter/${ageRange}`
           }
         })
       })
     }
 
-    if (bs?.length) {
+    if (establishmentTypes?.length) {
       selectedFilters.categories.push({
-        heading: { text: 'Filter B' },
-        items: bs.map((b) => {
+        heading: { text: 'School type' },
+        items: establishmentTypes.map((establishmentType) => {
           return {
-            text: filterHelper.getFilterBLabel(b),
-            href: `/organisations/${req.params.organisationId}/placements/find/results/remove-b-filter/${b}`
+            text: filterHelper.getFilterBLabel(establishmentType),
+            href: `/organisations/${req.params.organisationId}/placements/find/results/remove-establishment-type-filter/${establishmentType}`
           }
         })
       })
     }
 
-    if (cs?.length) {
+    if (genders?.length) {
       selectedFilters.categories.push({
-        heading: { text: 'Filter C' },
-        items: cs.map((c) => {
+        heading: { text: 'Gender' },
+        items: genders.map((gender) => {
           return {
-            text: filterHelper.getFilterCLabel(c),
-            href: `/organisations/${req.params.organisationId}/placements/find/results/remove-c-filter/${c}`
+            text: filterHelper.getFilterCLabel(gender),
+            href: `/organisations/${req.params.organisationId}/placements/find/results/remove-gender-filter/${gender}`
+          }
+        })
+      })
+    }
+
+    if (religiousCharacters?.length) {
+      selectedFilters.categories.push({
+        heading: { text: 'Religious character' },
+        items: religiousCharacters.map((religiousCharacter) => {
+          return {
+            text: filterHelper.getFilterCLabel(religiousCharacter),
+            href: `/organisations/${req.params.organisationId}/placements/find/results/remove-religious-character-filter/${religiousCharacter}`
+          }
+        })
+      })
+    }
+
+    if (ofstedRatings?.length) {
+      selectedFilters.categories.push({
+        heading: { text: 'Ofsted rating' },
+        items: ofstedRatings.map((ofstedRating) => {
+          return {
+            text: filterHelper.getFilterCLabel(ofstedRating),
+            href: `/organisations/${req.params.organisationId}/placements/find/results/remove-ofsted-rating-filter/${ofstedRating}`
           }
         })
       })
     }
   }
 
-  // let selectedA
-  // if (req.session.data.filters?.a) {
-  //   selectedA = req.session.data.filters.a
-  // }
-  // else {
-  //   selectedA = defaults.a
-  // }
+  const filterAgeRangeItems = filterHelper.getFilterAItems()
 
-  const filterAItems = filterHelper.getFilterAItems()
+  const filterEstablishmentTypeItems = giasHelper.getEstablishmentTypeOptions()
 
-  // let selectedB
-  // if (req.session.data.filters?.b) {
-  //   selectedB = req.session.data.filters.b
-  // }
-  // else {
-  //   selectedB = defaults.b
-  // }
+  const filterGenderItems = giasHelper.getGenderOptions()
 
-  const filterBItems = filterHelper.getFilterBItems()
+  const filterReligiousCharacterItems = giasHelper.getReligiousCharacterOptions()
 
-  // let selectedC
-  // if (req.session.data.filters?.c) {
-  //   selectedC = req.session.data.filters.c
-  // }
-  // else {
-  //   selectedC = defaults.c
-  // }
-
-  const filterCItems = filterHelper.getFilterCItems()
+  const filterOfstedRatingItems = ofstedHelper.getOfstedRatingOptions()
 
   // Search radius - 5, 10, 50
   // default to 50
@@ -346,9 +372,11 @@ exports.placements_list = (req, res) => {
     hasFilters,
     hasSearch,
     keywords,
-    filterAItems,
-    filterBItems,
-    filterCItems,
+    filterAgeRangeItems,
+    filterEstablishmentTypeItems,
+    filterGenderItems,
+    filterReligiousCharacterItems,
+    filterOfstedRatingItems,
     filters: req.session.data.filters,
     questions: req.session.data.questions,
     selectedSubjects: req.session.data.questions.subjects,
@@ -374,18 +402,28 @@ exports.removeKeywordSearch = (req, res) => {
   res.redirect(`/organisations/${req.params.organisationId}/placements/find/results`)
 }
 
-exports.removeFilterA = (req, res) => {
-  req.session.data.filters.a = filterHelper.removeFilter(req.params.a, req.session.data.filters.a)
+exports.removeFilterAgeRange = (req, res) => {
+  req.session.data.filters.ageRange = filterHelper.removeFilter(req.params.ageRange, req.session.data.filters.ageRange)
   res.redirect(`/organisations/${req.params.organisationId}/placements/find/results`)
 }
 
-exports.removeFilterB = (req, res) => {
-  req.session.data.filters.b = filterHelper.removeFilter(req.params.b, req.session.data.filters.b)
+exports.removeFilterEstablishmentType = (req, res) => {
+  req.session.data.filters.establishmentType = filterHelper.removeFilter(req.params.establishmentType, req.session.data.filters.establishmentType)
   res.redirect(`/organisations/${req.params.organisationId}/placements/find/results`)
 }
 
-exports.removeFilterC = (req, res) => {
-  req.session.data.filters.c = filterHelper.removeFilter(req.params.c, req.session.data.filters.c)
+exports.removeFilterGender = (req, res) => {
+  req.session.data.filters.gender = filterHelper.removeFilter(req.params.gender, req.session.data.filters.gender)
+  res.redirect(`/organisations/${req.params.organisationId}/placements/find/results`)
+}
+
+exports.removeFilterReligiousCharacter = (req, res) => {
+  req.session.data.filters.religiousCharacter = filterHelper.removeFilter(req.params.religiousCharacter, req.session.data.filters.religiousCharacter)
+  res.redirect(`/organisations/${req.params.organisationId}/placements/find/results`)
+}
+
+exports.removeFilterOfstedRating = (req, res) => {
+  req.session.data.filters.ofstedRating = filterHelper.removeFilter(req.params.ofstedRating, req.session.data.filters.ofstedRating)
   res.redirect(`/organisations/${req.params.organisationId}/placements/find/results`)
 }
 
@@ -400,7 +438,7 @@ exports.show = (req, res) => {
     placementId: req.params.placementId
   })
 
-  // add details of the schooll to the placement
+  // add details of the school to the placement
   placement = placementDecorator.decorate(placement)
 
   // TODO append filter data to back link???
