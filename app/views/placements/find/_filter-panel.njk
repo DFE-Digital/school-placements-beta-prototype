@@ -16,21 +16,17 @@
   classes: "govuk-checkboxes--small"
 }) }}
 
-{{ govukCheckboxes({
+{{ appCheckboxFilter({
   idPrefix: "filter-establishment-type",
   name: "filters[establishmentType]",
-  fieldset: {
-    legend: {
-      html: 'School type<span class="govuk-visually-hidden"> filter</span>',
-      classes: "govuk-fieldset__legend--s"
-    }
-  },
-  formGroup: {
-    classes: "app-filter__group"
+  legend: {
+    html: 'School type<span class="govuk-visually-hidden"> filter</span>' | safe,
+    classes: "govuk-fieldset__legend--s"
   },
   items: filterEstablishmentTypeItems,
-  values: filters.establishmentType,
-  classes: "govuk-checkboxes--small"
+  selectedItems: filters.establishmentType,
+  showSelectedTags: false,
+  classes: "govuk-!-margin-bottom-7"
 }) }}
 
 {{ govukCheckboxes({
@@ -50,21 +46,17 @@
   classes: "govuk-checkboxes--small"
 }) }}
 
-{{ govukCheckboxes({
+{{ appCheckboxFilter({
   idPrefix: "filter-religious-character",
   name: "filters[religiousCharacter]",
-  fieldset: {
-    legend: {
-      html: 'Religious character<span class="govuk-visually-hidden"> filter</span>',
-      classes: "govuk-fieldset__legend--s"
-    }
-  },
-  formGroup: {
-    classes: "app-filter__group"
+  legend: {
+    html: 'Religious character<span class="govuk-visually-hidden"> filter</span>' | safe,
+    classes: "govuk-fieldset__legend--s"
   },
   items: filterReligiousCharacterItems,
   values: filters.religiousCharacter,
-  classes: "govuk-checkboxes--small"
+  showSelectedTags: false,
+  classes: "govuk-!-margin-bottom-7"
 }) }}
 
 {{ govukCheckboxes({

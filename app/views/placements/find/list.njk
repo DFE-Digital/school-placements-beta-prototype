@@ -109,20 +109,28 @@
   filterToggleButton.init()
 </script>
 
-{# {% if userJourney in ["browse","filter"] %}
-  <script type="module" >
+
+<script type="module" >
   import { CheckboxFilter } from '/public/javascripts/components/checkbox-filter.js'
 
-  const checkboxFilter = new CheckboxFilter({
-    container: $('#subject'),
+  const checkboxFilterEstablishmentType = new CheckboxFilter({
+    container: $('#filter-establishment-type'),
     textBox: {
-      label: 'Search for subject'
+      label: 'Search for school type'
     }
   })
 
-  checkboxFilter.init()
-  </script>
+  const checkboxFilterReligiousCharacter = new CheckboxFilter({
+    container: $('#filter-religious-character'),
+    textBox: {
+      label: 'Search for religious character'
+    }
+  })
 
+  checkboxFilterEstablishmentType.init()
+  checkboxFilterReligiousCharacter.init()
+</script>
+{# {% if userJourney in ["browse","filter"] %}
   <script src="/public/javascripts/accessible-autocomplete.min.js"></script>
   <script src="/public/javascripts/debounce.js"></script>
   <script src="/public/javascripts/init-autocomplete.js"></script>
