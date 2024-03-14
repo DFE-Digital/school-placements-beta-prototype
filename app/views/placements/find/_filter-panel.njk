@@ -1,52 +1,86 @@
 {% set filterOptionsHtml %}
 {{ govukCheckboxes({
-  idPrefix: "filter-a",
-  name: "filters[a]",
+  idPrefix: "filter-age-range",
+  name: "filters[ageRange]",
   fieldset: {
     legend: {
-      html: 'Filter A<span class="govuk-visually-hidden"> filter</span>',
+      html: 'Age range<span class="govuk-visually-hidden"> filter</span>',
       classes: "govuk-fieldset__legend--s"
     }
   },
   formGroup: {
     classes: "app-filter__group"
   },
-  items: filterAItems,
-  values: filters.a,
+  items: filterAgeRangeItems,
+  values: filters.ageRange,
   classes: "govuk-checkboxes--small"
 }) }}
 
 {{ govukCheckboxes({
-  idPrefix: "filter-b",
-  name: "filters[b]",
+  idPrefix: "filter-establishment-type",
+  name: "filters[establishmentType]",
   fieldset: {
     legend: {
-      html: 'Filter B<span class="govuk-visually-hidden"> filter</span>',
+      html: 'School type<span class="govuk-visually-hidden"> filter</span>',
       classes: "govuk-fieldset__legend--s"
     }
   },
   formGroup: {
     classes: "app-filter__group"
   },
-  items: filterBItems,
-  values: filters.b,
+  items: filterEstablishmentTypeItems,
+  values: filters.establishmentType,
   classes: "govuk-checkboxes--small"
 }) }}
 
 {{ govukCheckboxes({
-  idPrefix: "filter-c",
-  name: "filters[c]",
+  idPrefix: "filter-gender",
+  name: "filters[gender]",
   fieldset: {
     legend: {
-      html: 'Filter C<span class="govuk-visually-hidden"> filter</span>',
+      html: 'Gender<span class="govuk-visually-hidden"> filter</span>',
       classes: "govuk-fieldset__legend--s"
     }
   },
   formGroup: {
     classes: "app-filter__group"
   },
-  items: filterCItems,
-  values: filters.c,
+  items: filterGenderItems,
+  values: filters.gender,
+  classes: "govuk-checkboxes--small"
+}) }}
+
+{{ govukCheckboxes({
+  idPrefix: "filter-religious-character",
+  name: "filters[religiousCharacter]",
+  fieldset: {
+    legend: {
+      html: 'Religious character<span class="govuk-visually-hidden"> filter</span>',
+      classes: "govuk-fieldset__legend--s"
+    }
+  },
+  formGroup: {
+    classes: "app-filter__group"
+  },
+  items: filterReligiousCharacterItems,
+  values: filters.religiousCharacter,
+  classes: "govuk-checkboxes--small"
+}) }}
+
+{{ govukCheckboxes({
+  idPrefix: "filter-ofsted-rating",
+  name: "filters[ofsetdRating]",
+  fieldset: {
+    legend: {
+      html: 'Ofsted rating<span class="govuk-visually-hidden"> filter</span>',
+      classes: "govuk-fieldset__legend--s"
+    }
+  },
+  formGroup: {
+    classes: "app-filter__group"
+  },
+  items: filterOfstedRatingItems,
+  values: filters.ofstedRating,
   classes: "govuk-checkboxes--small"
 }) }}
 {% endset %}
