@@ -1,4 +1,4 @@
-exports.getEstablishmentTypeOptions = (selectedItem) => {
+exports.getEstablishmentTypeOptions = () => { // selectedItem
   const items = []
 
   let establishmentTypes = require('../data/dist/schools/school-types')
@@ -9,7 +9,7 @@ exports.getEstablishmentTypeOptions = (selectedItem) => {
     item.text = establishmentType.name
     item.value = establishmentType.code
     item.id = establishmentType.id
-    item.checked = (selectedItem && selectedItem.includes(establishmentType.code)) ? 'checked' : ''
+    // item.checked = (selectedItem && selectedItem.includes(establishmentType.code)) ? 'checked' : ''
 
     items.push(item)
   })
@@ -34,7 +34,7 @@ exports.getEstablishmentTypeLabel = (code) => {
   return label
 }
 
-exports.getEstablishmentGroupOptions = (selectedItem) => {
+exports.getEstablishmentGroupOptions = () => { // selectedItem
   const items = []
 
   let establishmentGroups = require('../data/dist/schools/school-groups')
@@ -45,7 +45,7 @@ exports.getEstablishmentGroupOptions = (selectedItem) => {
     item.text = establishmentGroup.name
     item.value = establishmentGroup.code
     item.id = establishmentGroup.id
-    item.checked = (selectedItem && selectedItem.includes(establishmentGroup.code)) ? 'checked' : ''
+    // item.checked = (selectedItem && selectedItem.includes(establishmentGroup.code)) ? 'checked' : ''
 
     items.push(item)
   })
@@ -70,7 +70,7 @@ exports.getEstablishmentGroupLabel = (code) => {
   return label
 }
 
-exports.getEstablishmentStatusOptions = (selectedItem) => {
+exports.getEstablishmentStatusOptions = () => { // selectedItem
   const items = []
 
   let establishementStatuses = require('../data/dist/schools/school-statuses')
@@ -81,7 +81,7 @@ exports.getEstablishmentStatusOptions = (selectedItem) => {
     item.text = establishementStatus.name
     item.value = establishementStatus.code
     item.id = establishementStatus.id
-    item.checked = (selectedItem && selectedItem.includes(establishementStatus.code)) ? 'checked' : ''
+    // item.checked = (selectedItem && selectedItem.includes(establishementStatus.code)) ? 'checked' : ''
 
     items.push(item)
   })
@@ -106,7 +106,7 @@ exports.getEstablishmentStatusLabel = (code) => {
   return label
 }
 
-exports.getEstablishmentPhaseOptions = (selectedItem) => {
+exports.getEstablishmentPhaseOptions = () => { // selectedItem
   const items = []
 
   let establishementPhases = require('../data/dist/schools/school-phases')
@@ -117,7 +117,7 @@ exports.getEstablishmentPhaseOptions = (selectedItem) => {
     item.text = establishementPhase.name
     item.value = establishementPhase.code
     item.id = establishementPhase.id
-    item.checked = (selectedItem && selectedItem.includes(establishementPhase.code)) ? 'checked' : ''
+    // item.checked = (selectedItem && selectedItem.includes(establishementPhase.code)) ? 'checked' : ''
 
     items.push(item)
   })
@@ -142,7 +142,7 @@ exports.getEstablishmentPhaseLabel = (code) => {
   return label
 }
 
-exports.getGenderOptions = (selectedItem) => {
+exports.getGenderOptions = () => { // selectedItem
   const items = []
 
   let genders = require('../data/dist/schools/school-genders')
@@ -153,7 +153,7 @@ exports.getGenderOptions = (selectedItem) => {
     item.text = gender.name
     item.value = gender.code
     item.id = gender.id
-    item.checked = (selectedItem && selectedItem.includes(gender.code)) ? 'checked' : ''
+    // item.checked = (selectedItem && selectedItem.includes(gender.code)) ? 'checked' : ''
 
     items.push(item)
   })
@@ -178,7 +178,7 @@ exports.getGenderLabel = (code) => {
   return label
 }
 
-exports.getOfficialSixthFormOptions = (selectedItem) => {
+exports.getOfficialSixthFormOptions = () => { //selectedItem
   const items = []
 
   let sixthForms = require('../data/dist/schools/school-sixth-form')
@@ -189,7 +189,7 @@ exports.getOfficialSixthFormOptions = (selectedItem) => {
     item.text = sixthForm.name
     item.value = sixthForm.code
     item.id = sixthForm.id
-    item.checked = (selectedItem && selectedItem.includes(sixthForm.code)) ? 'checked' : ''
+    // item.checked = (selectedItem && selectedItem.includes(sixthForm.code)) ? 'checked' : ''
 
     items.push(item)
   })
@@ -214,7 +214,7 @@ exports.getOfficialSixthFormLabel = (code) => {
   return label
 }
 
-exports.getNurseryProvisionOptions = (selectedItem) => {
+exports.getNurseryProvisionOptions = () => { // selectedItem
   const items = []
 
   let nurseryProvisions = require('../data/dist/schools/school-nursery-provision')
@@ -225,7 +225,7 @@ exports.getNurseryProvisionOptions = (selectedItem) => {
     item.text = nurseryProvision.name
     item.value = nurseryProvision.code
     item.id = nurseryProvision.id
-    item.checked = (selectedItem && selectedItem.includes(nurseryProvision.code)) ? 'checked' : ''
+    // item.checked = (selectedItem && selectedItem.includes(nurseryProvision.code)) ? 'checked' : ''
 
     items.push(item)
   })
@@ -250,7 +250,7 @@ exports.getNurseryProvisionLabel = (code) => {
   return label
 }
 
-exports.getReligiousCharacterOptions = (selectedItem) => {
+exports.getReligiousCharacterOptions = () => { // selectedItem
   const items = []
 
   let religiousCharacters = require('../data/dist/schools/school-religious-character')
@@ -261,7 +261,7 @@ exports.getReligiousCharacterOptions = (selectedItem) => {
     item.text = religiousCharacter.name
     item.value = religiousCharacter.code
     item.id = religiousCharacter.id
-    item.checked = (selectedItem && selectedItem.includes(religiousCharacter.code)) ? 'checked' : ''
+    // item.checked = (selectedItem && selectedItem.includes(religiousCharacter.code)) ? 'checked' : ''
 
     items.push(item)
   })
@@ -286,7 +286,7 @@ exports.getReligiousCharacterLabel = (code) => {
   return label
 }
 
-exports.getAdmissionsPolicyOptions = (selectedItem) => {
+exports.getAdmissionsPolicyOptions = () => { // selectedItem
   const items = []
 
   let religiousCharacters = require('../data/dist/schools/school-admissions-policy')
@@ -297,7 +297,7 @@ exports.getAdmissionsPolicyOptions = (selectedItem) => {
     item.text = religiousCharacter.name
     item.value = religiousCharacter.code
     item.id = religiousCharacter.id
-    item.checked = (selectedItem && selectedItem.includes(religiousCharacter.code)) ? 'checked' : ''
+    // item.checked = (selectedItem && selectedItem.includes(religiousCharacter.code)) ? 'checked' : ''
 
     items.push(item)
   })
@@ -322,7 +322,7 @@ exports.getAdmissionsPolicyLabel = (code) => {
   return label
 }
 
-exports.getSpecialClassesOptions = (selectedItem) => {
+exports.getSpecialClassesOptions = () => { // selectedItem
   const items = []
 
   let options = require('../data/dist/schools/school-special-classes')
@@ -333,7 +333,7 @@ exports.getSpecialClassesOptions = (selectedItem) => {
     item.text = option.name
     item.value = option.code
     item.id = option.id
-    item.checked = (selectedItem && parseInt(selectedItem) === option.code) ? 'checked' : ''
+    // item.checked = (selectedItem && parseInt(selectedItem) === option.code) ? 'checked' : ''
 
     items.push(item)
   })
@@ -358,7 +358,7 @@ exports.getSpecialClassesLabel = (code) => {
   return label
 }
 
-exports.getUrbanRuralOptions = (selectedItem) => {
+exports.getUrbanRuralOptions = () => { // selectedItem
   const items = []
 
   let options = require('../data/dist/schools/school-urban-rural')
@@ -369,7 +369,7 @@ exports.getUrbanRuralOptions = (selectedItem) => {
     item.text = option.name
     item.value = option.code
     item.id = option.id
-    item.checked = (selectedItem && selectedItem.includes(option.code)) ? 'checked' : ''
+    // item.checked = (selectedItem && selectedItem.includes(option.code)) ? 'checked' : ''
 
     items.push(item)
   })
@@ -394,7 +394,7 @@ exports.getUrbanRuralLabel = (code) => {
   return label
 }
 
-exports.getSENDProvisionOptions = (selectedItem, noneOption = false) => {
+exports.getSENDProvisionOptions = (noneOption = false) => { // selectedItem
   const items = []
 
   let options = require('../data/dist/schools/school-send-provision')
@@ -407,7 +407,7 @@ exports.getSENDProvisionOptions = (selectedItem, noneOption = false) => {
     item.text = option.name
     item.value = option.code
     item.id = option.id
-    item.checked = (selectedItem && selectedItem.includes(option.code)) ? 'checked' : ''
+    // item.checked = (selectedItem && selectedItem.includes(option.code)) ? 'checked' : ''
 
     items.push(item)
   })
