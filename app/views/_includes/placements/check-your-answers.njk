@@ -1,12 +1,12 @@
 {% set subjectHtml %}
-{% if placement.subjectLevel == "secondary" %}
+{% if placement.subjects.length > 1 %}
   <ul class="govuk-list">
     {% for subject in placement.subjects %}
       <li>{{ subject | getSubjectLabel }}</li>
     {% endfor %}
   </ul>
 {% else %}
-  <p class="govuk-body">{{ placement.subjects | getSubjectLabel }}</p>
+  <p class="govuk-body">{{ placement.subjects[0] | getSubjectLabel }}</p>
 {% endif %}
 {% endset %}
 
