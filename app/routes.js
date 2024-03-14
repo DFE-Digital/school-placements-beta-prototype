@@ -216,9 +216,11 @@ router.get('/organisations/:organisationId/placements/find/results', checkIsAuth
 
 router.get('/organisations/:organisationId/placements/find/results/remove-keyword-search', checkIsAuthenticated, findPlacementController.removeKeywordSearch)
 
-router.get('/organisations/:organisationId/placements/find/results/remove-a-filter/:a', checkIsAuthenticated, findPlacementController.removeFilterA)
-router.get('/organisations/:organisationId/placements/find/results/remove-b-filter/:b',  checkIsAuthenticated,findPlacementController.removeFilterB)
-router.get('/organisations/:organisationId/placements/find/results/remove-c-filter/:c', checkIsAuthenticated, findPlacementController.removeFilterC)
+router.get('/organisations/:organisationId/placements/find/results/remove-age-range-filter/:ageRange', checkIsAuthenticated, findPlacementController.removeFilterAgeRange)
+router.get('/organisations/:organisationId/placements/find/results/remove-establishment-type-filter/:establishmentType',  checkIsAuthenticated,findPlacementController.removeFilterEstablishmentType)
+router.get('/organisations/:organisationId/placements/find/results/remove-gender-filter/:gender', checkIsAuthenticated, findPlacementController.removeFilterGender)
+router.get('/organisations/:organisationId/placements/find/results/remove-religious-character-filter/:religiousCharacter', checkIsAuthenticated, findPlacementController.removeFilterReligiousCharacter)
+router.get('/organisations/:organisationId/placements/find/results/remove-ofstedRating-filter/:ofstedRating', checkIsAuthenticated, findPlacementController.removeFilterOfstedRating)
 
 router.get('/organisations/:organisationId/placements/find/results/remove-all-filters',  checkIsAuthenticated,findPlacementController.removeAllFilters)
 
