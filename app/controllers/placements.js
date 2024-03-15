@@ -20,6 +20,15 @@ exports.placements_list = (req, res) => {
   delete req.session.data.placement
   delete req.session.data.currentSubjectLevel
 
+  // variables used in the find placement flow
+  delete req.session.data.questions
+  delete req.session.data.filters
+  delete req.session.data.location
+  delete req.session.data.school
+  delete req.session.data.q
+  delete req.session.data.sortBy
+  delete req.session.data.keywords
+
   // add details of school to each placement result
   if (placements.length) {
     placements = placements.map(placement => {

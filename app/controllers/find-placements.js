@@ -14,14 +14,6 @@ const placementDecorator = require('../decorators/placements.js')
 /// ------------------------------------------------------------------------ ///
 
 exports.find_location_get = (req, res) => {
-  delete req.session.data.questions
-  delete req.session.data.filters
-  delete req.session.data.location
-  delete req.session.data.school
-  delete req.session.data.q
-  delete req.session.data.sortBy
-  delete req.session.data.keywords
-
   res.render('placements/find/location', {
     actions: {
       save: `/organisations/${req.params.organisationId}/placements/find`,
