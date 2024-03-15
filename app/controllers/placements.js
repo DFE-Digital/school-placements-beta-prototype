@@ -2,6 +2,8 @@ const mentorModel = require('../models/mentors')
 const organisationModel = require('../models/organisations')
 const placementModel = require('../models/placements')
 
+const partnerPlacementModel = require('../models/partner-placements')
+
 const Pagination = require('../helpers/pagination')
 const mentorHelper = require('../helpers/mentors')
 const subjectHelper = require('../helpers/subjects')
@@ -15,7 +17,13 @@ const placementDecorator = require('../decorators/placements.js')
 exports.placements_list = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
   const mentors = mentorModel.findMany({ organisationId: req.params.organisationId })
-  let placements = placementModel.findMany({ organisationId: req.params.organisationId })
+
+  let placements
+  if (['university','scitt'].includes(organisation.type)) {
+    placements = partnerPlacementModel.findMany({ organisationId: req.params.organisationId })
+  } else {
+    placements = placementModel.findMany({ organisationId: req.params.organisationId })
+  }
 
   delete req.session.data.placement
   delete req.session.data.currentSubjectLevel
