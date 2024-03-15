@@ -192,41 +192,26 @@ exports.placements_list = (req, res) => {
   if (req.session.data.filters?.ageRange) {
     ageRanges = filterHelper.getCheckboxValues(ageRange, req.session.data.filters.ageRange)
   }
-  // else {
-  //   ageRanges = defaults.ageRange
-  // }
 
   let establishmentTypes
   if (req.session.data.filters?.establishmentType) {
     establishmentTypes = filterHelper.getCheckboxValues(establishmentType, req.session.data.filters.establishmentType)
   }
-  // else {
-  //   establishmentTypes = defaults.establishmentType
-  // }
 
   let genders
   if (req.session.data.filters?.gender) {
     genders = filterHelper.getCheckboxValues(gender, req.session.data.filters.gender)
   }
-  // else {
-  //   genders = defaults.gender
-  // }
 
   let religiousCharacters
   if (req.session.data.filters?.religiousCharacter) {
     religiousCharacters = filterHelper.getCheckboxValues(religiousCharacter, req.session.data.filters.religiousCharacter)
   }
-  // else {
-  //   religiousCharacters = defaults.religiousCharacter
-  // }
 
   let ofstedRatings
   if (req.session.data.filters?.ofstedRating) {
     ofstedRatings = filterHelper.getCheckboxValues(ofstedRating, req.session.data.filters.ofstedRating)
   }
-  // else {
-  //   ofstedRatings = defaults.ofstedRating
-  // }
 
   const hasFilters = !!((ageRanges?.length > 0)
     || (establishmentTypes?.length > 0)
@@ -303,35 +288,16 @@ exports.placements_list = (req, res) => {
     }
   }
 
-  const filterAgeRangeItems = filterHelper.getFilterAItems()
+  // get filter items
+  const filterAgeRangeItems = filterHelper.getFilterAItems(ageRanges)
 
-  let selectedEstablishmentType
-  if (req.session.data.filters?.establishmentType) {
-    selectedEstablishmentType = req.session.data.filters.establishmentType
-  }
+  const filterEstablishmentTypeItems = giasHelper.getEstablishmentTypeOptions(establishmentTypes)
 
-  const filterEstablishmentTypeItems = giasHelper.getEstablishmentTypeOptions(selectedEstablishmentType)
+  const filterGenderItems = giasHelper.getGenderOptions(genders)
 
-  let selectedGender
-  if (req.session.data.filters?.gender) {
-    selectedGender = req.session.data.filters.gender
-  }
+  const filterReligiousCharacterItems = giasHelper.getReligiousCharacterOptions(religiousCharacters)
 
-  const filterGenderItems = giasHelper.getGenderOptions(selectedGender)
-
-  let selectedReligiousCharacter
-  if (req.session.data.filters?.religiousCharacter) {
-    selectedReligiousCharacter = req.session.data.filters.religiousCharacter
-  }
-
-  const filterReligiousCharacterItems = giasHelper.getReligiousCharacterOptions(selectedReligiousCharacter)
-
-  let selectedOfstedRating
-  if (req.session.data.filters?.ofstedRating) {
-    selectedOfstedRating = req.session.data.filters.ofstedRating
-  }
-
-  const filterOfstedRatingItems = ofstedHelper.getOfstedRatingOptions(selectedOfstedRating)
+  const filterOfstedRatingItems = ofstedHelper.getOfstedRatingOptions(ofstedRatings)
 
   // Search radius - 5, 10, 50
   // default to 50
@@ -362,6 +328,7 @@ exports.placements_list = (req, res) => {
   // get an array of selected subjects for use in the search terms subject list
   // const selectedSubjects = filterHelper.getSelectedSubjectItems(subjectItems.filter(subject => subject.checked === 'checked'))
 
+  // get results based on initial questions
   let results = placementModel.findMany({
     subjectLevel: req.session.data.questions.subjectLevel,
     subjects: req.session.data.questions.subjects
@@ -369,11 +336,36 @@ exports.placements_list = (req, res) => {
 
   // add details of school to each placement result
   if (results.length) {
-
     results = results.map(result => {
       return result = placementDecorator.decorate(result)
     })
+  }
 
+  // filter results
+  if (establishmentTypes?.length) {
+    results = results.filter(result => {
+      return establishmentTypes.includes(result.school.establishmentType.toString())
+    })
+  }
+
+  if (genders?.length) {
+    results = results.filter(result => {
+      return genders.includes(result.school.gender.toString())
+    })
+  }
+
+  if (religiousCharacters?.length) {
+    results = results.filter(result => {
+      return religiousCharacters.includes(result.school.religiousCharacter.toString())
+    })
+  }
+
+  if (ofstedRatings?.length) {
+    results = results.filter(result => {
+      if (result.school.ofsted?.rating) {
+        return ofstedRatings.includes(result.school.ofsted.rating.toString())
+      }
+    })
   }
 
   // sort results
