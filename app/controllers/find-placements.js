@@ -14,7 +14,10 @@ const placementDecorator = require('../decorators/placements.js')
 /// ------------------------------------------------------------------------ ///
 
 exports.find_location_get = (req, res) => {
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+
   res.render('placements/find/location', {
+    organisation,
     actions: {
       save: `/organisations/${req.params.organisationId}/placements/find`,
       back: `/organisations/${req.params.organisationId}/placements`,
@@ -54,7 +57,10 @@ exports.find_location_post = (req, res) => {
   }
 
   if (errors.length) {
+    const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+
     res.render('placements/find/location', {
+      organisation,
       actions: {
         save: `/organisations/${req.params.organisationId}/placements/find`,
         back: `/organisations/${req.params.organisationId}/placements`,
@@ -68,9 +74,11 @@ exports.find_location_post = (req, res) => {
 }
 
 exports.find_subject_level_get = (req, res) => {
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
   const subjectLevelOptions = subjectHelper.getSubjectLevelOptions()
 
   res.render('placements/find/subject-level', {
+    organisation,
     questions: req.session.data.questions,
     subjectLevelOptions,
     actions: {
@@ -93,9 +101,11 @@ exports.find_subject_level_post = (req, res) => {
   }
 
   if (errors.length) {
+    const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
     const subjectLevelOptions = subjectHelper.getSubjectLevelOptions()
 
     res.render('placements/find/subject-level', {
+      organisation,
       questions: req.session.data.questions,
       subjectLevelOptions,
       actions: {
@@ -111,9 +121,11 @@ exports.find_subject_level_post = (req, res) => {
 }
 
 exports.find_subject_get = (req, res) => {
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
   const subjectOptions = subjectHelper.getSubjectOptions(req.session.data.questions.subjectLevel)
 
   res.render('placements/find/subject', {
+    organisation,
     questions: req.session.data.questions,
     subjectOptions,
     actions: {
@@ -146,9 +158,11 @@ exports.find_subject_post = (req, res) => {
   }
 
   if (errors.length) {
+    const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
     const subjectOptions = subjectHelper.getSubjectOptions(req.session.data.questions.subjectLevel)
 
     res.render('placements/find/subject', {
+      organisation,
       questions: req.session.data.questions,
       subjectOptions,
       actions: {
@@ -168,6 +182,8 @@ exports.find_subject_post = (req, res) => {
 /// ------------------------------------------------------------------------ ///
 
 exports.placements_list = (req, res) => {
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+
   // Search
   const keywords = req.session.data.keywords
 
@@ -370,6 +386,7 @@ exports.placements_list = (req, res) => {
   results = pagination.getData()
 
   res.render('../views/placements/find/list', {
+    organisation,
     results,
     pagination,
     selectedFilters,
