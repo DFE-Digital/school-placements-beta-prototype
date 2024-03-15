@@ -1,4 +1,4 @@
-exports.getEstablishmentTypeOptions = () => { // selectedItem
+exports.getEstablishmentTypeOptions = (selectedItem) => {
   const items = []
 
   let establishmentTypes = require('../data/dist/schools/school-types')
@@ -9,7 +9,7 @@ exports.getEstablishmentTypeOptions = () => { // selectedItem
     item.text = establishmentType.name
     item.value = establishmentType.code
     item.id = establishmentType.id
-    // item.checked = (selectedItem && selectedItem.includes(establishmentType.code)) ? 'checked' : ''
+    item.checked = (selectedItem && selectedItem.includes(establishmentType.code.toString())) ? 'checked' : ''
 
     items.push(item)
   })
@@ -23,7 +23,7 @@ exports.getEstablishmentTypeOptions = () => { // selectedItem
 
 exports.getEstablishmentTypeLabel = (code) => {
   const establishmentTypes = require('../data/dist/schools/school-types')
-  const establishmentType = establishmentTypes.find(establishmentType => establishmentType.code === code)
+  const establishmentType = establishmentTypes.find(establishmentType => establishmentType.code === parseInt(code))
 
   let label = code
 
@@ -34,7 +34,7 @@ exports.getEstablishmentTypeLabel = (code) => {
   return label
 }
 
-exports.getEstablishmentGroupOptions = () => { // selectedItem
+exports.getEstablishmentGroupOptions = (selectedItem) => {
   const items = []
 
   let establishmentGroups = require('../data/dist/schools/school-groups')
@@ -45,7 +45,7 @@ exports.getEstablishmentGroupOptions = () => { // selectedItem
     item.text = establishmentGroup.name
     item.value = establishmentGroup.code
     item.id = establishmentGroup.id
-    // item.checked = (selectedItem && selectedItem.includes(establishmentGroup.code)) ? 'checked' : ''
+    item.checked = (selectedItem && selectedItem.includes(establishmentGroup.code.toString())) ? 'checked' : ''
 
     items.push(item)
   })
@@ -59,7 +59,7 @@ exports.getEstablishmentGroupOptions = () => { // selectedItem
 
 exports.getEstablishmentGroupLabel = (code) => {
   const establishmentGroups = require('../data/dist/schools/school-groups')
-  const establishmentGroup = establishmentGroups.find(establishmentGroup => establishmentGroup.code === code)
+  const establishmentGroup = establishmentGroups.find(establishmentGroup => establishmentGroup.code === parseInt(code))
 
   let label = code
 
@@ -70,7 +70,7 @@ exports.getEstablishmentGroupLabel = (code) => {
   return label
 }
 
-exports.getEstablishmentStatusOptions = () => { // selectedItem
+exports.getEstablishmentStatusOptions = (selectedItem) => {
   const items = []
 
   let establishementStatuses = require('../data/dist/schools/school-statuses')
@@ -81,7 +81,7 @@ exports.getEstablishmentStatusOptions = () => { // selectedItem
     item.text = establishementStatus.name
     item.value = establishementStatus.code
     item.id = establishementStatus.id
-    // item.checked = (selectedItem && selectedItem.includes(establishementStatus.code)) ? 'checked' : ''
+    item.checked = (selectedItem && selectedItem.includes(establishementStatus.code.toString())) ? 'checked' : ''
 
     items.push(item)
   })
@@ -95,7 +95,7 @@ exports.getEstablishmentStatusOptions = () => { // selectedItem
 
 exports.getEstablishmentStatusLabel = (code) => {
   const establishementStatuses = require('../data/dist/schools/school-statuses')
-  const establishementStatus = establishementStatuses.find(establishementStatus => establishementStatus.code === code)
+  const establishementStatus = establishementStatuses.find(establishementStatus => establishementStatus.code === parseInt(code))
 
   let label = code
 
@@ -106,7 +106,7 @@ exports.getEstablishmentStatusLabel = (code) => {
   return label
 }
 
-exports.getEstablishmentPhaseOptions = () => { // selectedItem
+exports.getEstablishmentPhaseOptions = (selectedItem) => {
   const items = []
 
   let establishementPhases = require('../data/dist/schools/school-phases')
@@ -117,7 +117,7 @@ exports.getEstablishmentPhaseOptions = () => { // selectedItem
     item.text = establishementPhase.name
     item.value = establishementPhase.code
     item.id = establishementPhase.id
-    // item.checked = (selectedItem && selectedItem.includes(establishementPhase.code)) ? 'checked' : ''
+    item.checked = (selectedItem && selectedItem.includes(establishementPhase.code.toString())) ? 'checked' : ''
 
     items.push(item)
   })
@@ -131,7 +131,7 @@ exports.getEstablishmentPhaseOptions = () => { // selectedItem
 
 exports.getEstablishmentPhaseLabel = (code) => {
   const establishementPhases = require('../data/dist/schools/school-phases')
-  const establishementPhase = establishementPhases.find(establishementPhase => establishementPhase.code === code)
+  const establishementPhase = establishementPhases.find(establishementPhase => establishementPhase.code === parseInt(code))
 
   let label = code
 
@@ -142,7 +142,7 @@ exports.getEstablishmentPhaseLabel = (code) => {
   return label
 }
 
-exports.getGenderOptions = () => { // selectedItem
+exports.getGenderOptions = (selectedItem) => {
   const items = []
 
   let genders = require('../data/dist/schools/school-genders')
@@ -153,7 +153,7 @@ exports.getGenderOptions = () => { // selectedItem
     item.text = gender.name
     item.value = gender.code
     item.id = gender.id
-    // item.checked = (selectedItem && selectedItem.includes(gender.code)) ? 'checked' : ''
+    item.checked = (selectedItem && selectedItem.includes(gender.code.toString())) ? 'checked' : ''
 
     items.push(item)
   })
@@ -167,7 +167,7 @@ exports.getGenderOptions = () => { // selectedItem
 
 exports.getGenderLabel = (code) => {
   const genders = require('../data/dist/schools/school-genders')
-  const gender = genders.find(gender => gender.code === code)
+  const gender = genders.find(gender => gender.code === parseInt(code))
 
   let label = code
 
@@ -178,7 +178,7 @@ exports.getGenderLabel = (code) => {
   return label
 }
 
-exports.getOfficialSixthFormOptions = () => { //selectedItem
+exports.getOfficialSixthFormOptions = (selectedItem) => {
   const items = []
 
   let sixthForms = require('../data/dist/schools/school-sixth-form')
@@ -189,7 +189,7 @@ exports.getOfficialSixthFormOptions = () => { //selectedItem
     item.text = sixthForm.name
     item.value = sixthForm.code
     item.id = sixthForm.id
-    // item.checked = (selectedItem && selectedItem.includes(sixthForm.code)) ? 'checked' : ''
+    item.checked = (selectedItem && selectedItem.includes(sixthForm.code.toString())) ? 'checked' : ''
 
     items.push(item)
   })
@@ -203,7 +203,7 @@ exports.getOfficialSixthFormOptions = () => { //selectedItem
 
 exports.getOfficialSixthFormLabel = (code) => {
   const sixthForms = require('../data/dist/schools/school-sixth-form')
-  const sixthForm = sixthForms.find(sixthForm => sixthForm.code === code)
+  const sixthForm = sixthForms.find(sixthForm => sixthForm.code === parseInt(code))
 
   let label = code
 
@@ -214,7 +214,7 @@ exports.getOfficialSixthFormLabel = (code) => {
   return label
 }
 
-exports.getNurseryProvisionOptions = () => { // selectedItem
+exports.getNurseryProvisionOptions = (selectedItem) => {
   const items = []
 
   let nurseryProvisions = require('../data/dist/schools/school-nursery-provision')
@@ -225,7 +225,7 @@ exports.getNurseryProvisionOptions = () => { // selectedItem
     item.text = nurseryProvision.name
     item.value = nurseryProvision.code
     item.id = nurseryProvision.id
-    // item.checked = (selectedItem && selectedItem.includes(nurseryProvision.code)) ? 'checked' : ''
+    item.checked = (selectedItem && selectedItem.includes(nurseryProvision.code.toString())) ? 'checked' : ''
 
     items.push(item)
   })
@@ -239,7 +239,7 @@ exports.getNurseryProvisionOptions = () => { // selectedItem
 
 exports.getNurseryProvisionLabel = (code) => {
   const nurseryProvisions = require('../data/dist/schools/school-nursery-provision')
-  const nurseryProvision = nurseryProvisions.find(nurseryProvision => nurseryProvision.code === code)
+  const nurseryProvision = nurseryProvisions.find(nurseryProvision => nurseryProvision.code === parseInt(code))
 
   let label = code
 
@@ -250,7 +250,7 @@ exports.getNurseryProvisionLabel = (code) => {
   return label
 }
 
-exports.getReligiousCharacterOptions = () => { // selectedItem
+exports.getReligiousCharacterOptions = (selectedItem) => {
   const items = []
 
   let religiousCharacters = require('../data/dist/schools/school-religious-character')
@@ -261,7 +261,7 @@ exports.getReligiousCharacterOptions = () => { // selectedItem
     item.text = religiousCharacter.name
     item.value = religiousCharacter.code
     item.id = religiousCharacter.id
-    // item.checked = (selectedItem && selectedItem.includes(religiousCharacter.code)) ? 'checked' : ''
+    item.checked = (selectedItem && selectedItem.includes(religiousCharacter.code.toString())) ? 'checked' : ''
 
     items.push(item)
   })
@@ -275,7 +275,7 @@ exports.getReligiousCharacterOptions = () => { // selectedItem
 
 exports.getReligiousCharacterLabel = (code) => {
   const religiousCharacters = require('../data/dist/schools/school-religious-character')
-  const religiousCharacter = religiousCharacters.find(religiousCharacter => religiousCharacter.code === code)
+  const religiousCharacter = religiousCharacters.find(religiousCharacter => religiousCharacter.code === parseInt(code))
 
   let label = code
 
@@ -286,7 +286,7 @@ exports.getReligiousCharacterLabel = (code) => {
   return label
 }
 
-exports.getAdmissionsPolicyOptions = () => { // selectedItem
+exports.getAdmissionsPolicyOptions = (selectedItem) => {
   const items = []
 
   let religiousCharacters = require('../data/dist/schools/school-admissions-policy')
@@ -297,7 +297,7 @@ exports.getAdmissionsPolicyOptions = () => { // selectedItem
     item.text = religiousCharacter.name
     item.value = religiousCharacter.code
     item.id = religiousCharacter.id
-    // item.checked = (selectedItem && selectedItem.includes(religiousCharacter.code)) ? 'checked' : ''
+    item.checked = (selectedItem && selectedItem.includes(religiousCharacter.code.toString())) ? 'checked' : ''
 
     items.push(item)
   })
@@ -311,7 +311,7 @@ exports.getAdmissionsPolicyOptions = () => { // selectedItem
 
 exports.getAdmissionsPolicyLabel = (code) => {
   const religiousCharacters = require('../data/dist/schools/school-admissions-policy')
-  const religiousCharacter = religiousCharacters.find(religiousCharacter => religiousCharacter.code === code)
+  const religiousCharacter = religiousCharacters.find(religiousCharacter => religiousCharacter.code === parseInt(code))
 
   let label = code
 
@@ -358,7 +358,7 @@ exports.getSpecialClassesLabel = (code) => {
   return label
 }
 
-exports.getUrbanRuralOptions = () => { // selectedItem
+exports.getUrbanRuralOptions = (selectedItem) => {
   const items = []
 
   let options = require('../data/dist/schools/school-urban-rural')
@@ -369,7 +369,7 @@ exports.getUrbanRuralOptions = () => { // selectedItem
     item.text = option.name
     item.value = option.code
     item.id = option.id
-    // item.checked = (selectedItem && selectedItem.includes(option.code)) ? 'checked' : ''
+    item.checked = (selectedItem && selectedItem.includes(option.code.toString())) ? 'checked' : ''
 
     items.push(item)
   })
@@ -394,7 +394,7 @@ exports.getUrbanRuralLabel = (code) => {
   return label
 }
 
-exports.getSENDProvisionOptions = (noneOption = false) => { // selectedItem
+exports.getSENDProvisionOptions = (selectedItem, noneOption = false) => {
   const items = []
 
   let options = require('../data/dist/schools/school-send-provision')
@@ -407,7 +407,7 @@ exports.getSENDProvisionOptions = (noneOption = false) => { // selectedItem
     item.text = option.name
     item.value = option.code
     item.id = option.id
-    // item.checked = (selectedItem && selectedItem.includes(option.code)) ? 'checked' : ''
+    item.checked = (selectedItem && selectedItem.includes(option.code.toString())) ? 'checked' : ''
 
     items.push(item)
   })
@@ -432,7 +432,7 @@ exports.getSENDProvisionOptions = (noneOption = false) => { // selectedItem
 
 exports.getSENDProvisionLabel = (code) => {
   const options = require('../data/dist/schools/school-send-provision')
-  const option = options.find(option => option.code === code)
+  const option = options.find(option => option.code === parseInt(code))
 
   let label = code
 
