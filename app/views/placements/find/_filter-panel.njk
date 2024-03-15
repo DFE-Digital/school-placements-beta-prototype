@@ -1,5 +1,5 @@
 {% set filterOptionsHtml %}
-{{ govukCheckboxes({
+{# {{ govukCheckboxes({
   idPrefix: "filter-age-range",
   name: "filters[ageRange]",
   fieldset: {
@@ -14,7 +14,7 @@
   items: filterAgeRangeItems,
   values: filters.ageRange,
   classes: "govuk-checkboxes--small"
-}) }}
+}) }} #}
 
 {{ appCheckboxFilter({
   idPrefix: "filter-establishment-type",
