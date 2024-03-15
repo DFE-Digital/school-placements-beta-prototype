@@ -61,6 +61,7 @@
                 placementName: result.name,
                 minAge: result.school.minAge,
                 maxAge: result.school.maxAge,
+                establishmentType: result.school.establishmentType | getEstablishmentTypeLabel,
                 gender: result.school.gender | getGenderLabel,
                 religiousCharacter: result.school.religiousCharacter | getReligiousCharacterLabel,
                 urbanRural: result.school.urbanRural | getUrbanRuralLabel,
