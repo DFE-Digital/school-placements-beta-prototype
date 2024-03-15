@@ -1,7 +1,6 @@
 const path = require('path')
 const fs = require('fs')
 const { v4: uuid } = require('uuid')
-const { log } = require('console')
 
 const directoryPath = path.join(__dirname, '../data/dist/placements/')
 
