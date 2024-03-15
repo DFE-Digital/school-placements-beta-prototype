@@ -25,10 +25,12 @@ exports.getEstablishmentTypeLabel = (code) => {
   const establishmentTypes = require('../data/dist/schools/school-types')
   const establishmentType = establishmentTypes.find(establishmentType => establishmentType.code === parseInt(code))
 
-  let label = code
+  let label
 
-  if (establishmentType) {
+  if (!!establishmentType) {
     label = establishmentType.name
+  } else {
+    label = 'Not entered'
   }
 
   return label
@@ -61,10 +63,12 @@ exports.getEstablishmentGroupLabel = (code) => {
   const establishmentGroups = require('../data/dist/schools/school-groups')
   const establishmentGroup = establishmentGroups.find(establishmentGroup => establishmentGroup.code === parseInt(code))
 
-  let label = code
+  let label
 
-  if (establishmentGroup) {
+  if (!!establishmentGroup) {
     label = establishmentGroup.name
+  } else {
+    label = 'Not entered'
   }
 
   return label
@@ -97,10 +101,12 @@ exports.getEstablishmentStatusLabel = (code) => {
   const establishementStatuses = require('../data/dist/schools/school-statuses')
   const establishementStatus = establishementStatuses.find(establishementStatus => establishementStatus.code === parseInt(code))
 
-  let label = code
+  let label
 
-  if (establishementStatus) {
+  if (!!establishementStatus) {
     label = establishementStatus.name
+  } else {
+    label = 'Not entered'
   }
 
   return label
@@ -133,10 +139,12 @@ exports.getEstablishmentPhaseLabel = (code) => {
   const establishementPhases = require('../data/dist/schools/school-phases')
   const establishementPhase = establishementPhases.find(establishementPhase => establishementPhase.code === parseInt(code))
 
-  let label = code
+  let label
 
-  if (establishementPhase) {
+  if (!!establishementPhase) {
     label = establishementPhase.name
+  } else {
+    label = 'Not entered'
   }
 
   return label
@@ -169,10 +177,12 @@ exports.getGenderLabel = (code) => {
   const genders = require('../data/dist/schools/school-genders')
   const gender = genders.find(gender => gender.code === parseInt(code))
 
-  let label = code
+  let label
 
-  if (gender) {
+  if (!!gender) {
     label = gender.name
+  } else {
+    label = 'Not entered'
   }
 
   return label
@@ -205,10 +215,12 @@ exports.getOfficialSixthFormLabel = (code) => {
   const sixthForms = require('../data/dist/schools/school-sixth-form')
   const sixthForm = sixthForms.find(sixthForm => sixthForm.code === parseInt(code))
 
-  let label = code
+  let label
 
-  if (sixthForm) {
+  if (!!sixthForm) {
     label = sixthForm.name
+  } else {
+    label = 'Not entered'
   }
 
   return label
@@ -241,10 +253,12 @@ exports.getNurseryProvisionLabel = (code) => {
   const nurseryProvisions = require('../data/dist/schools/school-nursery-provision')
   const nurseryProvision = nurseryProvisions.find(nurseryProvision => nurseryProvision.code === parseInt(code))
 
-  let label = code
+  let label
 
-  if (nurseryProvision) {
+  if (!!nurseryProvision) {
     label = nurseryProvision.name
+  } else {
+    label = 'Not entered'
   }
 
   return label
@@ -277,10 +291,12 @@ exports.getReligiousCharacterLabel = (code) => {
   const religiousCharacters = require('../data/dist/schools/school-religious-character')
   const religiousCharacter = religiousCharacters.find(religiousCharacter => religiousCharacter.code === parseInt(code))
 
-  let label = code
+  let label
 
-  if (religiousCharacter) {
+  if (!!religiousCharacter) {
     label = religiousCharacter.name
+  } else {
+    label = 'Not entered'
   }
 
   return label
@@ -289,15 +305,15 @@ exports.getReligiousCharacterLabel = (code) => {
 exports.getAdmissionsPolicyOptions = (selectedItem) => {
   const items = []
 
-  let religiousCharacters = require('../data/dist/schools/school-admissions-policy')
+  let admissionsPolicies = require('../data/dist/schools/school-admissions-policy')
 
-  religiousCharacters.forEach((religiousCharacter, i) => {
+  admissionsPolicies.forEach((admissionsPolicy, i) => {
     const item = {}
 
-    item.text = religiousCharacter.name
-    item.value = religiousCharacter.code
-    item.id = religiousCharacter.id
-    item.checked = (selectedItem && selectedItem.includes(religiousCharacter.code.toString())) ? 'checked' : ''
+    item.text = admissionsPolicy.name
+    item.value = admissionsPolicy.code
+    item.id = admissionsPolicy.id
+    item.checked = (selectedItem && selectedItem.includes(admissionsPolicy.code.toString())) ? 'checked' : ''
 
     items.push(item)
   })
@@ -310,13 +326,15 @@ exports.getAdmissionsPolicyOptions = (selectedItem) => {
 }
 
 exports.getAdmissionsPolicyLabel = (code) => {
-  const religiousCharacters = require('../data/dist/schools/school-admissions-policy')
-  const religiousCharacter = religiousCharacters.find(religiousCharacter => religiousCharacter.code === parseInt(code))
+  const admissionsPolicies = require('../data/dist/schools/school-admissions-policy')
+  const admissionsPolicy = admissionsPolicies.find(admissionsPolicy => admissionsPolicy.code === parseInt(code))
 
-  let label = code
+  let label
 
-  if (religiousCharacter) {
-    label = religiousCharacter.name
+  if (!!admissionsPolicy) {
+    label = admissionsPolicy.name
+  } else {
+    label = 'Not entered'
   }
 
   return label
@@ -349,10 +367,12 @@ exports.getSpecialClassesLabel = (code) => {
   const options = require('../data/dist/schools/school-special-classes')
   const option = options.find(option => option.code === parseInt(code))
 
-  let label = code
+  let label
 
-  if (option) {
+  if (!!option) {
     label = option.name
+  } else {
+    label = 'Not entered'
   }
 
   return label
@@ -385,10 +405,12 @@ exports.getUrbanRuralLabel = (code) => {
   const options = require('../data/dist/schools/school-urban-rural')
   const option = options.find(option => option.code === code)
 
-  let label = code
+  let label
 
-  if (option) {
+  if (!!option) {
     label = option.name
+  } else {
+    label = 'Not entered'
   }
 
   return label
@@ -434,10 +456,12 @@ exports.getSENDProvisionLabel = (code) => {
   const options = require('../data/dist/schools/school-send-provision')
   const option = options.find(option => option.code === parseInt(code))
 
-  let label = code
+  let label
 
-  if (option) {
+  if (!!option) {
     label = option.name
+  } else {
+    label = 'Not entered'
   }
 
   return label
