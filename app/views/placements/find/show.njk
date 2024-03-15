@@ -30,8 +30,8 @@
               text: "School type"
             },
             value: {
-              text: placement.school.establishmentType | getEstablishmentTypeLabel if placement.school.establishmentType else "Not entered",
-              classes: "govuk-hint" if not placement.school.establishmentType
+              text: placement.school.establishmentType | getEstablishmentTypeLabel,
+              classes: "govuk-hint" if placement.school.establishmentType == "Not entered"
             }
           },
           {
@@ -39,17 +39,17 @@
               text: "School phase"
             },
             value: {
-              text: placement.school.establishmentPhase | getEstablishmentPhaseLabel if placement.school.establishmentPhase else "Not entered",
-              classes: "govuk-hint" if not placement.school.establishmentPhase
+              text: placement.school.establishmentPhase | getEstablishmentPhaseLabel,
+              classes: "govuk-hint" if placement.school.establishmentPhase == "Not entered"
             }
           },
           {
             key: {
-              text: "School gender"
+              text: "Gender"
             },
             value: {
-              text: placement.school.gender | getGenderLabel if placement.school.gender else "Not entered",
-              classes: "govuk-hint" if not placement.school.gender
+              text: placement.school.gender | getGenderLabel,
+              classes: "govuk-hint" if placement.school.gender == "Not entered"
             }
           },
           {
@@ -66,8 +66,8 @@
               text: "Religious character"
             },
             value: {
-              text: placement.school.religiousCharacter | getReligiousCharacterLabel if placement.school.religiousCharacter else "Not entered",
-              classes: "govuk-hint" if not placement.school.religiousCharacter
+              text: placement.school.religiousCharacter | getReligiousCharacterLabel,
+              classes: "govuk-hint" if placement.school.religiousCharacter == "Not entered"
             }
           },
           {
@@ -75,8 +75,8 @@
               text: "Urban or rural"
             },
             value: {
-              text: placement.school.urbanRural | getUrbanRuralLabel if placement.school.urbanRural else "Not entered",
-              classes: "govuk-hint" if not placement.school.urbanRural
+              text: placement.school.urbanRural | getUrbanRuralLabel,
+              classes: "govuk-hint" if placement.school.urbanRural == "Not entered"
             }
           },
           {
@@ -84,8 +84,8 @@
               text: "Admissions policy"
             },
             value: {
-              text: placement.school.admissionsPolicy | getAdmissionsPolicyLabel if placement.school.admissionsPolicy else "Not entered",
-              classes: "govuk-hint" if not placement.school.admissionsPolicy
+              text: placement.school.admissionsPolicy | getAdmissionsPolicyLabel,
+              classes: "govuk-hint" if placement.school.admissionsPolicy == "Not entered"
             }
           },
           {
@@ -93,8 +93,8 @@
               text: "Percentage free school meals"
             },
             value: {
-              text: placement.school.percentageFreeSchoolMeals | numeral('0.0') + "%" if placement.school.percentageFreeSchoolMeals else "Not entered",
-              classes: "govuk-hint" if not placement.school.percentageFreeSchoolMeals
+              text: placement.school.percentageFreeSchoolMeals | numeral('0.0') + "%",
+              classes: "govuk-hint" if placement.school.percentageFreeSchoolMeals == "Not entered"
             }
           },
           {
@@ -102,8 +102,8 @@
               text: "Ofsted rating"
             },
             value: {
-              text: placement.school.ofsted.rating | getOfstedRatingLabel if placement.school.ofsted.rating else "Not entered",
-              classes: "govuk-hint" if not placement.school.ofstedRating
+              text: placement.school.ofsted.rating | getOfstedRatingLabel,
+              classes: "govuk-hint" if placement.school.ofstedRating == "Not entered"
             }
           }
         ]
