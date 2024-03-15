@@ -65,7 +65,7 @@
                 gender: result.school.gender | getGenderLabel,
                 religiousCharacter: result.school.religiousCharacter | getReligiousCharacterLabel,
                 urbanRural: result.school.urbanRural | getUrbanRuralLabel,
-                ofstedRating: result.school.ofsted.rating | getOfstedRatingLabel,
+                ofstedRating: result.school.ofsted.rating | getOfstedRatingLabel if result.school.ofsted.rating else "Not known",
                 mentors: result.mentors
               })}}
             </li>
