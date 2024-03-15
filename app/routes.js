@@ -220,7 +220,7 @@ router.get('/organisations/:organisationId/placements/find/results/remove-age-ra
 router.get('/organisations/:organisationId/placements/find/results/remove-establishment-type-filter/:establishmentType',  checkIsAuthenticated,findPlacementController.removeFilterEstablishmentType)
 router.get('/organisations/:organisationId/placements/find/results/remove-gender-filter/:gender', checkIsAuthenticated, findPlacementController.removeFilterGender)
 router.get('/organisations/:organisationId/placements/find/results/remove-religious-character-filter/:religiousCharacter', checkIsAuthenticated, findPlacementController.removeFilterReligiousCharacter)
-router.get('/organisations/:organisationId/placements/find/results/remove-ofstedRating-filter/:ofstedRating', checkIsAuthenticated, findPlacementController.removeFilterOfstedRating)
+router.get('/organisations/:organisationId/placements/find/results/remove-ofsted-rating-filter/:ofstedRating', checkIsAuthenticated, findPlacementController.removeFilterOfstedRating)
 
 router.get('/organisations/:organisationId/placements/find/results/remove-all-filters',  checkIsAuthenticated,findPlacementController.removeAllFilters)
 
