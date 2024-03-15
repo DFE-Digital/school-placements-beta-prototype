@@ -19,12 +19,14 @@
 {{ appCheckboxFilter({
   idPrefix: "filter-establishment-type",
   name: "filters[establishmentType]",
-  legend: {
-    html: 'School type<span class="govuk-visually-hidden"> filter</span>' | safe,
-    classes: "govuk-fieldset__legend--s"
+  fieldset: {
+    legend: {
+      html: 'School type<span class="govuk-visually-hidden"> filter</span>',
+      classes: "govuk-fieldset__legend--s"
+    }
   },
   items: filterEstablishmentTypeItems,
-  selectedItems: filters.establishmentType,
+  values: filters.establishmentType,
   showSelectedTags: false,
   classes: "govuk-!-margin-bottom-7"
 }) }}
@@ -49,9 +51,11 @@
 {{ appCheckboxFilter({
   idPrefix: "filter-religious-character",
   name: "filters[religiousCharacter]",
-  legend: {
-    html: 'Religious character<span class="govuk-visually-hidden"> filter</span>' | safe,
-    classes: "govuk-fieldset__legend--s"
+  fieldset: {
+    legend: {
+      html: 'Religious character<span class="govuk-visually-hidden"> filter</span>',
+      classes: "govuk-fieldset__legend--s"
+    }
   },
   items: filterReligiousCharacterItems,
   values: filters.religiousCharacter,
@@ -61,7 +65,7 @@
 
 {{ govukCheckboxes({
   idPrefix: "filter-ofsted-rating",
-  name: "filters[ofsetdRating]",
+  name: "filters[ofstedRating]",
   fieldset: {
     legend: {
       html: 'Ofsted rating<span class="govuk-visually-hidden"> filter</span>',

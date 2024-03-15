@@ -8,7 +8,7 @@
     <fieldset class="govuk-fieldset">
       <legend class="govuk-fieldset__legend {{ params.legend.classes | default('govuk-fieldset__legend--s') }}">
         <h1 class="govuk-fieldset__heading">
-          {{ params.legend.html if params.legend.html else params.legend.text }}
+          {{ params.fieldset.legend.html if params.fieldset.legend.html else params.fieldset.legend.text }}
         </h1>
       </legend>
 
@@ -35,9 +35,10 @@
         <div class="govuk-checkboxes govuk-checkboxes--small app-checkbox-filter__container-inner">
 
           {%- for item in params.items -%}
+            {% set isChecked = item.checked | default((item.value in params.values and item.checked != false) if params.values else false, true) %}
 
             <div class="govuk-checkboxes__item">
-              <input class="govuk-checkboxes__input" id="{{ idPrefix }}-{{ item.id | default(item.value) }}" name="{{ params.name }}" type="checkbox" value="{{ item.value }}" {{ 'checked' if item.checked }}>
+              <input class="govuk-checkboxes__input" id="{{ idPrefix }}-{{ item.id | default(item.value) }}" name="{{ params.name }}" type="checkbox" value="{{ item.value }}" {{- " checked" if isChecked }}>
               <label class="govuk-label govuk-checkboxes__label" for="{{ idPrefix }}-{{ item.id | default(item.value) }}">
                 {{- item.text -}}
               </label>
