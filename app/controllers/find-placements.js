@@ -259,7 +259,7 @@ exports.placements_list = (req, res) => {
         heading: { text: 'School type' },
         items: establishmentTypes.map((establishmentType) => {
           return {
-            text: filterHelper.getFilterBLabel(establishmentType),
+            text: giasHelper.getEstablishmentTypeLabel(establishmentType),
             href: `/organisations/${req.params.organisationId}/placements/find/results/remove-establishment-type-filter/${establishmentType}`
           }
         })
@@ -271,7 +271,7 @@ exports.placements_list = (req, res) => {
         heading: { text: 'Gender' },
         items: genders.map((gender) => {
           return {
-            text: filterHelper.getFilterCLabel(gender),
+            text: giasHelper.getGenderLabel(gender),
             href: `/organisations/${req.params.organisationId}/placements/find/results/remove-gender-filter/${gender}`
           }
         })
@@ -283,7 +283,7 @@ exports.placements_list = (req, res) => {
         heading: { text: 'Religious character' },
         items: religiousCharacters.map((religiousCharacter) => {
           return {
-            text: filterHelper.getFilterCLabel(religiousCharacter),
+            text: giasHelper.getReligiousCharacterLabel(religiousCharacter),
             href: `/organisations/${req.params.organisationId}/placements/find/results/remove-religious-character-filter/${religiousCharacter}`
           }
         })
@@ -295,7 +295,7 @@ exports.placements_list = (req, res) => {
         heading: { text: 'Ofsted rating' },
         items: ofstedRatings.map((ofstedRating) => {
           return {
-            text: filterHelper.getFilterCLabel(ofstedRating),
+            text: ofstedHelper.getOfstedRatingLabel(ofstedRating),
             href: `/organisations/${req.params.organisationId}/placements/find/results/remove-ofsted-rating-filter/${ofstedRating}`
           }
         })
@@ -305,13 +305,33 @@ exports.placements_list = (req, res) => {
 
   const filterAgeRangeItems = filterHelper.getFilterAItems()
 
-  const filterEstablishmentTypeItems = giasHelper.getEstablishmentTypeOptions()
+  let selectedEstablishmentType
+  if (req.session.data.filters?.establishmentType) {
+    selectedEstablishmentType = req.session.data.filters.establishmentType
+  }
 
-  const filterGenderItems = giasHelper.getGenderOptions()
+  const filterEstablishmentTypeItems = giasHelper.getEstablishmentTypeOptions(selectedEstablishmentType)
 
-  const filterReligiousCharacterItems = giasHelper.getReligiousCharacterOptions()
+  let selectedGender
+  if (req.session.data.filters?.gender) {
+    selectedGender = req.session.data.filters.gender
+  }
 
-  const filterOfstedRatingItems = ofstedHelper.getOfstedRatingOptions()
+  const filterGenderItems = giasHelper.getGenderOptions(selectedGender)
+
+  let selectedReligiousCharacter
+  if (req.session.data.filters?.religiousCharacter) {
+    selectedReligiousCharacter = req.session.data.filters.religiousCharacter
+  }
+
+  const filterReligiousCharacterItems = giasHelper.getReligiousCharacterOptions(selectedReligiousCharacter)
+
+  let selectedOfstedRating
+  if (req.session.data.filters?.ofstedRating) {
+    selectedOfstedRating = req.session.data.filters.ofstedRating
+  }
+
+  const filterOfstedRatingItems = ofstedHelper.getOfstedRatingOptions(selectedOfstedRating)
 
   // Search radius - 5, 10, 50
   // default to 50
