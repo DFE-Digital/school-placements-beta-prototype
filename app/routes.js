@@ -53,6 +53,7 @@ const mentorController = require('./controllers/mentors')
 const organisationController = require('./controllers/organisations')
 const userController = require('./controllers/users')
 const placementController = require('./controllers/placements')
+const partnerController = require('./controllers/partners')
 const findPlacementController = require('./controllers/find-placements')
 
 const supportOrganisationController = require('./controllers/support/organisations')
@@ -198,6 +199,14 @@ router.post('/organisations/:organisationId/mentors/:mentorId/delete', checkIsAu
 router.get('/organisations/:organisationId/mentors/:mentorId', checkIsAuthenticated, mentorController.mentor_details)
 
 router.get('/organisations/:organisationId/mentors', checkIsAuthenticated, mentorController.mentor_list)
+
+/// ------------------------------------------------------------------------ ///
+/// PARTNER ROUTES
+/// ------------------------------------------------------------------------ ///
+
+router.get('/organisations/:organisationId/schools', checkIsAuthenticated, partnerController.partner_schools_list)
+
+router.get('/organisations/:organisationId/providers', checkIsAuthenticated, partnerController.partner_providers_list)
 
 /// ------------------------------------------------------------------------ ///
 /// PLACEMENT ROUTES
