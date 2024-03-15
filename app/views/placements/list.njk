@@ -13,7 +13,7 @@
   {% include "_includes/notification-banner.njk" %}
 
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
+    <div class="{{ 'govuk-grid-column-full' if organisation.type in ['university','scitt'] else 'govuk-grid-column-two-thirds' }}">
 
       {% include "_includes/page-heading.njk" %}
 
@@ -23,7 +23,13 @@
           href: actions.find
         }) }}
 
-        <p class="govuk-body">There are no placements for your partner schools.</p>
+        {% if placements.length %}
+          {% include "_includes/placements/providers/list.njk" %}
+          {# {% include "_includes/pagination.njk" %} #}
+        {% else %}
+          <p class="govuk-body">There are no placements for your partner schools.</p>
+        {% endif %}
+
       {% else %}
         {% if not mentors.length %}
           {% set mentorHtml %}
@@ -43,12 +49,14 @@
         {% endif %}
 
         {% if placements.length %}
-          {% include "_includes/placements/list.njk" %}
-          {% include "_includes/pagination.njk" %}
+          {% include "_includes/placements/schools/list.njk" %}
+          {# {% include "_includes/pagination.njk" %} #}
         {% else %}
           <p class="govuk-body">There are no placements for {{ organisation.name if organisation.name else "your organisation" }}.</p>
         {% endif %}
       {% endif %}
+
+      {% include "_includes/pagination.njk" %}
 
     </div>
   </div>
