@@ -19,11 +19,14 @@
 
       {% if organisation.type in ["university","scitt"] %}
         {{ govukButton({
-          text: "Find placement",
+          text: "Find new placement",
           href: actions.find
         }) }}
 
+        <h2 class="govuk-heading-m">Partner school placements</h2>
+
         {% if placements.length %}
+          {% include "./_search-panel.njk" %}
           {% include "_includes/placements/providers/list.njk" %}
           {# {% include "_includes/pagination.njk" %} #}
         {% else %}
