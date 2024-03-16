@@ -4,6 +4,10 @@
 
 {% set title = placement.subjects | getPlacementLabel %}
 
+{% if organisation.type in ["university","scitt"] %}
+  {% set caption = "Placement - " + placement.school.name %}
+{% endif %}
+
 {% block beforeContent %}
 {{ govukBackLink({
   text: "Back",
@@ -20,11 +24,18 @@
 
       {% include "_includes/page-heading.njk" %}
 
-      {% include "_includes/placements/details.njk" %}
+      {% if organisation.type in ["university","scitt"] %}
+        {% include "_includes/placements/providers/details.njk" %}
 
-      <p class="govuk-body">
-        <a class="govuk-link app-link--destructive" href="{{ actions.delete }}">Remove placement</a>
-      </p>
+        {% include "_includes/placements/schools/mentor-details.njk" %}
+        {% include "_includes/placements/schools/contact-details.njk" %}
+      {% else %}
+        {% include "_includes/placements/schools/details.njk" %}
+
+        <p class="govuk-body">
+          <a class="govuk-link app-link--destructive" href="{{ actions.delete }}">Remove placement</a>
+        </p>
+      {% endif %}
 
     </div>
   </div>
