@@ -21,6 +21,11 @@
 
       {% include "_includes/page-heading.njk" %}
 
+      {{ govukButton({
+        text: "Assign trainee",
+        href: "#"
+      }) }}
+
       {% include "_includes/placements/providers/details.njk" %}
 
       {% include "_includes/placements/providers/mentor-details.njk" %}
