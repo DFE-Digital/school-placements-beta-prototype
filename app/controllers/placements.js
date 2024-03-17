@@ -18,55 +18,73 @@ exports.placements_list = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
   const mentors = mentorModel.findMany({ organisationId: req.params.organisationId })
 
+  // TODO: get pageSize from settings
+  let pageSize = 25
+
   let placements
   if (['university','scitt'].includes(organisation.type)) {
     placements = partnerPlacementModel.findMany({ organisationId: req.params.organisationId })
+
+    // add details of school to each placement result
+    if (placements.length) {
+      placements = placements.map(placement => {
+        return placement = placementDecorator.decorate(placement)
+      })
+
+      // sort placements
+      placements.sort((a, b) => {
+        return a.name.localeCompare(b.name)
+      })
+    }
+
+    // variables used in the find placement flow
+    delete req.session.data.questions
+    delete req.session.data.filters
+    delete req.session.data.location
+    delete req.session.data.school
+    delete req.session.data.q
+    delete req.session.data.sortBy
+    delete req.session.data.keywords
+
+    let pagination = new Pagination(placements, req.query.page, pageSize)
+    placements = pagination.getData()
+
+    res.render('../views/placements/providers/list', {
+      organisation,
+      placements,
+      pagination,
+      actions: {
+        new: `/organisations/${req.params.organisationId}/placements/new`,
+        view: `/organisations/${req.params.organisationId}/placements`,
+        find: `/organisations/${req.params.organisationId}/placements/find`,
+        mentors: `/organisations/${req.params.organisationId}/mentors`,
+        back: '/'
+      }
+    })
+
   } else {
     placements = placementModel.findMany({ organisationId: req.params.organisationId })
-  }
 
-  delete req.session.data.placement
-  delete req.session.data.currentSubjectLevel
+    delete req.session.data.placement
+    delete req.session.data.currentSubjectLevel
 
-  // variables used in the find placement flow
-  delete req.session.data.questions
-  delete req.session.data.filters
-  delete req.session.data.location
-  delete req.session.data.school
-  delete req.session.data.q
-  delete req.session.data.sortBy
-  delete req.session.data.keywords
+    let pagination = new Pagination(placements, req.query.page, pageSize)
+    placements = pagination.getData()
 
-  // add details of school to each placement result
-  if (placements.length) {
-    placements = placements.map(placement => {
-      return placement = placementDecorator.decorate(placement)
-    })
-
-    // sort placements
-    placements.sort((a, b) => {
-      return a.name.localeCompare(b.name)
+    res.render('../views/placements/schools/list', {
+      organisation,
+      mentors,
+      placements,
+      pagination,
+      actions: {
+        new: `/organisations/${req.params.organisationId}/placements/new`,
+        view: `/organisations/${req.params.organisationId}/placements`,
+        find: `/organisations/${req.params.organisationId}/placements/find`,
+        mentors: `/organisations/${req.params.organisationId}/mentors`,
+        back: '/'
+      }
     })
   }
-
-  // TODO: get pageSize from settings
-  let pageSize = 25
-  let pagination = new Pagination(placements, req.query.page, pageSize)
-  placements = pagination.getData()
-
-  res.render('../views/placements/list', {
-    organisation,
-    mentors,
-    placements,
-    pagination,
-    actions: {
-      new: `/organisations/${req.params.organisationId}/placements/new`,
-      view: `/organisations/${req.params.organisationId}/placements`,
-      find: `/organisations/${req.params.organisationId}/placements/find`,
-      mentors: `/organisations/${req.params.organisationId}/mentors`,
-      back: '/'
-    }
-  })
 }
 
 /// ------------------------------------------------------------------------ ///
@@ -78,7 +96,7 @@ exports.placement_details = (req, res) => {
   let placement = placementModel.findOne({ placementId: req.params.placementId })
   placement = placementDecorator.decorate(placement)
 
-  res.render('../views/placements/show', {
+  res.render('../views/placements/schools/show', {
     organisation,
     placement,
     actions: {
@@ -121,7 +139,7 @@ exports.new_placement_get = (req, res) => {
     // show subject level form
     const subjectLevelOptions = subjectHelper.getSubjectLevelOptions()
 
-    res.render('../views/placements/subject-level', {
+    res.render('../views/placements/schools/subject-level', {
       organisation,
       placement: req.session.data.placement,
       subjectLevelOptions,
@@ -156,7 +174,7 @@ exports.new_placement_post = (req, res) => {
   }
 
   if (errors.length) {
-    res.render('../views/placements/subject-level', {
+    res.render('../views/placements/schools/subject-level', {
       organisation,
       placement: req.session.data.placement,
       subjectLevelOptions,
@@ -191,7 +209,7 @@ exports.new_placement_subject_get = (req, res) => {
     save += '?referrer=check'
   }
 
-  res.render('../views/placements/subject', {
+  res.render('../views/placements/schools/subject', {
     organisation,
     placement: req.session.data.placement,
     subjectOptions,
@@ -235,7 +253,7 @@ exports.new_placement_subject_post = (req, res) => {
   }
 
   if (errors.length) {
-    res.render('../views/placements/subject', {
+    res.render('../views/placements/schools/subject', {
       organisation,
       placement: req.session.data.placement,
       subjectOptions,
@@ -270,7 +288,7 @@ exports.new_placement_mentor_get = (req, res) => {
     save += '?referrer=check'
   }
 
-  res.render('../views/placements/mentor', {
+  res.render('../views/placements/schools/mentor', {
     organisation,
     placement: req.session.data.placement,
     mentorOptions,
@@ -319,7 +337,7 @@ exports.new_placement_mentor_post = (req, res) => {
   }
 
   if (errors.length) {
-    res.render('../views/placements/mentor', {
+    res.render('../views/placements/schools/mentor', {
       organisation,
       placement: req.session.data.placement,
       mentorOptions,
@@ -349,7 +367,7 @@ exports.new_placement_window_get = (req, res) => {
     save += '?referrer=check'
   }
 
-  res.render('../views/placements/window', {
+  res.render('../views/placements/schools/window', {
     organisation,
     placement: req.session.data.placement,
     actions: {
@@ -381,7 +399,7 @@ exports.new_placement_window_post = (req, res) => {
   }
 
   if (errors.length) {
-    res.render('../views/placements/window', {
+    res.render('../views/placements/schools/window', {
       organisation,
       placement: req.session.data.placement,
       actions: {
@@ -399,7 +417,7 @@ exports.new_placement_window_post = (req, res) => {
 exports.new_placement_check_get = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
 
-  res.render('../views/placements/check-your-answers', {
+  res.render('../views/placements/schools/check-your-answers', {
     organisation,
     placement: req.session.data.placement,
     actions: {
@@ -433,7 +451,7 @@ exports.edit_placement_subject_get = (req, res) => {
   const currentPlacement = placementModel.findOne({ placementId: req.params.placementId })
   const subjectOptions = subjectHelper.getSubjectOptions(currentPlacement.subjectLevel)
 
-  res.render('../views/placements/subject', {
+  res.render('../views/placements/schools/subject', {
     organisation,
     currentPlacement,
     placement: currentPlacement,
@@ -475,7 +493,7 @@ exports.edit_placement_subject_post = (req, res) => {
   }
 
   if (errors.length) {
-    res.render('../views/placements/subject', {
+    res.render('../views/placements/schools/subject', {
       organisation,
       currentPlacement,
       placement,
@@ -508,7 +526,7 @@ exports.edit_placement_mentor_get = (req, res) => {
     otherOptionLabel: 'Not known yet'
   })
 
-  res.render('../views/placements/mentor', {
+  res.render('../views/placements/schools/mentor', {
     organisation,
     currentPlacement,
     placement: currentPlacement,
@@ -554,7 +572,7 @@ exports.edit_placement_mentor_post = (req, res) => {
   }
 
   if (errors.length) {
-    res.render('../views/placements/mentor', {
+    res.render('../views/placements/schools/mentor', {
       organisation,
       currentPlacement,
       placement,
@@ -582,7 +600,7 @@ exports.edit_placement_window_get = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
   const currentPlacement = placementModel.findOne({ placementId: req.params.placementId })
 
-  res.render('../views/placements/window', {
+  res.render('../views/placements/schools/window', {
     organisation,
     currentPlacement,
     placement: currentPlacement,
@@ -611,7 +629,7 @@ exports.edit_placement_window_post = (req, res) => {
   }
 
   if (errors.length) {
-    res.render('../views/placements/window', {
+    res.render('../views/placements/schools/window', {
       organisation,
       currentPlacement,
       placement,
@@ -645,7 +663,7 @@ exports.delete_placement_get = (req, res) => {
     placementId: req.params.placementId
   })
 
-  res.render('../views/placements/delete', {
+  res.render('../views/placements/schools/delete', {
     organisation,
     placement,
     actions: {
