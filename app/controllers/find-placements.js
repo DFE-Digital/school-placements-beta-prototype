@@ -122,7 +122,9 @@ exports.find_subject_level_post = (req, res) => {
 
 exports.find_subject_get = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-  const subjectOptions = subjectHelper.getSubjectOptions(req.session.data.questions.subjectLevel)
+  const subjectOptions = subjectHelper.getSubjectOptions({
+    subjectLevel: req.session.data.questions.subjectLevel
+  })
 
   res.render('placements/find/subject', {
     organisation,
@@ -159,7 +161,9 @@ exports.find_subject_post = (req, res) => {
 
   if (errors.length) {
     const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-    const subjectOptions = subjectHelper.getSubjectOptions(req.session.data.questions.subjectLevel)
+    const subjectOptions = subjectHelper.getSubjectOptions({
+      subjectLevel: req.session.data.questions.subjectLevel
+    })
 
     res.render('placements/find/subject', {
       organisation,
