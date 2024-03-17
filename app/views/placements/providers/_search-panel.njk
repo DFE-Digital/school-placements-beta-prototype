@@ -9,7 +9,7 @@
     value: keywords,
     spellcheck: false
   },
-  action: "#",
+  action: actions.search.find,
   buttons: [{
     text: "Search",
     classes: "app-search__button"
@@ -22,5 +22,3 @@
     <a class="govuk-link govuk-link--no-visited-state" href="{{ actions.search.remove }}">Clear search</a>
   </p>
 {% endif %}
-
-{# actions.search.find #}
