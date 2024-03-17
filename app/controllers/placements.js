@@ -235,6 +235,7 @@ exports.placements_list = (req, res) => {
       filters: req.session.data.filters,
       actions: {
         view: `/organisations/${req.params.organisationId}/placements`,
+        find: `/organisations/${req.params.organisationId}/placements/find`,
         filters: {
           apply: `/organisations/${req.params.organisationId}/placements`,
           remove: `/organisations/${req.params.organisationId}/placements/remove-all-filters`
