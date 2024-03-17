@@ -1,0 +1,32 @@
+{% extends "layouts/main.njk" %}
+
+{% set primaryNavId = "placements" %}
+
+{% set title = placement.subjects | getPlacementLabel %}
+{% set caption = "Placement - " + placement.school.name %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: actions.back
+}) }}
+{% endblock %}
+
+{% block content %}
+
+  {% include "_includes/notification-banner.njk" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      {% include "_includes/page-heading.njk" %}
+
+      {% include "_includes/placements/providers/details.njk" %}
+
+      {% include "_includes/placements/providers/mentor-details.njk" %}
+      {% include "_includes/placements/providers/contact-details.njk" %}
+
+    </div>
+  </div>
+
+{% endblock %}
