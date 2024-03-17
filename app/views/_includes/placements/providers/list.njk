@@ -2,7 +2,7 @@
   {% for result in placements %}
     <li class="app-search-results__item">
       {{ appResultDetail({
-        href: baseUrl + "/placements/" + result.id,
+        href: actions.view + "/" + result.id,
         schoolName: result.school.name,
         placementName: result.name,
         minAge: result.school.minAge,

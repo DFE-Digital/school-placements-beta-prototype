@@ -50,27 +50,9 @@
 
       {# {% include "./_sort-options.njk" %} #}
 
-      {% if results.length %}
+      {% if placements.length %}
 
-        <ul class="app-search-results">
-          {% for result in results %}
-            <li class="app-search-results__item">
-              {{ appResultDetail({
-                href: baseUrl + "/placements/find/results/" + result.id,
-                schoolName: result.school.name,
-                placementName: result.name,
-                minAge: result.school.minAge,
-                maxAge: result.school.maxAge,
-                establishmentType: result.school.establishmentType | getEstablishmentTypeLabel,
-                gender: result.school.gender | getGenderLabel,
-                religiousCharacter: result.school.religiousCharacter | getReligiousCharacterLabel,
-                urbanRural: result.school.urbanRural | getUrbanRuralLabel,
-                ofstedRating: result.school.ofsted.rating | getOfstedRatingLabel if result.school.ofsted.rating else "Not known",
-                mentors: result.mentors
-              })}}
-            </li>
-          {% endfor %}
-        </ul>
+        {% include "_includes/placements/providers/list.njk" %}
 
         {% include "_includes/pagination.njk" %}
 
