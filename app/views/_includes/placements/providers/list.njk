@@ -1,38 +1,3 @@
-{# <table class="govuk-table app-table--vertical-align-middle">
-  <thead class="govuk-table__head">
-    <tr class="govuk-table__row">
-      <th class="govuk-table__header">Subject</th>
-      <th class="govuk-table__header">School</th>
-      <th class="govuk-table__header">Mentor</th>
-    </tr>
-  </thead>
-  <tbody class="govuk-table__body">
-    {% for placement in placements %}
-      <tr class="govuk-table__row">
-        <td class="govuk-table__cell">
-          <a class="govuk-link" href="{{ actions.view }}/{{ placement.id }}">
-            {{ placement.subjects | getPlacementLabel }}
-          </a>
-        </td>
-        <td class="govuk-table__cell">
-          {{ placement.school.name }}
-        </td>
-        <td class="govuk-table__cell">
-          {% if placement.mentors == "unknown" %}
-            Not known yet
-          {% else %}
-            <ul class="govuk-list">
-              {% for mentor in placement.mentors %}
-                <li>{{ mentor | getMentorName }}</li>
-              {% endfor %}
-            </ul>
-          {% endif %}
-        </td>
-      </tr>
-    {% endfor %}
-  </tbody>
-</table> #}
-
 <ul class="app-search-results">
   {% for result in placements %}
     <li class="app-search-results__item">
