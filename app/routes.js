@@ -257,7 +257,6 @@ router.post('/organisations/:organisationId/placements/new/check', checkIsAuthen
 router.get('/organisations/:organisationId/placements/remove-keyword-search', checkIsAuthenticated, placementController.removeKeywordSearch)
 
 router.get('/organisations/:organisationId/placements/remove-subject-filter/:subject', checkIsAuthenticated, placementController.removeFilterSubject)
-router.get('/organisations/:organisationId/placements/remove-age-range-filter/:ageRange', checkIsAuthenticated, placementController.removeFilterAgeRange)
 router.get('/organisations/:organisationId/placements/remove-establishment-type-filter/:establishmentType',  checkIsAuthenticated,placementController.removeFilterEstablishmentType)
 router.get('/organisations/:organisationId/placements/remove-gender-filter/:gender', checkIsAuthenticated, placementController.removeFilterGender)
 router.get('/organisations/:organisationId/placements/remove-religious-character-filter/:religiousCharacter', checkIsAuthenticated, placementController.removeFilterReligiousCharacter)
