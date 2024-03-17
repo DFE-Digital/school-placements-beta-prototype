@@ -1,21 +1,4 @@
 {% set filterOptionsHtml %}
-{# {{ govukCheckboxes({
-  idPrefix: "filter-age-range",
-  name: "filters[ageRange]",
-  fieldset: {
-    legend: {
-      html: 'Age range<span class="govuk-visually-hidden"> filter</span>',
-      classes: "govuk-fieldset__legend--s"
-    }
-  },
-  formGroup: {
-    classes: "app-filter__group"
-  },
-  items: filterAgeRangeItems,
-  values: filters.ageRange,
-  classes: "govuk-checkboxes--small"
-}) }} #}
-
 {{ appCheckboxFilter({
   idPrefix: "filter-subject",
   name: "filters[subject]",
