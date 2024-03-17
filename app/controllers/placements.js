@@ -31,17 +31,11 @@ exports.placements_list = (req, res) => {
     const hasSearch = !!((keywords))
 
     // Filters
-    const ageRange = null
     const subject = null
     const establishmentType = null
     const gender = null
     const religiousCharacter = null
     const ofstedRating = null
-
-    let ageRanges
-    if (req.session.data.filters?.ageRange) {
-      ageRanges = filterHelper.getCheckboxValues(ageRange, req.session.data.filters.ageRange)
-    }
 
     let subjects
     if (req.session.data.filters?.subject) {
@@ -68,8 +62,7 @@ exports.placements_list = (req, res) => {
       ofstedRatings = filterHelper.getCheckboxValues(ofstedRating, req.session.data.filters.ofstedRating)
     }
 
-    const hasFilters = !!((ageRanges?.length > 0)
-      || (subjects?.length > 0)
+    const hasFilters = !!((subjects?.length > 0)
       || (establishmentTypes?.length > 0)
       || (genders?.length > 0)
       || (religiousCharacters?.length > 0)
@@ -90,18 +83,6 @@ exports.placements_list = (req, res) => {
             return {
               text: subjectHelper.getSubjectLabel(subject),
               href: `/organisations/${req.params.organisationId}/placements/remove-subject-filter/${subject}`
-            }
-          })
-        })
-      }
-
-      if (ageRanges?.length) {
-        selectedFilters.categories.push({
-          heading: { text: 'Age range' },
-          items: ageRanges.map((ageRange) => {
-            return {
-              text: filterHelper.getFilterALabel(ageRange),
-              href: `/organisations/${req.params.organisationId}/placements/remove-age-range-filter/${ageRange}`
             }
           })
         })
@@ -157,8 +138,6 @@ exports.placements_list = (req, res) => {
     }
 
     // get filter items
-    const filterAgeRangeItems = filterHelper.getFilterAItems(ageRanges)
-
     const filterSubjectItems = subjectHelper.getSubjectOptions({
       selectedItem: subject
     })
@@ -178,45 +157,55 @@ exports.placements_list = (req, res) => {
       placements = placements.map(placement => {
         return placement = placementDecorator.decorate(placement)
       })
-    }
 
-    // filter placements
-    if (subjects?.length) {
-      placements = placements.filter(placement => {
-        return placement.subjects.some(subject => subjects.includes(subject))
+      if (keywords?.length) {
+        const query = keywords.toLowerCase()
+        placements = placements.filter(placement => {
+          return placement.school.name.toLowerCase().includes(query)
+            || placement.school.urn?.toString().includes(query)
+            || placement.school.address?.postcode?.toLowerCase().includes(query)
+        })
+      }
+
+      // filter placements
+      if (subjects?.length) {
+        placements = placements.filter(placement => {
+          return placement.subjects.some(subject => subjects.includes(subject))
+        })
+      }
+
+      if (establishmentTypes?.length) {
+        placements = placements.filter(placement => {
+          return establishmentTypes.includes(placement.school.establishmentType.toString())
+        })
+      }
+
+      if (genders?.length) {
+        placements = placements.filter(placement => {
+          return genders.includes(placement.school.gender.toString())
+        })
+      }
+
+      if (religiousCharacters?.length) {
+        placements = placements.filter(placement => {
+          return religiousCharacters.includes(placement.school.religiousCharacter.toString())
+        })
+      }
+
+      if (ofstedRatings?.length) {
+        placements = placements.filter(placement => {
+          if (placement.school.ofsted?.rating) {
+            return ofstedRatings.includes(placement.school.ofsted.rating.toString())
+          }
+        })
+      }
+
+      // sort placements
+      placements.sort((a, b) => {
+        return a.name.localeCompare(b.name) || a.school.name.localeCompare(b.school.name)
       })
-    }
 
-    if (establishmentTypes?.length) {
-      placements = placements.filter(placement => {
-        return establishmentTypes.includes(placement.school.establishmentType.toString())
-      })
     }
-
-    if (genders?.length) {
-      placements = placements.filter(placement => {
-        return genders.includes(placement.school.gender.toString())
-      })
-    }
-
-    if (religiousCharacters?.length) {
-      placements = placements.filter(placement => {
-        return religiousCharacters.includes(placement.school.religiousCharacter.toString())
-      })
-    }
-
-    if (ofstedRatings?.length) {
-      placements = placements.filter(placement => {
-        if (placement.school.ofsted?.rating) {
-          return ofstedRatings.includes(placement.school.ofsted.rating.toString())
-        }
-      })
-    }
-
-    // sort placements
-    placements.sort((a, b) => {
-      return a.name.localeCompare(b.name) || a.school.name.localeCompare(b.school.name)
-    })
 
     // variables used in the find placement flow
     // delete req.session.data.questions
@@ -238,7 +227,6 @@ exports.placements_list = (req, res) => {
       hasFilters,
       hasSearch,
       keywords,
-      filterAgeRangeItems,
       filterSubjectItems,
       filterEstablishmentTypeItems,
       filterGenderItems,
@@ -246,11 +234,15 @@ exports.placements_list = (req, res) => {
       filterOfstedRatingItems,
       filters: req.session.data.filters,
       actions: {
-        new: `/organisations/${req.params.organisationId}/placements/new`,
         view: `/organisations/${req.params.organisationId}/placements`,
-        find: `/organisations/${req.params.organisationId}/placements/find`,
-        mentors: `/organisations/${req.params.organisationId}/mentors`,
-        back: '/'
+        filters: {
+          apply: `/organisations/${req.params.organisationId}/placements`,
+          remove: `/organisations/${req.params.organisationId}/placements/remove-all-filters`
+        },
+        search: {
+          find: `/organisations/${req.params.organisationId}/placements`,
+          remove: `/organisations/${req.params.organisationId}/placements/remove-keyword-search`
+        }
       }
     })
 
@@ -288,11 +280,6 @@ exports.removeKeywordSearch = (req, res) => {
 
 exports.removeFilterSubject = (req, res) => {
   req.session.data.filters.subject = filterHelper.removeFilter(req.params.subject, req.session.data.filters.subject)
-  res.redirect(`/organisations/${req.params.organisationId}/placements`)
-}
-
-exports.removeFilterAgeRange = (req, res) => {
-  req.session.data.filters.ageRange = filterHelper.removeFilter(req.params.ageRange, req.session.data.filters.ageRange)
   res.redirect(`/organisations/${req.params.organisationId}/placements`)
 }
 
