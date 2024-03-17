@@ -94,18 +94,31 @@ exports.placements_list = (req, res) => {
 exports.placement_details = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
   let placement = placementModel.findOne({ placementId: req.params.placementId })
-  placement = placementDecorator.decorate(placement)
 
-  res.render('../views/placements/schools/show', {
-    organisation,
-    placement,
-    actions: {
-      change: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`,
-      delete: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}/delete`,
-      back: `/organisations/${req.params.organisationId}/placements`,
-      cancel: `/organisations/${req.params.organisationId}/placements`
-    }
-  })
+  const actions = {
+    change: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`,
+    delete: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}/delete`,
+    back: `/organisations/${req.params.organisationId}/placements`,
+    cancel: `/organisations/${req.params.organisationId}/placements`
+  }
+
+  if (['university','scitt'].includes(organisation.type)) {
+    placement = placementDecorator.decorate(placement)
+
+    res.render('../views/placements/providers/show', {
+      organisation,
+      placement,
+      actions
+    })
+  } else {
+    res.render('../views/placements/schools/show', {
+      organisation,
+      placement,
+      actions
+    })
+  }
+
+
 }
 
 /// ------------------------------------------------------------------------ ///
