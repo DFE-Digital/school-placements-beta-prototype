@@ -337,57 +337,57 @@ exports.placements_list = (req, res) => {
   // const selectedSubjects = filterHelper.getSelectedSubjectItems(subjectItems.filter(subject => subject.checked === 'checked'))
 
   // get results based on initial questions
-  let results = placementModel.findMany({
+  let placements = placementModel.findMany({
     subjectLevel: req.session.data.questions.subjectLevel,
     subjects: req.session.data.questions.subjects
   })
 
-  // add details of school to each placement result
-  if (results.length) {
-    results = results.map(result => {
-      return result = placementDecorator.decorate(result)
+  // add details of school to each placement
+  if (placements.length) {
+    placements = placements.map(placement => {
+      return placement = placementDecorator.decorate(placement)
     })
   }
 
-  // filter results
+  // filter placements
   if (establishmentTypes?.length) {
-    results = results.filter(result => {
-      return establishmentTypes.includes(result.school.establishmentType.toString())
+    placements = placements.filter(placement => {
+      return establishmentTypes.includes(placement.school.establishmentType.toString())
     })
   }
 
   if (genders?.length) {
-    results = results.filter(result => {
-      return genders.includes(result.school.gender.toString())
+    placements = placements.filter(placement => {
+      return genders.includes(placement.school.gender.toString())
     })
   }
 
   if (religiousCharacters?.length) {
-    results = results.filter(result => {
-      return religiousCharacters.includes(result.school.religiousCharacter.toString())
+    placements = placements.filter(placement => {
+      return religiousCharacters.includes(placement.school.religiousCharacter.toString())
     })
   }
 
   if (ofstedRatings?.length) {
-    results = results.filter(result => {
-      if (result.school.ofsted?.rating) {
-        return ofstedRatings.includes(result.school.ofsted.rating.toString())
+    placements = placements.filter(placement => {
+      if (placement.school.ofsted?.rating) {
+        return ofstedRatings.includes(placement.school.ofsted.rating.toString())
       }
     })
   }
 
-  // sort results
-  results.sort((a, b) => {
+  // sort placements
+  placements.sort((a, b) => {
     return a.name.localeCompare(b.name) || a.school.name.localeCompare(b.school.name)
   })
 
   let pageSize = 25
-  let pagination = new Pagination(results, req.query.page, pageSize)
-  results = pagination.getData()
+  let pagination = new Pagination(placements, req.query.page, pageSize)
+  placements = pagination.getData()
 
   res.render('../views/placements/find/list', {
     organisation,
-    results,
+    placements,
     pagination,
     selectedFilters,
     hasFilters,
