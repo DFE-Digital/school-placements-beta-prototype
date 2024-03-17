@@ -254,7 +254,7 @@ router.post('/organisations/:organisationId/placements/new/check', checkIsAuthen
 
 /// ------------------------------------------------------------------------ ///
 
-router.get('/organisations/:organisationId/placements/remove-keyword-search', checkIsAuthenticated, findPlacementController.removeKeywordSearch)
+router.get('/organisations/:organisationId/placements/remove-keyword-search', checkIsAuthenticated, placementController.removeKeywordSearch)
 
 router.get('/organisations/:organisationId/placements/remove-subject-filter/:subject', checkIsAuthenticated, placementController.removeFilterSubject)
 router.get('/organisations/:organisationId/placements/remove-age-range-filter/:ageRange', checkIsAuthenticated, placementController.removeFilterAgeRange)
@@ -263,7 +263,7 @@ router.get('/organisations/:organisationId/placements/remove-gender-filter/:gend
 router.get('/organisations/:organisationId/placements/remove-religious-character-filter/:religiousCharacter', checkIsAuthenticated, placementController.removeFilterReligiousCharacter)
 router.get('/organisations/:organisationId/placements/remove-ofsted-rating-filter/:ofstedRating', checkIsAuthenticated, placementController.removeFilterOfstedRating)
 
-router.get('/organisations/:organisationId/placements/remove-all-filters',  checkIsAuthenticated,findPlacementController.removeAllFilters)
+router.get('/organisations/:organisationId/placements/remove-all-filters',  checkIsAuthenticated,placementController.removeAllFilters)
 
 router.get('/organisations/:organisationId/placements/:placementId/subject', checkIsAuthenticated, placementController.edit_placement_subject_get)
 router.post('/organisations/:organisationId/placements/:placementId/subject', checkIsAuthenticated, placementController.edit_placement_subject_post)
