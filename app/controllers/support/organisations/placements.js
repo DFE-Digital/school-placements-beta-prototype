@@ -36,7 +36,7 @@ exports.placements_list = (req, res) => {
     pagination,
     actions: {
       new: '#', //`/organisations/${req.params.organisationId}/placements/new`
-      view: `/organisations/${req.params.organisationId}/placements`,
+      view: `/support/organisations/${req.params.organisationId}/placements`,
       back: '/'
     }
   })
@@ -48,7 +48,8 @@ exports.placements_list = (req, res) => {
 
 exports.placement_details = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-  const placement = placementModel.findOne({ placementId: req.params.placementId })
+  let placement = placementModel.findOne({ placementId: req.params.placementId })
+  placement = placementDecorator.decorate(placement)
 
   res.render('../views/support/organisations/placements/show', {
     organisation,
