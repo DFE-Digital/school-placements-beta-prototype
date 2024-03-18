@@ -25,6 +25,18 @@ exports.placements_list = (req, res) => {
 
   let placements
   if (['university','scitt'].includes(organisation.type)) {
+    // variables used in the find placement flow
+    delete req.session.data.questions
+    delete req.session.data.location
+    delete req.session.data.school
+    delete req.session.data.q
+    delete req.session.data.sortBy
+
+    if (req.get('referer').includes(`/organisations/${req.params.organisationId}/placements/find/results`)) {
+      delete req.session.data.filters
+      delete req.session.data.keywords
+    }
+
     // Search
     const keywords = req.session.data.keywords
 
@@ -139,7 +151,7 @@ exports.placements_list = (req, res) => {
 
     // get filter items
     const filterSubjectItems = subjectHelper.getSubjectOptions({
-      selectedItem: subject
+      selectedItem: subjects
     })
 
     const filterEstablishmentTypeItems = giasHelper.getEstablishmentTypeOptions(establishmentTypes)
@@ -206,15 +218,6 @@ exports.placements_list = (req, res) => {
       })
 
     }
-
-    // variables used in the find placement flow
-    // delete req.session.data.questions
-    // delete req.session.data.filters
-    // delete req.session.data.location
-    // delete req.session.data.school
-    // delete req.session.data.q
-    // delete req.session.data.sortBy
-    // delete req.session.data.keywords
 
     let pagination = new Pagination(placements, req.query.page, pageSize)
     placements = pagination.getData()
