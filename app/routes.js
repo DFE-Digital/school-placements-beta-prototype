@@ -53,9 +53,12 @@ const mentorController = require('./controllers/mentors')
 const organisationController = require('./controllers/organisations')
 const userController = require('./controllers/users')
 const placementController = require('./controllers/placements')
+const partnerController = require('./controllers/partners')
+const findPlacementController = require('./controllers/find-placements')
 
 const supportOrganisationController = require('./controllers/support/organisations')
 const supportOrganisationMentorController = require('./controllers/support/organisations/mentors')
+const supportOrganisationPlacementController = require('./controllers/support/organisations/placements')
 const supportOrganisationUserController = require('./controllers/support/organisations/users')
 const supportUserController = require('./controllers/support/users')
 
@@ -188,6 +191,8 @@ router.post('/organisations/:organisationId/mentors/new', checkIsAuthenticated, 
 router.get('/organisations/:organisationId/mentors/new/check', checkIsAuthenticated, mentorController.new_mentor_check_get)
 router.post('/organisations/:organisationId/mentors/new/check', checkIsAuthenticated, mentorController.new_mentor_check_post)
 
+/// ------------------------------------------------------------------------ ///
+
 router.get('/organisations/:organisationId/mentors/:mentorId/delete', checkIsAuthenticated, mentorController.delete_mentor_get)
 router.post('/organisations/:organisationId/mentors/:mentorId/delete', checkIsAuthenticated, mentorController.delete_mentor_post)
 
@@ -196,7 +201,40 @@ router.get('/organisations/:organisationId/mentors/:mentorId', checkIsAuthentica
 router.get('/organisations/:organisationId/mentors', checkIsAuthenticated, mentorController.mentor_list)
 
 /// ------------------------------------------------------------------------ ///
+/// PARTNER ROUTES
+/// ------------------------------------------------------------------------ ///
+
+router.get('/organisations/:organisationId/schools', checkIsAuthenticated, partnerController.partner_schools_list)
+
+router.get('/organisations/:organisationId/providers', checkIsAuthenticated, partnerController.partner_providers_list)
+
+/// ------------------------------------------------------------------------ ///
 /// PLACEMENT ROUTES
+/// ------------------------------------------------------------------------ ///
+
+router.get('/organisations/:organisationId/placements/find', checkIsAuthenticated, findPlacementController.find_location_get)
+router.post('/organisations/:organisationId/placements/find', checkIsAuthenticated, findPlacementController.find_location_post)
+
+router.get('/organisations/:organisationId/placements/find/subject-level', checkIsAuthenticated, findPlacementController.find_subject_level_get)
+router.post('/organisations/:organisationId/placements/find/subject-level', checkIsAuthenticated, findPlacementController.find_subject_level_post)
+
+router.get('/organisations/:organisationId/placements/find/subject', checkIsAuthenticated, findPlacementController.find_subject_get)
+router.post('/organisations/:organisationId/placements/find/subject', checkIsAuthenticated, findPlacementController.find_subject_post)
+
+router.get('/organisations/:organisationId/placements/find/results', checkIsAuthenticated, findPlacementController.placements_list)
+
+router.get('/organisations/:organisationId/placements/find/results/remove-keyword-search', checkIsAuthenticated, findPlacementController.removeKeywordSearch)
+
+router.get('/organisations/:organisationId/placements/find/results/remove-age-range-filter/:ageRange', checkIsAuthenticated, findPlacementController.removeFilterAgeRange)
+router.get('/organisations/:organisationId/placements/find/results/remove-establishment-type-filter/:establishmentType',  checkIsAuthenticated,findPlacementController.removeFilterEstablishmentType)
+router.get('/organisations/:organisationId/placements/find/results/remove-gender-filter/:gender', checkIsAuthenticated, findPlacementController.removeFilterGender)
+router.get('/organisations/:organisationId/placements/find/results/remove-religious-character-filter/:religiousCharacter', checkIsAuthenticated, findPlacementController.removeFilterReligiousCharacter)
+router.get('/organisations/:organisationId/placements/find/results/remove-ofsted-rating-filter/:ofstedRating', checkIsAuthenticated, findPlacementController.removeFilterOfstedRating)
+
+router.get('/organisations/:organisationId/placements/find/results/remove-all-filters',  checkIsAuthenticated,findPlacementController.removeAllFilters)
+
+router.get('/organisations/:organisationId/placements/find/results/:placementId', checkIsAuthenticated, findPlacementController.show)
+
 /// ------------------------------------------------------------------------ ///
 
 router.get('/organisations/:organisationId/placements/new', checkIsAuthenticated, placementController.new_placement_get)
@@ -214,6 +252,18 @@ router.post('/organisations/:organisationId/placements/new/window', checkIsAuthe
 router.get('/organisations/:organisationId/placements/new/check', checkIsAuthenticated, placementController.new_placement_check_get)
 router.post('/organisations/:organisationId/placements/new/check', checkIsAuthenticated, placementController.new_placement_check_post)
 
+/// ------------------------------------------------------------------------ ///
+
+router.get('/organisations/:organisationId/placements/remove-keyword-search', checkIsAuthenticated, placementController.removeKeywordSearch)
+
+router.get('/organisations/:organisationId/placements/remove-subject-filter/:subject', checkIsAuthenticated, placementController.removeFilterSubject)
+router.get('/organisations/:organisationId/placements/remove-establishment-type-filter/:establishmentType',  checkIsAuthenticated,placementController.removeFilterEstablishmentType)
+router.get('/organisations/:organisationId/placements/remove-gender-filter/:gender', checkIsAuthenticated, placementController.removeFilterGender)
+router.get('/organisations/:organisationId/placements/remove-religious-character-filter/:religiousCharacter', checkIsAuthenticated, placementController.removeFilterReligiousCharacter)
+router.get('/organisations/:organisationId/placements/remove-ofsted-rating-filter/:ofstedRating', checkIsAuthenticated, placementController.removeFilterOfstedRating)
+
+router.get('/organisations/:organisationId/placements/remove-all-filters',  checkIsAuthenticated,placementController.removeAllFilters)
+
 router.get('/organisations/:organisationId/placements/:placementId/subject', checkIsAuthenticated, placementController.edit_placement_subject_get)
 router.post('/organisations/:organisationId/placements/:placementId/subject', checkIsAuthenticated, placementController.edit_placement_subject_post)
 
@@ -228,7 +278,7 @@ router.post('/organisations/:organisationId/placements/:placementId/delete', che
 
 router.get('/organisations/:organisationId/placements/:placementId', checkIsAuthenticated, placementController.placement_details)
 
-router.get('/organisations/:organisationId/placements', checkIsAuthenticated, placementController.placement_list)
+router.get('/organisations/:organisationId/placements', checkIsAuthenticated, placementController.placements_list)
 
 /// ------------------------------------------------------------------------ ///
 /// ------------------------------------------------------------------------ ///
@@ -275,6 +325,14 @@ router.post('/support/organisations/:organisationId/mentors/:mentorId/delete', c
 router.get('/support/organisations/:organisationId/mentors/:mentorId', checkIsAuthenticated, supportOrganisationMentorController.mentor_details)
 
 router.get('/support/organisations/:organisationId/mentors', checkIsAuthenticated, supportOrganisationMentorController.mentor_list)
+
+/// ------------------------------------------------------------------------ ///
+/// SUPPORT - ORGANISATION PLACEMENT ROUTES
+/// ------------------------------------------------------------------------ ///
+
+router.get('/support/organisations/:organisationId/placements/:placementId', checkIsAuthenticated, supportOrganisationPlacementController.placement_details)
+
+router.get('/support/organisations/:organisationId/placements', checkIsAuthenticated, supportOrganisationPlacementController.placements_list)
 
 /// ------------------------------------------------------------------------ ///
 /// SUPPORT - USER ROUTES

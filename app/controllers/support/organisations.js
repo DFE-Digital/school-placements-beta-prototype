@@ -5,6 +5,7 @@ const schoolModel = require('../../models/schools')
 
 const Pagination = require('../../helpers/pagination')
 const utilsHelper = require('../../helpers/utils')
+const filterHelper = require('../../helpers/filters')
 
 exports.list_organisations_get = (req, res) => {
   // Clean out data from add organisation flow if present
@@ -22,7 +23,7 @@ exports.list_organisations_get = (req, res) => {
 
   let organisationTypes
   if (req.session.data.filters?.organisationType) {
-    organisationTypes = utilsHelper.getCheckboxValues(organisationType, req.session.data.filters.organisationType)
+    organisationTypes = filterHelper.getCheckboxValues(organisationType, req.session.data.filters.organisationType)
   }
 
   const hasFilters = !!((organisationTypes?.length > 0))
@@ -66,7 +67,6 @@ exports.list_organisations_get = (req, res) => {
     return a.name.localeCompare(b.name) || a.type.localeCompare(b.type)
   })
 
-
   let pageSize = 25
   let pagination = new Pagination(organisations, req.query.page, pageSize)
   organisations = pagination.getData()
@@ -96,7 +96,7 @@ exports.list_organisations_get = (req, res) => {
 }
 
 exports.removeOrganisationTypeFilter = (req, res) => {
-  req.session.data.filters.organisationType = utilsHelper.removeFilter(
+  req.session.data.filters.organisationType = filterHelper.removeFilter(
     req.params.organisationType,
     req.session.data.filters.organisationType
   )

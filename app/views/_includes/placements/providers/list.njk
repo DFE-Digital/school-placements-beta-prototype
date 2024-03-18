@@ -1,0 +1,19 @@
+<ul class="app-search-results">
+  {% for result in placements %}
+    <li class="app-search-results__item">
+      {{ appResultDetail({
+        href: actions.view + "/" + result.id,
+        schoolName: result.school.name,
+        placementName: result.name,
+        minAge: result.school.minAge,
+        maxAge: result.school.maxAge,
+        establishmentType: result.school.establishmentType | getEstablishmentTypeLabel,
+        gender: result.school.gender | getGenderLabel,
+        religiousCharacter: result.school.religiousCharacter | getReligiousCharacterLabel,
+        urbanRural: result.school.urbanRural | getUrbanRuralLabel,
+        ofstedRating: result.school.ofsted.rating | getOfstedRatingLabel if result.school.ofsted.rating else "Not known",
+        mentors: result.mentors
+      })}}
+    </li>
+  {% endfor %}
+</ul>

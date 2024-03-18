@@ -1,6 +1,6 @@
 {% if pagination.pageCount > 1 %}
   <p class="govuk-body">
-    Showing {{ pagination.firstResultNumber }} to {{ pagination.lastResultNumber }} of {{ pagination.totalCount }} results
+    Showing {{ pagination.firstResultNumber }} to {{ pagination.lastResultNumber }} of {{ pagination.totalCount | numeral('0,0') }} results
   </p>
 
   {{ govukPagination({

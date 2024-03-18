@@ -29,11 +29,20 @@ exports.getSubjectLevelLabel = (code) => {
   return label
 }
 
-exports.getSubjectOptions = (subjectLevel, active = true) => { //, selectedItem
+exports.getSubjectOptions = (params) => {
   const items = []
 
+  let active = true
+  if (params.active) {
+    active = params.active
+  }
+
   let subjects = require('../data/dist/subjects/subjects')
-  subjects = subjects.filter(subject => subject.level === subjectLevel && subject.active === active)
+  subjects = subjects.filter(subject => subject.active === active)
+
+  if (params.subjectLevel) {
+    subjects = subjects.filter(subject => subject.level === params.subjectLevel)
+  }
 
   subjects.forEach((subject, i) => {
     const item = {}
@@ -41,7 +50,7 @@ exports.getSubjectOptions = (subjectLevel, active = true) => { //, selectedItem
     item.text = subject.name
     item.value = subject.code
     item.id = subject.id
-    // item.checked = (selectedItem && selectedItem.includes(subject.code)) ? 'checked' : ''
+    item.checked = (params.selectedItem && params.selectedItem.includes(subject.code)) ? 'checked' : ''
 
     items.push(item)
   })

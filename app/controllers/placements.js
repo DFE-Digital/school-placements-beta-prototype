@@ -2,39 +2,314 @@ const mentorModel = require('../models/mentors')
 const organisationModel = require('../models/organisations')
 const placementModel = require('../models/placements')
 
+const partnerPlacementModel = require('../models/partner-placements')
+
 const Pagination = require('../helpers/pagination')
+const filterHelper = require('../helpers/filters.js')
+const giasHelper = require('../helpers/gias')
 const mentorHelper = require('../helpers/mentors')
+const ofstedHelper = require('../helpers/ofsted')
 const subjectHelper = require('../helpers/subjects')
+
+const placementDecorator = require('../decorators/placements.js')
 
 /// ------------------------------------------------------------------------ ///
 /// LIST PLACEMENT
 /// ------------------------------------------------------------------------ ///
 
-exports.placement_list = (req, res) => {
+exports.placements_list = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-  const mentors = mentorModel.findMany({ organisationId: req.params.organisationId })
-  let placements = placementModel.findMany({ organisationId: req.params.organisationId })
-
-  delete req.session.data.placement
-  delete req.session.data.currentSubjectLevel
 
   // TODO: get pageSize from settings
   let pageSize = 25
-  let pagination = new Pagination(placements, req.query.page, pageSize)
-  placements = pagination.getData()
 
-  res.render('../views/placements/list', {
-    organisation,
-    mentors,
-    placements,
-    pagination,
-    actions: {
-      new: `/organisations/${req.params.organisationId}/placements/new`,
-      view: `/organisations/${req.params.organisationId}/placements`,
-      mentors: `/organisations/${req.params.organisationId}/mentors`,
-      back: '/'
+  let placements
+  if (['university','scitt'].includes(organisation.type)) {
+    // variables used in the find placement flow
+    delete req.session.data.questions
+    delete req.session.data.location
+    delete req.session.data.school
+    delete req.session.data.q
+    delete req.session.data.sortBy
+
+    if (req.get('referer').includes(`/organisations/${req.params.organisationId}/placements/find/results`)) {
+      delete req.session.data.filters
+      delete req.session.data.keywords
     }
-  })
+
+    // Search
+    const keywords = req.session.data.keywords
+
+    const hasSearch = !!((keywords))
+
+    // Filters
+    const subject = null
+    const establishmentType = null
+    const gender = null
+    const religiousCharacter = null
+    const ofstedRating = null
+
+    let subjects
+    if (req.session.data.filters?.subject) {
+      subjects = filterHelper.getCheckboxValues(subject, req.session.data.filters.subject)
+    }
+
+    let establishmentTypes
+    if (req.session.data.filters?.establishmentType) {
+      establishmentTypes = filterHelper.getCheckboxValues(establishmentType, req.session.data.filters.establishmentType)
+    }
+
+    let genders
+    if (req.session.data.filters?.gender) {
+      genders = filterHelper.getCheckboxValues(gender, req.session.data.filters.gender)
+    }
+
+    let religiousCharacters
+    if (req.session.data.filters?.religiousCharacter) {
+      religiousCharacters = filterHelper.getCheckboxValues(religiousCharacter, req.session.data.filters.religiousCharacter)
+    }
+
+    let ofstedRatings
+    if (req.session.data.filters?.ofstedRating) {
+      ofstedRatings = filterHelper.getCheckboxValues(ofstedRating, req.session.data.filters.ofstedRating)
+    }
+
+    const hasFilters = !!((subjects?.length > 0)
+      || (establishmentTypes?.length > 0)
+      || (genders?.length > 0)
+      || (religiousCharacters?.length > 0)
+      || (ofstedRatings?.length > 0)
+    )
+
+    let selectedFilters = null
+
+    if (hasFilters) {
+      selectedFilters = {
+        categories: []
+      }
+
+      if (subjects?.length) {
+        selectedFilters.categories.push({
+          heading: { text: 'Subject' },
+          items: subjects.map((subject) => {
+            return {
+              text: subjectHelper.getSubjectLabel(subject),
+              href: `/organisations/${req.params.organisationId}/placements/remove-subject-filter/${subject}`
+            }
+          })
+        })
+      }
+
+      if (establishmentTypes?.length) {
+        selectedFilters.categories.push({
+          heading: { text: 'School type' },
+          items: establishmentTypes.map((establishmentType) => {
+            return {
+              text: giasHelper.getEstablishmentTypeLabel(establishmentType),
+              href: `/organisations/${req.params.organisationId}/placements/remove-establishment-type-filter/${establishmentType}`
+            }
+          })
+        })
+      }
+
+      if (genders?.length) {
+        selectedFilters.categories.push({
+          heading: { text: 'Gender' },
+          items: genders.map((gender) => {
+            return {
+              text: giasHelper.getGenderLabel(gender),
+              href: `/organisations/${req.params.organisationId}/placements/remove-gender-filter/${gender}`
+            }
+          })
+        })
+      }
+
+      if (religiousCharacters?.length) {
+        selectedFilters.categories.push({
+          heading: { text: 'Religious character' },
+          items: religiousCharacters.map((religiousCharacter) => {
+            return {
+              text: giasHelper.getReligiousCharacterLabel(religiousCharacter),
+              href: `/organisations/${req.params.organisationId}/placements/remove-religious-character-filter/${religiousCharacter}`
+            }
+          })
+        })
+      }
+
+      if (ofstedRatings?.length) {
+        selectedFilters.categories.push({
+          heading: { text: 'Ofsted rating' },
+          items: ofstedRatings.map((ofstedRating) => {
+            return {
+              text: ofstedHelper.getOfstedRatingLabel(ofstedRating),
+              href: `/organisations/${req.params.organisationId}/placements/remove-ofsted-rating-filter/${ofstedRating}`
+            }
+          })
+        })
+      }
+    }
+
+    // get filter items
+    const filterSubjectItems = subjectHelper.getSubjectOptions({
+      selectedItem: subjects
+    })
+
+    const filterEstablishmentTypeItems = giasHelper.getEstablishmentTypeOptions(establishmentTypes)
+
+    const filterGenderItems = giasHelper.getGenderOptions(genders)
+
+    const filterReligiousCharacterItems = giasHelper.getReligiousCharacterOptions(religiousCharacters)
+
+    const filterOfstedRatingItems = ofstedHelper.getOfstedRatingOptions(ofstedRatings)
+
+    placements = partnerPlacementModel.findMany({ organisationId: req.params.organisationId })
+
+    // add details of school to each placement
+    if (placements.length) {
+      placements = placements.map(placement => {
+        return placement = placementDecorator.decorate(placement)
+      })
+
+      if (keywords?.length) {
+        const query = keywords.toLowerCase()
+        placements = placements.filter(placement => {
+          return placement.school.name.toLowerCase().includes(query)
+            || placement.school.urn?.toString().includes(query)
+            || placement.school.address?.postcode?.toLowerCase().includes(query)
+        })
+      }
+
+      // filter placements
+      if (subjects?.length) {
+        placements = placements.filter(placement => {
+          return placement.subjects.some(subject => subjects.includes(subject))
+        })
+      }
+
+      if (establishmentTypes?.length) {
+        placements = placements.filter(placement => {
+          return establishmentTypes.includes(placement.school.establishmentType.toString())
+        })
+      }
+
+      if (genders?.length) {
+        placements = placements.filter(placement => {
+          return genders.includes(placement.school.gender.toString())
+        })
+      }
+
+      if (religiousCharacters?.length) {
+        placements = placements.filter(placement => {
+          return religiousCharacters.includes(placement.school.religiousCharacter.toString())
+        })
+      }
+
+      if (ofstedRatings?.length) {
+        placements = placements.filter(placement => {
+          if (placement.school.ofsted?.rating) {
+            return ofstedRatings.includes(placement.school.ofsted.rating.toString())
+          }
+        })
+      }
+
+      // sort placements
+      placements.sort((a, b) => {
+        return a.name.localeCompare(b.name) || a.school.name.localeCompare(b.school.name)
+      })
+
+    }
+
+    let pagination = new Pagination(placements, req.query.page, pageSize)
+    placements = pagination.getData()
+
+    res.render('../views/placements/providers/list', {
+      organisation,
+      placements,
+      pagination,
+      selectedFilters,
+      hasFilters,
+      hasSearch,
+      keywords,
+      filterSubjectItems,
+      filterEstablishmentTypeItems,
+      filterGenderItems,
+      filterReligiousCharacterItems,
+      filterOfstedRatingItems,
+      filters: req.session.data.filters,
+      actions: {
+        view: `/organisations/${req.params.organisationId}/placements`,
+        find: `/organisations/${req.params.organisationId}/placements/find`,
+        filters: {
+          apply: `/organisations/${req.params.organisationId}/placements`,
+          remove: `/organisations/${req.params.organisationId}/placements/remove-all-filters`
+        },
+        search: {
+          find: `/organisations/${req.params.organisationId}/placements`,
+          remove: `/organisations/${req.params.organisationId}/placements/remove-keyword-search`
+        }
+      }
+    })
+
+  } else {
+    const mentors = mentorModel.findMany({ organisationId: req.params.organisationId })
+
+    placements = placementModel.findMany({ organisationId: req.params.organisationId })
+
+    delete req.session.data.placement
+    delete req.session.data.currentSubjectLevel
+
+    let pagination = new Pagination(placements, req.query.page, pageSize)
+    placements = pagination.getData()
+
+    res.render('../views/placements/schools/list', {
+      organisation,
+      mentors,
+      placements,
+      pagination,
+      actions: {
+        new: `/organisations/${req.params.organisationId}/placements/new`,
+        view: `/organisations/${req.params.organisationId}/placements`,
+        find: `/organisations/${req.params.organisationId}/placements/find`,
+        mentors: `/organisations/${req.params.organisationId}/mentors`,
+        back: '/'
+      }
+    })
+  }
+}
+
+exports.removeKeywordSearch = (req, res) => {
+  delete req.session.data.keywords
+  res.redirect(`/organisations/${req.params.organisationId}/placements`)
+}
+
+exports.removeFilterSubject = (req, res) => {
+  req.session.data.filters.subject = filterHelper.removeFilter(req.params.subject, req.session.data.filters.subject)
+  res.redirect(`/organisations/${req.params.organisationId}/placements`)
+}
+
+exports.removeFilterEstablishmentType = (req, res) => {
+  req.session.data.filters.establishmentType = filterHelper.removeFilter(req.params.establishmentType, req.session.data.filters.establishmentType)
+  res.redirect(`/organisations/${req.params.organisationId}/placements`)
+}
+
+exports.removeFilterGender = (req, res) => {
+  req.session.data.filters.gender = filterHelper.removeFilter(req.params.gender, req.session.data.filters.gender)
+  res.redirect(`/organisations/${req.params.organisationId}/placements`)
+}
+
+exports.removeFilterReligiousCharacter = (req, res) => {
+  req.session.data.filters.religiousCharacter = filterHelper.removeFilter(req.params.religiousCharacter, req.session.data.filters.religiousCharacter)
+  res.redirect(`/organisations/${req.params.organisationId}/placements`)
+}
+
+exports.removeFilterOfstedRating = (req, res) => {
+  req.session.data.filters.ofstedRating = filterHelper.removeFilter(req.params.ofstedRating, req.session.data.filters.ofstedRating)
+  res.redirect(`/organisations/${req.params.organisationId}/placements`)
+}
+
+exports.removeAllFilters = (req, res) => {
+  delete req.session.data.filters
+  res.redirect(`/organisations/${req.params.organisationId}/placements`)
 }
 
 /// ------------------------------------------------------------------------ ///
@@ -43,18 +318,30 @@ exports.placement_list = (req, res) => {
 
 exports.placement_details = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-  const placement = placementModel.findOne({ placementId: req.params.placementId })
+  let placement = placementModel.findOne({ placementId: req.params.placementId })
 
-  res.render('../views/placements/show', {
-    organisation,
-    placement,
-    actions: {
-      change: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`,
-      delete: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}/delete`,
-      back: `/organisations/${req.params.organisationId}/placements`,
-      cancel: `/organisations/${req.params.organisationId}/placements`
-    }
-  })
+  const actions = {
+    change: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`,
+    delete: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}/delete`,
+    back: `/organisations/${req.params.organisationId}/placements`,
+    cancel: `/organisations/${req.params.organisationId}/placements`
+  }
+
+  if (['university','scitt'].includes(organisation.type)) {
+    placement = placementDecorator.decorate(placement)
+
+    res.render('../views/placements/providers/show', {
+      organisation,
+      placement,
+      actions
+    })
+  } else {
+    res.render('../views/placements/schools/show', {
+      organisation,
+      placement,
+      actions
+    })
+  }
 }
 
 /// ------------------------------------------------------------------------ ///
@@ -88,7 +375,7 @@ exports.new_placement_get = (req, res) => {
     // show subject level form
     const subjectLevelOptions = subjectHelper.getSubjectLevelOptions()
 
-    res.render('../views/placements/subject-level', {
+    res.render('../views/placements/schools/subject-level', {
       organisation,
       placement: req.session.data.placement,
       subjectLevelOptions,
@@ -123,7 +410,7 @@ exports.new_placement_post = (req, res) => {
   }
 
   if (errors.length) {
-    res.render('../views/placements/subject-level', {
+    res.render('../views/placements/schools/subject-level', {
       organisation,
       placement: req.session.data.placement,
       subjectLevelOptions,
@@ -149,7 +436,9 @@ exports.new_placement_post = (req, res) => {
 
 exports.new_placement_subject_get = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-  const subjectOptions = subjectHelper.getSubjectOptions(req.session.data.placement.subjectLevel)
+  const subjectOptions = subjectHelper.getSubjectOptions({
+    subjectLevel: req.session.data.placement.subjectLevel
+  })
 
   let back = `/organisations/${req.params.organisationId}/placements/new`
   let save = `/organisations/${req.params.organisationId}/placements/new/subject`
@@ -158,7 +447,7 @@ exports.new_placement_subject_get = (req, res) => {
     save += '?referrer=check'
   }
 
-  res.render('../views/placements/subject', {
+  res.render('../views/placements/schools/subject', {
     organisation,
     placement: req.session.data.placement,
     subjectOptions,
@@ -172,7 +461,9 @@ exports.new_placement_subject_get = (req, res) => {
 
 exports.new_placement_subject_post = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-  const subjectOptions = subjectHelper.getSubjectOptions(req.session.data.placement.subjectLevel)
+  const subjectOptions = subjectHelper.getSubjectOptions({
+    subjectLevel: req.session.data.placement.subjectLevel
+  })
 
   let back = `/organisations/${req.params.organisationId}/placements/new`
   let save = `/organisations/${req.params.organisationId}/placements/new/subject`
@@ -202,7 +493,7 @@ exports.new_placement_subject_post = (req, res) => {
   }
 
   if (errors.length) {
-    res.render('../views/placements/subject', {
+    res.render('../views/placements/schools/subject', {
       organisation,
       placement: req.session.data.placement,
       subjectOptions,
@@ -237,7 +528,7 @@ exports.new_placement_mentor_get = (req, res) => {
     save += '?referrer=check'
   }
 
-  res.render('../views/placements/mentor', {
+  res.render('../views/placements/schools/mentor', {
     organisation,
     placement: req.session.data.placement,
     mentorOptions,
@@ -286,7 +577,7 @@ exports.new_placement_mentor_post = (req, res) => {
   }
 
   if (errors.length) {
-    res.render('../views/placements/mentor', {
+    res.render('../views/placements/schools/mentor', {
       organisation,
       placement: req.session.data.placement,
       mentorOptions,
@@ -316,7 +607,7 @@ exports.new_placement_window_get = (req, res) => {
     save += '?referrer=check'
   }
 
-  res.render('../views/placements/window', {
+  res.render('../views/placements/schools/window', {
     organisation,
     placement: req.session.data.placement,
     actions: {
@@ -348,7 +639,7 @@ exports.new_placement_window_post = (req, res) => {
   }
 
   if (errors.length) {
-    res.render('../views/placements/window', {
+    res.render('../views/placements/schools/window', {
       organisation,
       placement: req.session.data.placement,
       actions: {
@@ -366,7 +657,7 @@ exports.new_placement_window_post = (req, res) => {
 exports.new_placement_check_get = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
 
-  res.render('../views/placements/check-your-answers', {
+  res.render('../views/placements/schools/check-your-answers', {
     organisation,
     placement: req.session.data.placement,
     actions: {
@@ -398,9 +689,11 @@ exports.new_placement_check_post = (req, res) => {
 exports.edit_placement_subject_get = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
   const currentPlacement = placementModel.findOne({ placementId: req.params.placementId })
-  const subjectOptions = subjectHelper.getSubjectOptions(currentPlacement.subjectLevel)
+  const subjectOptions = subjectHelper.getSubjectOptions({
+    subjectLevel: currentPlacement.subjectLevel
+  })
 
-  res.render('../views/placements/subject', {
+  res.render('../views/placements/schools/subject', {
     organisation,
     currentPlacement,
     placement: currentPlacement,
@@ -419,7 +712,9 @@ exports.edit_placement_subject_post = (req, res) => {
   // combine submitted data with current placement data
   const placement = {...currentPlacement, ...req.session.data.placement}
 
-  const subjectOptions = subjectHelper.getSubjectOptions(placement.subjectLevel)
+  const subjectOptions = subjectHelper.getSubjectOptions({
+    subjectLevel: placement.subjectLevel
+  })
 
   const errors = []
 
@@ -442,7 +737,7 @@ exports.edit_placement_subject_post = (req, res) => {
   }
 
   if (errors.length) {
-    res.render('../views/placements/subject', {
+    res.render('../views/placements/schools/subject', {
       organisation,
       currentPlacement,
       placement,
@@ -475,7 +770,7 @@ exports.edit_placement_mentor_get = (req, res) => {
     otherOptionLabel: 'Not known yet'
   })
 
-  res.render('../views/placements/mentor', {
+  res.render('../views/placements/schools/mentor', {
     organisation,
     currentPlacement,
     placement: currentPlacement,
@@ -521,7 +816,7 @@ exports.edit_placement_mentor_post = (req, res) => {
   }
 
   if (errors.length) {
-    res.render('../views/placements/mentor', {
+    res.render('../views/placements/schools/mentor', {
       organisation,
       currentPlacement,
       placement,
@@ -549,7 +844,7 @@ exports.edit_placement_window_get = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
   const currentPlacement = placementModel.findOne({ placementId: req.params.placementId })
 
-  res.render('../views/placements/window', {
+  res.render('../views/placements/schools/window', {
     organisation,
     currentPlacement,
     placement: currentPlacement,
@@ -578,7 +873,7 @@ exports.edit_placement_window_post = (req, res) => {
   }
 
   if (errors.length) {
-    res.render('../views/placements/window', {
+    res.render('../views/placements/schools/window', {
       organisation,
       currentPlacement,
       placement,
@@ -612,7 +907,7 @@ exports.delete_placement_get = (req, res) => {
     placementId: req.params.placementId
   })
 
-  res.render('../views/placements/delete', {
+  res.render('../views/placements/schools/delete', {
     organisation,
     placement,
     actions: {

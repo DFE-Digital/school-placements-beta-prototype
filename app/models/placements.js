@@ -27,15 +27,25 @@ exports.findMany = (params) => {
     placements = placements.filter(placement => placement.organisationId === params.organisationId)
   }
 
+  if (params.subjectLevel) {
+    placements = placements.filter(placement => placement.subjectLevel === params.subjectLevel)
+  }
+
+  if (params.subjects) {
+    placements = placements.filter(placement => {
+      return placement.subjects.some(subject => params.subjects.includes(subject))
+    })
+  }
+
   return placements
 }
 
 exports.findOne = (params) => {
-  const placements = this.findMany({ organisationId: params.organisationId })
   let placement = {}
 
   if (params.placementId) {
-    placement = placements.find(placement => placement.id === params.placementId)
+    const raw = fs.readFileSync(directoryPath + '/' + params.placementId + '.json')
+    placement = JSON.parse(raw)
   }
 
   return placement

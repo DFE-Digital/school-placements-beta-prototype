@@ -1,0 +1,26 @@
+<h2 class="govuk-heading-m govuk-!-margin-top-9">Mentor details</h2>
+
+{% set mentorHtml %}
+  {% if placement.mentors != "unknown" %}
+    <ul class="govuk-list">
+      {% for mentor in placements.mentors %}
+        <li>{{ mentor | getTeacherName }}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="govuk-body">Not known yet</p>
+  {% endif %}
+{% endset %}
+
+{{ govukSummaryList({
+  rows: [
+    {
+      key: {
+        text: "Mentor" + ("s" if placement.mentors.length > 1)
+      },
+      value: {
+        html: mentorHtml
+      }
+    }
+  ]
+}) }}

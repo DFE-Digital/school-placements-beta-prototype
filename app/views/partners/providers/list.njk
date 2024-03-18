@@ -1,0 +1,35 @@
+{% extends "layouts/main.njk" %}
+
+{% set primaryNavId = "providers" %}
+
+{% set title = "Providers" %}
+
+{% block beforeContent %}
+
+{% endblock %}
+
+{% block content %}
+
+  {% include "_includes/notification-banner.njk" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      {% include "_includes/page-heading.njk" %}
+
+      {{ govukButton({
+        text: "Add provider",
+        href: actions.new
+      }) }}
+
+      {% if partners.length %}
+        {% include "_includes/partners/providers/list.njk" %}
+        {% include "_includes/pagination.njk" %}
+      {% else %}
+        <p class="govuk-body">There are no {{ title | lower }} for {{ organisation.name if organisation.name else "your organisation" }}.</p>
+      {% endif %}
+
+    </div>
+  </div>
+
+{% endblock %}

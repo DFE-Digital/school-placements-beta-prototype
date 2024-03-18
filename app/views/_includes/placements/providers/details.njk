@@ -1,0 +1,85 @@
+{{ govukSummaryList({
+  rows: [
+    {
+      key: {
+        text: "School type"
+      },
+      value: {
+        text: placement.school.establishmentType | getEstablishmentTypeLabel,
+        classes: "govuk-hint" if placement.school.establishmentType == "Not entered"
+      }
+    },
+    {
+      key: {
+        text: "School phase"
+      },
+      value: {
+        text: placement.school.establishmentPhase | getEstablishmentPhaseLabel,
+        classes: "govuk-hint" if placement.school.establishmentPhase == "Not entered"
+      }
+    },
+    {
+      key: {
+        text: "Gender"
+      },
+      value: {
+        text: placement.school.gender | getGenderLabel,
+        classes: "govuk-hint" if placement.school.gender == "Not entered"
+      }
+    },
+    {
+      key: {
+        text: "Age range"
+      },
+      value: {
+        text: placement.school.minAge + " to " + placement.school.maxAge if placement.school.minAge and placement.school.maxAge else "Not entered",
+        classes: "govuk-hint" if not placement.school.minAge and placement.school.maxAge
+      }
+    },
+    {
+      key: {
+        text: "Religious character"
+      },
+      value: {
+        text: placement.school.religiousCharacter | getReligiousCharacterLabel,
+        classes: "govuk-hint" if placement.school.religiousCharacter == "Not entered"
+      }
+    },
+    {
+      key: {
+        text: "Urban or rural"
+      },
+      value: {
+        text: placement.school.urbanRural | getUrbanRuralLabel,
+        classes: "govuk-hint" if placement.school.urbanRural == "Not entered"
+      }
+    },
+    {
+      key: {
+        text: "Admissions policy"
+      },
+      value: {
+        text: placement.school.admissionsPolicy | getAdmissionsPolicyLabel,
+        classes: "govuk-hint" if placement.school.admissionsPolicy == "Not entered"
+      }
+    },
+    {
+      key: {
+        text: "Percentage free school meals"
+      },
+      value: {
+        text: placement.school.percentageFreeSchoolMeals | numeral('0.0') + "%",
+        classes: "govuk-hint" if placement.school.percentageFreeSchoolMeals == "Not entered"
+      }
+    },
+    {
+      key: {
+        text: "Ofsted rating"
+      },
+      value: {
+        text: placement.school.ofsted.rating | getOfstedRatingLabel,
+        classes: "govuk-hint" if placement.school.ofstedRating == "Not entered"
+      }
+    }
+  ]
+}) }}

@@ -1,0 +1,96 @@
+{% set subjectHtml %}
+{% if placement.subjects.length > 1 %}
+  <ul class="govuk-list">
+    {% for subject in placement.subjects %}
+      <li>{{ subject | getSubjectLabel }}</li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p class="govuk-body">{{ placement.subjects[0] | getSubjectLabel }}</p>
+{% endif %}
+{% endset %}
+
+{% set mentorHtml %}
+{% if placement.mentors == "unknown" %}
+  <p class="govuk-body">Not known yet</p>
+{% else %}
+  <ul class="govuk-list">
+    {% for mentor in placement.mentors %}
+      <li>{{ mentor | getMentorName }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+{% endset %}
+
+{{ govukSummaryList({
+  rows: [
+    {
+      key: {
+        text: "Subject level"
+      },
+      value: {
+        text: placement.subjectLevel | getSubjectLevelLabel
+      },
+      actions: {
+        items: [
+          {
+            href: actions.change + "?referrer=check",
+            text: "Change",
+            visuallyHiddenText: "subject level"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Subject"
+      },
+      value: {
+        html: subjectHtml
+      },
+      actions: {
+        items: [
+          {
+            href: actions.change  + "/subject?referrer=check",
+            text: "Change",
+            visuallyHiddenText: "subject"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Mentor" + ("s" if claim.mentors.length > 1)
+      },
+      value: {
+        html: mentorHtml
+      },
+      actions: {
+        items: [
+          {
+            href: actions.change  + "/mentor?referrer=check",
+            text: "Change",
+            visuallyHiddenText: "mentor"
+          }
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Window"
+      },
+      value: {
+        text: placement.window | capitalize
+      },
+      actions: {
+        items: [
+          {
+            href: actions.change  + "/window?referrer=check",
+            text: "Change",
+            visuallyHiddenText: "window"
+          }
+        ]
+      }
+    }
+  ]
+}) }}

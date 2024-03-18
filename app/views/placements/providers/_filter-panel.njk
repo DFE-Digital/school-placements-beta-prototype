@@ -1,0 +1,125 @@
+{% set filterOptionsHtml %}
+{{ appCheckboxFilter({
+  idPrefix: "filter-subject",
+  name: "filters[subject]",
+  fieldset: {
+    legend: {
+      html: 'Subject<span class="govuk-visually-hidden"> filter</span>',
+      classes: "govuk-fieldset__legend--s"
+    }
+  },
+  items: filterSubjectItems,
+  values: filters.subject,
+  showSelectedTags: false,
+  classes: "govuk-!-margin-bottom-7"
+}) }}
+
+{{ appCheckboxFilter({
+  idPrefix: "filter-establishment-type",
+  name: "filters[establishmentType]",
+  fieldset: {
+    legend: {
+      html: 'School type<span class="govuk-visually-hidden"> filter</span>',
+      classes: "govuk-fieldset__legend--s"
+    }
+  },
+  items: filterEstablishmentTypeItems,
+  values: filters.establishmentType,
+  showSelectedTags: false,
+  classes: "govuk-!-margin-bottom-7"
+}) }}
+
+{{ govukCheckboxes({
+  idPrefix: "filter-gender",
+  name: "filters[gender]",
+  fieldset: {
+    legend: {
+      html: 'Gender<span class="govuk-visually-hidden"> filter</span>',
+      classes: "govuk-fieldset__legend--s"
+    }
+  },
+  formGroup: {
+    classes: "app-filter__group"
+  },
+  items: filterGenderItems,
+  values: filters.gender,
+  classes: "govuk-checkboxes--small"
+}) }}
+
+{{ appCheckboxFilter({
+  idPrefix: "filter-religious-character",
+  name: "filters[religiousCharacter]",
+  fieldset: {
+    legend: {
+      html: 'Religious character<span class="govuk-visually-hidden"> filter</span>',
+      classes: "govuk-fieldset__legend--s"
+    }
+  },
+  items: filterReligiousCharacterItems,
+  values: filters.religiousCharacter,
+  showSelectedTags: false,
+  classes: "govuk-!-margin-bottom-7"
+}) }}
+
+{{ govukCheckboxes({
+  idPrefix: "filter-ofsted-rating",
+  name: "filters[ofstedRating]",
+  fieldset: {
+    legend: {
+      html: 'Ofsted rating<span class="govuk-visually-hidden"> filter</span>',
+      classes: "govuk-fieldset__legend--s"
+    }
+  },
+  formGroup: {
+    classes: "app-filter__group"
+  },
+  items: filterOfstedRatingItems,
+  values: filters.ofstedRating,
+  classes: "govuk-checkboxes--small"
+}) }}
+{% endset %}
+
+<div class="app-filter">
+  <div class="app-filter__header">
+    <div class="app-filter__header-title">
+      <h2 class="govuk-heading-m">Filter</h2>
+    </div>
+    <div class="app-filter__header-action">
+
+    </div>
+  </div>
+  <div class="app-filter__content">
+    {% if selectedFilters %}
+      <div class="app-filter__selected">
+        <div class="app-filter__selected-heading">
+          <div class="app-filter__heading-title">
+            <h2 class="govuk-heading-m govuk-!-margin-bottom-1">Selected filters</h2>
+            <p class="govuk-body">
+              <a class="govuk-link govuk-link--no-visited-state" href="{{ actions.filters.remove }}">Clear filters</a>
+            </p>
+          </div>
+        </div>
+        {% for category in selectedFilters.categories %}
+          <h3 class="govuk-heading-s govuk-!-margin-bottom-0">{{ category.heading.text }}</h3>
+          <ul class="app-filter-tags">
+            {% for item in category.items %}
+              <li>
+                <a class="app-filter__tag" href="{{ item.href }}">
+                  <span class="govuk-visually-hidden">Remove this filter</span> {{ item.text }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endfor %}
+      </div>
+    {% endif %}
+    <div class="app-filter__options">
+      <form method="get" action="{{ actions.filters.apply }}" novalidate>
+        <button class="govuk-button" data-module="govuk-button">
+          Apply filters
+        </button>
+        {{ filterOptionsHtml | safe }}
+      </form>
+    </div>
+  </div>
+</div>

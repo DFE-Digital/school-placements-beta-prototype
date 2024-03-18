@@ -27,11 +27,8 @@ exports.organisation = (req, res) => {
   // put the selected organisation into the passport object
   // for use around the service
   req.session.passport.organisation = organisation
-  if (organisation.type === 'school') {
-    res.redirect(`/organisations/${req.params.organisationId}/placements`)
-  } else {
-    res.redirect(`/organisations/${req.params.organisationId}/details`)
-  }
+
+  res.redirect(`/organisations/${req.params.organisationId}/placements`)
 }
 
 /// ------------------------------------------------------------------------ ///
