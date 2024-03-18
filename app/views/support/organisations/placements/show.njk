@@ -2,7 +2,7 @@
 
 {% set primaryNavId = "organisations" %}
 
-{% set title = "PLACEMENT TTILE" %}
+{% set title = placement.name %}
 {% set caption = "Placements - " + organisation.name %}
 
 {% block beforeContent %}
@@ -21,7 +21,7 @@
 
       {% include "_includes/page-heading.njk" %}
 
-      {% include "_includes/placements/details.njk" %}
+      {% include "_includes/placements/schools/details.njk" %}
 
       <p class="govuk-body">
         <a class="govuk-link app-link--destructive" href="{{ actions.delete }}">Remove placement</a>
