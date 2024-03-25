@@ -49,6 +49,7 @@ router.use(passport.session())
 const accountController = require('./controllers/account')
 const authenticationController = require('./controllers/authentication')
 const contentController = require('./controllers/content')
+const locationController = require('./controllers/locations')
 const mentorController = require('./controllers/mentors')
 const organisationController = require('./controllers/organisations')
 const userController = require('./controllers/users')
@@ -412,3 +413,5 @@ router.get('/terms', contentController.terms)
 router.get('/provider-suggestions', organisationController.provider_suggestions_json)
 
 router.get('/school-suggestions', organisationController.school_suggestions_json)
+
+router.get('/location-suggestions', locationController.location_suggestions_json)
