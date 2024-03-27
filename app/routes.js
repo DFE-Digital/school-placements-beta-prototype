@@ -49,6 +49,7 @@ router.use(passport.session())
 const accountController = require('./controllers/account')
 const authenticationController = require('./controllers/authentication')
 const contentController = require('./controllers/content')
+const feedbackController = require('./controllers/feedback')
 const mentorController = require('./controllers/mentors')
 const organisationController = require('./controllers/organisations')
 const userController = require('./controllers/users')
@@ -396,6 +397,11 @@ router.get('/support/organisations', checkIsAuthenticated, supportOrganisationCo
 /// ------------------------------------------------------------------------ ///
 /// GENERAL ROUTES
 /// ------------------------------------------------------------------------ ///
+
+router.get('/feedback', feedbackController.feedback_form_get)
+router.post('/feedback', feedbackController.feedback_form_post)
+
+router.get('/feedback/confirmation', feedbackController.feedback_confirmation_get)
 
 router.get('/accessibility', contentController.accessibility)
 
