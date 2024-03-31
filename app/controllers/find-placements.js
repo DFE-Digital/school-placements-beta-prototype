@@ -92,10 +92,10 @@ exports.find_subject_level_get = (req, res) => {
 exports.find_subject_level_post = (req, res) => {
   const errors = []
 
-  if (!req.session.data.questions.subjectLevel?.length) {
+  if (!req.session.data.questions?.subjectLevel.length) {
     const error = {}
-    error.fieldName = "subject-level"
-    error.href = "#subject-level"
+    error.fieldName = "subjectLevel"
+    error.href = "#subjectLevel"
     error.text = "Select a subject level"
     errors.push(error)
   }
