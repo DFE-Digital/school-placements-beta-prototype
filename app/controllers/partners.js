@@ -4,7 +4,7 @@ const organisationModel = require('../models/organisations')
 const Pagination = require('../helpers/pagination')
 
 /// ------------------------------------------------------------------------ ///
-/// LIST PARTNERS
+/// LIST PARTNER SCHOOLS
 /// ------------------------------------------------------------------------ ///
 
 exports.partner_schools_list = (req, res) => {
@@ -27,12 +27,32 @@ exports.partner_schools_list = (req, res) => {
     partners,
     pagination,
     actions: {
-      new: `/organisations/${req.params.organisationId}/partners/new`,
-      view: `/organisations/${req.params.organisationId}/partners`,
+      new: `/organisations/${req.params.organisationId}/schools/new`,
+      view: `/organisations/${req.params.organisationId}/schools`,
       back: '/'
     }
   })
 }
+
+exports.partner_school_details = (req, res) => {
+  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
+  const school = organisationModel.findOne({ organisationId: req.params.schoolId })
+
+  res.render('../views/partners/schools/show', {
+    organisation,
+    school,
+    actions: {
+      change: `/organisations/${req.params.organisationId}/schools/${req.params.schoolId}`,
+      delete: `/organisations/${req.params.organisationId}/schools/${req.params.schoolId}/delete`,
+      back: `/organisations/${req.params.organisationId}/schools`,
+      cancel: `/organisations/${req.params.organisationId}/schools`
+    }
+  })
+}
+
+/// ------------------------------------------------------------------------ ///
+/// LIST PARTNER PROVIDERS
+/// ------------------------------------------------------------------------ ///
 
 exports.partner_providers_list = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
