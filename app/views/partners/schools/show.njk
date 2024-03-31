@@ -1,0 +1,40 @@
+{% extends "layouts/main.njk" %}
+
+{% set primaryNavId = "schools" %}
+
+{% set title = school.name %}
+{% set caption = "Partner school" %}
+
+{% block beforeContent %}
+
+{% endblock %}
+
+{% block content %}
+
+  {% include "_includes/notification-banner.njk" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      {% include "_includes/page-heading.njk" %}
+
+      {% set organisation = school %}
+
+      {% include "_includes/organisations/details.njk" %}
+
+      {% include "_includes/organisations/additional-details.njk" %}
+
+      {% include "_includes/organisations/send-details.njk" %}
+
+      {% include "_includes/organisations/ofsted-details.njk" %}
+
+      {% include "_includes/organisations/contact-details.njk" %}
+
+      <p class="govuk-body">
+        <a class="govuk-link app-link--destructive" href="{{ actions.delete }}">Remove partner school</a>
+      </p>
+
+    </div>
+  </div>
+
+{% endblock %}

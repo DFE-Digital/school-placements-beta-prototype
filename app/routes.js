@@ -207,6 +207,8 @@ router.get('/organisations/:organisationId/mentors', checkIsAuthenticated, mento
 
 router.get('/organisations/:organisationId/schools', checkIsAuthenticated, partnerController.partner_schools_list)
 
+router.get('/organisations/:organisationId/schools/:schoolId', checkIsAuthenticated, partnerController.partner_school_details)
+
 router.get('/organisations/:organisationId/providers', checkIsAuthenticated, partnerController.partner_providers_list)
 
 /// ------------------------------------------------------------------------ ///
