@@ -54,7 +54,7 @@ const mentorController = require('./controllers/mentors')
 const organisationController = require('./controllers/organisations')
 const userController = require('./controllers/users')
 const placementController = require('./controllers/placements')
-const partnerController = require('./controllers/partners')
+const partnerSchoolController = require('./controllers/partner-schools')
 const findPlacementController = require('./controllers/find-placements')
 
 const supportOrganisationController = require('./controllers/support/organisations')
@@ -202,14 +202,27 @@ router.get('/organisations/:organisationId/mentors/:mentorId', checkIsAuthentica
 router.get('/organisations/:organisationId/mentors', checkIsAuthenticated, mentorController.mentor_list)
 
 /// ------------------------------------------------------------------------ ///
-/// PARTNER ROUTES
+/// PARTNER SCHOOL ROUTES
 /// ------------------------------------------------------------------------ ///
 
-router.get('/organisations/:organisationId/schools', checkIsAuthenticated, partnerController.partner_schools_list)
+router.get('/organisations/:organisationId/schools/new', checkIsAuthenticated, partnerSchoolController.new_partner_school_get)
+router.post('/organisations/:organisationId/schools/new', checkIsAuthenticated, partnerSchoolController.new_partner_school_post)
 
-router.get('/organisations/:organisationId/schools/:schoolId', checkIsAuthenticated, partnerController.partner_school_details)
+router.get('/organisations/:organisationId/schools/new/check', checkIsAuthenticated, partnerSchoolController.new_partner_school_check_get)
+router.post('/organisations/:organisationId/schools/new/check', checkIsAuthenticated, partnerSchoolController.new_partner_school_check_post)
 
-router.get('/organisations/:organisationId/providers', checkIsAuthenticated, partnerController.partner_providers_list)
+router.get('/organisations/:organisationId/schools/:schoolId/delete', checkIsAuthenticated, partnerSchoolController.delete_partner_school_get)
+router.post('/organisations/:organisationId/schools/:schoolId/delete', checkIsAuthenticated, partnerSchoolController.delete_partner_school_post)
+
+router.get('/organisations/:organisationId/schools/:schoolId', checkIsAuthenticated, partnerSchoolController.partner_school_details)
+
+router.get('/organisations/:organisationId/schools', checkIsAuthenticated, partnerSchoolController.partner_schools_list)
+
+/// ------------------------------------------------------------------------ ///
+/// PARTNER PROVIDER ROUTES
+/// ------------------------------------------------------------------------ ///
+
+// router.get('/organisations/:organisationId/providers', checkIsAuthenticated, partnerProviderController.partner_providers_list)
 
 /// ------------------------------------------------------------------------ ///
 /// PLACEMENT ROUTES
