@@ -1,0 +1,115 @@
+{% extends "layouts/main.njk" %}
+
+{% set primaryNavId = "schools" %}
+
+{% set title = "Check your answers" %}
+{% set caption = "Add partner school" %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: actions.back
+}) }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      {% include "_includes/page-heading.njk" %}
+
+      <form action="{{ actions.save }}" method="post" accept-charset="utf-8" novalidate>
+
+        {% set addressHtml %}
+          {% if school.address.addressLine1.length
+            and school.address.town.length
+            and school.address.postcode.length %}
+            <p class="govuk-body">
+              {% if school.address.addressLine1.length %}
+                {{ school.address.addressLine1 }}<br>
+              {% endif %}
+              {% if school.address.addressLine2.length %}
+                {{ school.address.addressLine2 }}<br>
+              {% endif %}
+              {% if school.address.town.length %}
+                {{ school.address.town }}<br>
+              {% endif %}
+              {% if school.address.county.length %}
+                {{ school.address.county }}<br>
+              {% endif %}
+              {% if school.address.postcode.length %}
+                {{ school.address.postcode | upper }}<br>
+              {% endif %}
+            </p>
+          {% else %}
+            <p class="govuk-hint">Not entered</p>
+          {% endif %}
+
+        {% endset %}
+
+        {{ govukSummaryList({
+          rows: [
+            {
+              key: {
+                text: "Organisation name"
+              },
+              value: {
+                text: school.name if school.name else "Not entered",
+                classes: "govuk-hint" if not school.name
+              },
+              actions: {
+                items: [
+                  {
+                    href: actions.change + "/" + "?referrer=check",
+                    text: "Change",
+                    visuallyHiddenText: "name"
+                  }
+                ]
+              }
+            },
+            {
+              key: {
+                text: "UK provider reference number (UKPRN)"
+              },
+              value: {
+                text: school.ukprn if school.ukprn else "Not entered",
+                classes: "govuk-hint" if not school.ukprn
+              }
+            } if school.type != "school",
+            {
+              key: {
+                text: "Unique reference number (URN)"
+              },
+              value: {
+                text: school.urn if school.urn else "Not entered",
+                classes: "govuk-hint" if not school.urn
+              }
+            }
+          ]
+        }) }}
+
+        {% set organisation = school %}
+
+        {% include "_includes/organisations/additional-details.njk" %}
+
+        {% include "_includes/organisations/send-details.njk" %}
+
+        {% include "_includes/organisations/ofsted-details.njk" %}
+
+        {% include "_includes/organisations/contact-details.njk" %}
+
+        {{ govukButton({
+          text: "Add partner school"
+        }) }}
+
+      </form>
+
+      <p class="govuk-body">
+        <a class="govuk-link" href="{{ actions.cancel }}">Cancel</a>
+      </p>
+
+    </div>
+  </div>
+
+{% endblock %}
