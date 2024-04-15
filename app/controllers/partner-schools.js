@@ -30,8 +30,7 @@ exports.partner_schools_list = (req, res) => {
     pagination,
     actions: {
       new: `/organisations/${req.params.organisationId}/schools/new`,
-      view: `/organisations/${req.params.organisationId}/schools`,
-      back: '/'
+      view: `/organisations/${req.params.organisationId}/schools`
     }
   })
 }
