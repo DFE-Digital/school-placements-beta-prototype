@@ -2,20 +2,20 @@
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
       <th class="govuk-table__header">Name</th>
-      {# <th class="govuk-table__header">Unique reference number (URN)</th> #}
+      <th class="govuk-table__header">UK provider reference number (UKPRN)</th>
     </tr>
   </thead>
   <tbody class="govuk-table__body">
     {% for partner in partners %}
       <tr class="govuk-table__row">
-        <td class="govuk-table__cell app-table--courses__course-name">
-          <a class="govuk-link" href="#"> {# {{ actions.view }}/{{ partner.id }} #}
+        <td class="govuk-table__cell">
+          <a class="govuk-link" href="{{ actions.view }}/{{ partner.id }}">
             {{ partner.name }}
           </a>
         </td>
-        {# <td class="govuk-table__cell">
-          {{ partner.urn if partner.urn else "Not entered" }}
-        </td> #}
+        <td class="govuk-table__cell">
+          {{ partner.ukprn if partner.ukprn else "Not entered" }}
+        </td>
       </tr>
     {% endfor %}
   </tbody>
