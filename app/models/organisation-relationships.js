@@ -27,7 +27,7 @@ exports.insertOne = (params) => {
 
   if (params.schoolId && params.providerId) {
     organisation = schoolModel.findOne({ query: params.schoolId })
-    console.log('Insert', organisation);
+
     organisation.type = 'school'
 
     organisation.relationships = []
@@ -53,7 +53,6 @@ exports.updateOne = (params) => {
 
   if (params.schoolId && params.providerId) {
     organisation = organisationModel.findOne({ organisationId: params.schoolId })
-    console.log('Update', organisation);
 
     if (!organisation.relationships) {
       organisation.relationships = []
