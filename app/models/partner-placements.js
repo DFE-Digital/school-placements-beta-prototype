@@ -1,14 +1,14 @@
 const path = require('path')
 const fs = require('fs')
 
-const partnerModel = require('./partners')
+const partnerSchoolModel = require('./partner-schools')
 
 const directoryPath = path.join(__dirname, '../data/dist/placements/')
 
 
 exports.findMany = (params) => {
   // get the organisations for a given provider
-  const organisations = partnerModel.findMany({ organisationId: params.organisationId })
+  const organisations = partnerSchoolModel.findMany({ organisationId: params.organisationId })
 
   // get the IDs for all the school partners so we can retrieve their placements
   const partners = organisations.map(partner => partner.id)

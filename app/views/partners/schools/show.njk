@@ -6,7 +6,10 @@
 {% set caption = "Partner school" %}
 
 {% block beforeContent %}
-
+{{ govukBackLink({
+  text: "Back",
+  href: actions.back
+}) }}
 {% endblock %}
 
 {% block content %}
