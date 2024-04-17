@@ -55,6 +55,7 @@ const organisationController = require('./controllers/organisations')
 const userController = require('./controllers/users')
 const placementController = require('./controllers/placements')
 const partnerSchoolController = require('./controllers/partner-schools')
+const partnerProviderController = require('./controllers/partner-providers')
 const findPlacementController = require('./controllers/find-placements')
 
 const supportOrganisationController = require('./controllers/support/organisations')
@@ -222,7 +223,18 @@ router.get('/organisations/:organisationId/schools', checkIsAuthenticated, partn
 /// PARTNER PROVIDER ROUTES
 /// ------------------------------------------------------------------------ ///
 
-// router.get('/organisations/:organisationId/providers', checkIsAuthenticated, partnerProviderController.partner_providers_list)
+router.get('/organisations/:organisationId/providers/new', checkIsAuthenticated, partnerProviderController.new_partner_provider_get)
+router.post('/organisations/:organisationId/providers/new', checkIsAuthenticated, partnerProviderController.new_partner_provider_post)
+
+router.get('/organisations/:organisationId/providers/new/check', checkIsAuthenticated, partnerProviderController.new_partner_provider_check_get)
+router.post('/organisations/:organisationId/providers/new/check', checkIsAuthenticated, partnerProviderController.new_partner_provider_check_post)
+
+router.get('/organisations/:organisationId/providers/:providerId/delete', checkIsAuthenticated, partnerProviderController.delete_partner_provider_get)
+router.post('/organisations/:organisationId/providers/:providerId/delete', checkIsAuthenticated, partnerProviderController.delete_partner_provider_post)
+
+router.get('/organisations/:organisationId/providers/:providerId', checkIsAuthenticated, partnerProviderController.partner_provider_details)
+
+router.get('/organisations/:organisationId/providers', checkIsAuthenticated, partnerProviderController.partner_providers_list)
 
 /// ------------------------------------------------------------------------ ///
 /// PLACEMENT ROUTES
