@@ -274,9 +274,6 @@ router.post('/organisations/:organisationId/placements/new/subject', checkIsAuth
 router.get('/organisations/:organisationId/placements/new/mentor', checkIsAuthenticated, placementController.new_placement_mentor_get)
 router.post('/organisations/:organisationId/placements/new/mentor', checkIsAuthenticated, placementController.new_placement_mentor_post)
 
-router.get('/organisations/:organisationId/placements/new/window', checkIsAuthenticated, placementController.new_placement_window_get)
-router.post('/organisations/:organisationId/placements/new/window', checkIsAuthenticated, placementController.new_placement_window_post)
-
 router.get('/organisations/:organisationId/placements/new/check', checkIsAuthenticated, placementController.new_placement_check_get)
 router.post('/organisations/:organisationId/placements/new/check', checkIsAuthenticated, placementController.new_placement_check_post)
 
@@ -297,9 +294,6 @@ router.post('/organisations/:organisationId/placements/:placementId/subject', ch
 
 router.get('/organisations/:organisationId/placements/:placementId/mentor', checkIsAuthenticated, placementController.edit_placement_mentor_get)
 router.post('/organisations/:organisationId/placements/:placementId/mentor', checkIsAuthenticated, placementController.edit_placement_mentor_post)
-
-router.get('/organisations/:organisationId/placements/:placementId/window', checkIsAuthenticated, placementController.edit_placement_window_get)
-router.post('/organisations/:organisationId/placements/:placementId/window', checkIsAuthenticated, placementController.edit_placement_window_post)
 
 router.get('/organisations/:organisationId/placements/:placementId/delete', checkIsAuthenticated, placementController.delete_placement_get)
 router.post('/organisations/:organisationId/placements/:placementId/delete', checkIsAuthenticated, placementController.delete_placement_post)
