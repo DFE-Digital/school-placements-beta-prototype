@@ -688,14 +688,7 @@ exports.edit_placement_subject_post = (req, res) => {
       errors
     })
   } else {
-    placementModel.updateOne({
-      organisationId: req.params.organisationId,
-      placementId: req.params.placementId,
-      placement: req.session.data.placement,
-    })
-
-    req.flash('success', 'Subject updated')
-    res.redirect(`/organisations/${req.params.organisationId}/placements/${req.params.placementId}`)
+    res.redirect(`/organisations/${req.params.organisationId}/placements/${req.params.placementId}/mentor`)
   }
 }
 
@@ -773,7 +766,7 @@ exports.edit_placement_mentor_post = (req, res) => {
       placement: req.session.data.placement,
     })
 
-    req.flash('success', 'Mentor updated')
+    req.flash('success', 'Placement updated')
     res.redirect(`/organisations/${req.params.organisationId}/placements/${req.params.placementId}`)
   }
 }
