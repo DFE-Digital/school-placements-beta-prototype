@@ -506,11 +506,7 @@ exports.new_placement_subject_post = (req, res) => {
       errors
     })
   } else {
-    if (req.query.referrer === 'check') {
-      res.redirect(`/organisations/${req.params.organisationId}/placements/new/check`)
-    } else {
-      res.redirect(`/organisations/${req.params.organisationId}/placements/new/mentor`)
-    }
+    res.redirect(`/organisations/${req.params.organisationId}/placements/new/mentor`)
   }
 }
 
@@ -590,11 +586,7 @@ exports.new_placement_mentor_post = (req, res) => {
       errors
     })
   } else {
-    if (req.query.referrer === 'check') {
-      res.redirect(`/organisations/${req.params.organisationId}/placements/new/check`)
-    } else {
-      res.redirect(`/organisations/${req.params.organisationId}/placements/new/window`)
-    }
+    res.redirect(`/organisations/${req.params.organisationId}/placements/new/check`)
   }
 }
 
