@@ -437,7 +437,8 @@ exports.new_placement_post = (req, res) => {
 exports.new_placement_subject_get = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
   const subjectOptions = subjectHelper.getSubjectOptions({
-    subjectLevel: req.session.data.placement.subjectLevel
+    subjectLevel: req.session.data.placement.subjectLevel,
+    selectedItem: req.session.data.placement.subjects
   })
 
   let back = `/organisations/${req.params.organisationId}/placements/new`
@@ -505,11 +506,7 @@ exports.new_placement_subject_post = (req, res) => {
       errors
     })
   } else {
-    if (req.query.referrer === 'check') {
-      res.redirect(`/organisations/${req.params.organisationId}/placements/new/check`)
-    } else {
-      res.redirect(`/organisations/${req.params.organisationId}/placements/new/mentor`)
-    }
+    res.redirect(`/organisations/${req.params.organisationId}/placements/new/mentor`)
   }
 }
 
@@ -589,67 +586,6 @@ exports.new_placement_mentor_post = (req, res) => {
       errors
     })
   } else {
-    if (req.query.referrer === 'check') {
-      res.redirect(`/organisations/${req.params.organisationId}/placements/new/check`)
-    } else {
-      res.redirect(`/organisations/${req.params.organisationId}/placements/new/window`)
-    }
-  }
-}
-
-exports.new_placement_window_get = (req, res) => {
-  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-
-  let back = `/organisations/${req.params.organisationId}/placements/new/mentor`
-  let save = `/organisations/${req.params.organisationId}/placements/new/window`
-  if (req.query.referrer === 'check') {
-    back = `/organisations/${req.params.organisationId}/placements/new/check`
-    save += '?referrer=check'
-  }
-
-  res.render('../views/placements/schools/window', {
-    organisation,
-    placement: req.session.data.placement,
-    actions: {
-      save,
-      back,
-      cancel: `/organisations/${req.params.organisationId}/placements`
-    }
-  })
-}
-
-exports.new_placement_window_post = (req, res) => {
-  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-
-  let back = `/organisations/${req.params.organisationId}/placements/new/mentor`
-  let save = `/organisations/${req.params.organisationId}/placements/new/window`
-  if (req.query.referrer === 'check') {
-    back = `/organisations/${req.params.organisationId}/placements/new/check`
-    save += '?referrer=check'
-  }
-
-  const errors = []
-
-  if (!req.session.data.placement.window) {
-    const error = {}
-    error.fieldName = 'window'
-    error.href = '#window'
-    error.text = 'Select a window'
-    errors.push(error)
-  }
-
-  if (errors.length) {
-    res.render('../views/placements/schools/window', {
-      organisation,
-      placement: req.session.data.placement,
-      actions: {
-        save,
-        back,
-        cancel: `/organisations/${req.params.organisationId}/placements`
-      },
-      errors
-    })
-  } else {
     res.redirect(`/organisations/${req.params.organisationId}/placements/new/check`)
   }
 }
@@ -690,7 +626,8 @@ exports.edit_placement_subject_get = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
   const currentPlacement = placementModel.findOne({ placementId: req.params.placementId })
   const subjectOptions = subjectHelper.getSubjectOptions({
-    subjectLevel: currentPlacement.subjectLevel
+    subjectLevel: currentPlacement.subjectLevel,
+    selectedItem: currentPlacement.subjects
   })
 
   res.render('../views/placements/schools/subject', {
@@ -713,7 +650,8 @@ exports.edit_placement_subject_post = (req, res) => {
   const placement = {...currentPlacement, ...req.session.data.placement}
 
   const subjectOptions = subjectHelper.getSubjectOptions({
-    subjectLevel: placement.subjectLevel
+    subjectLevel: placement.subjectLevel,
+    selectedItem: placement.subjects
   })
 
   const errors = []
@@ -750,14 +688,7 @@ exports.edit_placement_subject_post = (req, res) => {
       errors
     })
   } else {
-    placementModel.updateOne({
-      organisationId: req.params.organisationId,
-      placementId: req.params.placementId,
-      placement: req.session.data.placement,
-    })
-
-    req.flash('success', 'Subject updated')
-    res.redirect(`/organisations/${req.params.organisationId}/placements/${req.params.placementId}`)
+    res.redirect(`/organisations/${req.params.organisationId}/placements/${req.params.placementId}/mentor`)
   }
 }
 
@@ -835,63 +766,7 @@ exports.edit_placement_mentor_post = (req, res) => {
       placement: req.session.data.placement,
     })
 
-    req.flash('success', 'Mentor updated')
-    res.redirect(`/organisations/${req.params.organisationId}/placements/${req.params.placementId}`)
-  }
-}
-
-exports.edit_placement_window_get = (req, res) => {
-  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-  const currentPlacement = placementModel.findOne({ placementId: req.params.placementId })
-
-  res.render('../views/placements/schools/window', {
-    organisation,
-    currentPlacement,
-    placement: currentPlacement,
-    actions: {
-      save: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}/window`,
-      back: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`,
-      cancel: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`
-    }
-  })
-}
-
-exports.edit_placement_window_post = (req, res) => {
-  const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-  const currentPlacement = placementModel.findOne({ placementId: req.params.placementId })
-  // combine submitted data with current placement data
-  const placement = {...currentPlacement, ...req.session.data.placement}
-
-  const errors = []
-
-  if (!req.session.data.placement.window) {
-    const error = {}
-    error.fieldName = 'window'
-    error.href = '#window'
-    error.text = 'Select a window'
-    errors.push(error)
-  }
-
-  if (errors.length) {
-    res.render('../views/placements/schools/window', {
-      organisation,
-      currentPlacement,
-      placement,
-      actions: {
-        save: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}/window`,
-        back: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`,
-        cancel: `/organisations/${req.params.organisationId}/placements/${req.params.placementId}`
-      },
-      errors
-    })
-  } else {
-    placementModel.updateOne({
-      organisationId: req.params.organisationId,
-      placementId: req.params.placementId,
-      placement: req.session.data.placement,
-    })
-
-    req.flash('success', 'Window updated')
+    req.flash('success', 'Placement updated')
     res.redirect(`/organisations/${req.params.organisationId}/placements/${req.params.placementId}`)
   }
 }
