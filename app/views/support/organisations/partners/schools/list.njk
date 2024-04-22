@@ -1,0 +1,48 @@
+{% extends "layouts/support.njk" %}
+
+{% set primaryNavId = "organisations" %}
+{% set secondaryNavId = "schools" %}
+
+{% set title = organisation.name %}
+
+{% block beforeContent %}
+
+{% endblock %}
+
+{% block content %}
+
+  {% include "_includes/notification-banner.njk" %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {% include "_includes/page-heading.njk" %}
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      {% include "../../_secondary-navigation.njk" %}
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h2 class="govuk-heading-m">Partner schools</h2>
+
+      {{ govukButton({
+        text: "Add partner school",
+        href: actions.new
+      }) }}
+
+      {% if partners.length %}
+        {% include "_includes/partners/schools/list.njk" %}
+        {% include "_includes/pagination.njk" %}
+      {% else %}
+        <p class="govuk-body">There are no {{ title | lower }} for {{ organisation.name if organisation.name else "your organisation" }}.</p>
+      {% endif %}
+
+    </div>
+  </div>
+
+{% endblock %}
