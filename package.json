@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "connect-flash": "^0.1.1",
-    "convert-csv-to-json": "^2.44.0",
+    "convert-csv-to-json": "^2.46.0",
     "csv-string": "^4.1.1",
     "govuk-frontend": "^5.3.1",
     "govuk-prototype-kit": "13.16.2",
