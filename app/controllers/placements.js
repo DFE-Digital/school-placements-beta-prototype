@@ -339,7 +339,9 @@ exports.placement_details = (req, res) => {
     res.render('../views/placements/schools/show', {
       organisation,
       placement,
-      actions
+      actions: {
+        mentors: `/organisations/${req.params.organisationId}/mentors`
+      }
     })
   }
 }
@@ -465,6 +467,7 @@ exports.new_placement_subject_post = (req, res) => {
   const subjectOptions = subjectHelper.getSubjectOptions({
     subjectLevel: req.session.data.placement.subjectLevel
   })
+  let mentors = mentorModel.findMany({ organisationId: req.params.organisationId })
 
   let back = `/organisations/${req.params.organisationId}/placements/new`
   let save = `/organisations/${req.params.organisationId}/placements/new/subject`
@@ -505,6 +508,8 @@ exports.new_placement_subject_post = (req, res) => {
       },
       errors
     })
+  } else if (!mentors.length) {
+    res.redirect(`/organisations/${req.params.organisationId}/placements/new/check`)
   } else {
     res.redirect(`/organisations/${req.params.organisationId}/placements/new/mentor`)
   }
