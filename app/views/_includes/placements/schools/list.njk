@@ -16,7 +16,7 @@
           </a>
         </td>
         <td class="govuk-table__cell">
-          {% if placement.mentors == "unknown" %}
+          {% if placement.mentors == "unknown" or not placement.mentors %}
             Not known yet
           {% else %}
             <ul class="govuk-list">
