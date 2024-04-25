@@ -508,10 +508,12 @@ exports.new_placement_subject_post = (req, res) => {
       },
       errors
     })
-  } else if (!mentors.length) {
-    res.redirect(`/organisations/${req.params.organisationId}/placements/new/check`)
-  } else {
-    res.redirect(`/organisations/${req.params.organisationId}/placements/new/mentor`)
+} else {
+    if (!mentors.length) {
+      res.redirect(`/organisations/${req.params.organisationId}/placements/new/check`)
+    } else {
+      res.redirect(`/organisations/${req.params.organisationId}/placements/new/mentor`)
+    }
   }
 }
 
