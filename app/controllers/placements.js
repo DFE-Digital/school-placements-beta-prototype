@@ -467,7 +467,7 @@ exports.new_placement_subject_post = (req, res) => {
   const subjectOptions = subjectHelper.getSubjectOptions({
     subjectLevel: req.session.data.placement.subjectLevel
   })
-  let mentors = mentorModel.findMany({ organisationId: req.params.organisationId })
+  const mentors = mentorModel.findMany({ organisationId: req.params.organisationId })
 
   let back = `/organisations/${req.params.organisationId}/placements/new`
   let save = `/organisations/${req.params.organisationId}/placements/new/subject`
