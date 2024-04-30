@@ -213,6 +213,6 @@ exports.delete_partner_provider_post = (req, res) => {
     schoolId: req.params.organisationId
   })
 
-  req.flash('success', 'Partner school removed')
+  req.flash('success', 'Partner provider removed')
   res.redirect(`/organisations/${req.params.organisationId}/providers`)
 }
