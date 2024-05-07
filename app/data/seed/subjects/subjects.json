@@ -108,6 +108,7 @@
     "id": "a9a2321a-fe0e-49fd-96b0-304880d1eed2",
     "name": "English as a second or other language",
     "code": "16",
+    "parentCode": "ML",
     "level": "secondary",
     "active": true
   },
@@ -115,6 +116,7 @@
     "id": "9727f674-61ba-4efa-b1f2-21ec7e354442",
     "name": "French",
     "code": "15",
+    "parentCode": "ML",
     "level": "secondary",
     "active": true
   },
@@ -136,6 +138,7 @@
     "id": "fbb00c08-2dbc-4f26-adb3-3b23afba18c1",
     "name": "German",
     "code": "17",
+    "parentCode": "ML",
     "level": "secondary",
     "active": true
   },
@@ -157,6 +160,7 @@
     "id": "5e94c647-7b7e-4d02-a3b4-7667296fbf0a",
     "name": "Italian",
     "code": "18",
+    "parentCode": "ML",
     "level": "secondary",
     "active": true
   },
@@ -164,6 +168,7 @@
     "id": "dbae1e2d-e1c7-4b6d-897d-d5be177a884a",
     "name": "Japanese",
     "code": "19",
+    "parentCode": "ML",
     "level": "secondary",
     "active": true
   },
@@ -178,6 +183,7 @@
     "id": "440c1e5c-0a7b-49ae-9534-184528468511",
     "name": "Mandarin",
     "code": "20",
+    "parentCode": "ML",
     "level": "secondary",
     "active": true
   },
@@ -189,9 +195,17 @@
     "active": true
   },
   {
+    "id": "ce8523ef-9236-4cd9-b260-d826c7a521b3",
+    "name": "Modern languages",
+    "code": "ML",
+    "level": "secondary",
+    "active": false
+  },
+  {
     "id": "4608e5e3-2a1a-48a1-8236-56c7af5a139d",
     "name": "Modern languages - other",
     "code": "24",
+    "parentCode": "ML",
     "level": "secondary",
     "active": false
   },
@@ -290,6 +304,7 @@
     "id": "f1f05cc5-08a2-4766-b138-71edb79081b9",
     "name": "Russian",
     "code": "21",
+    "parentCode": "ML",
     "level": "secondary",
     "active": true
   },
@@ -298,7 +313,7 @@
     "name": "Science",
     "code": "F0",
     "level": "secondary",
-    "active": false
+    "active": true
   },
   {
     "id": "bd9a2174-f682-4f18-9551-498c2f7a48f9",
@@ -311,6 +326,7 @@
     "id": "e34fd2a3-a32e-44e9-aea1-666badf3ac03",
     "name": "Spanish",
     "code": "22",
+    "parentCode": "ML",
     "level": "secondary",
     "active": true
   }
