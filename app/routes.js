@@ -49,13 +49,10 @@ router.use(passport.session())
 const accountController = require('./controllers/account')
 const authenticationController = require('./controllers/authentication')
 const contentController = require('./controllers/content')
-<<<<<<< HEAD
-const locationController = require('./controllers/locations')
-=======
 const errorController = require('./controllers/errors')
 const feedbackController = require('./controllers/feedback')
 const findPlacementController = require('./controllers/find-placements')
->>>>>>> main
+const locationController = require('./controllers/locations')
 const mentorController = require('./controllers/mentors')
 const organisationController = require('./controllers/organisations')
 const partnerProviderController = require('./controllers/partner-providers')
