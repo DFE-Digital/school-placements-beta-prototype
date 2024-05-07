@@ -18,6 +18,12 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
+      {% set headingTag %}
+        {{ govukTag({
+          text: "Published"
+        }) }}
+      {% endset %}
+
       {% include "_includes/page-heading.njk" %}
 
       {% include "_includes/placements/schools/details.njk" %}

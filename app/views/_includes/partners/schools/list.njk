@@ -8,8 +8,8 @@
   <tbody class="govuk-table__body">
     {% for partner in partners %}
       <tr class="govuk-table__row">
-        <td class="govuk-table__cell app-table--courses__course-name">
-          <a class="govuk-link" href="#"> {# {{ actions.view }}/{{ partner.id }} #}
+        <td class="govuk-table__cell">
+          <a class="govuk-link" href="{{ actions.view }}/{{ partner.id }}">
             {{ partner.name }}
           </a>
         </td>

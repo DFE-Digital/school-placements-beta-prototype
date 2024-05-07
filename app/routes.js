@@ -49,18 +49,26 @@ router.use(passport.session())
 const accountController = require('./controllers/account')
 const authenticationController = require('./controllers/authentication')
 const contentController = require('./controllers/content')
+<<<<<<< HEAD
 const locationController = require('./controllers/locations')
+=======
+const errorController = require('./controllers/errors')
+const feedbackController = require('./controllers/feedback')
+const findPlacementController = require('./controllers/find-placements')
+>>>>>>> main
 const mentorController = require('./controllers/mentors')
 const organisationController = require('./controllers/organisations')
-const userController = require('./controllers/users')
+const partnerProviderController = require('./controllers/partner-providers')
+const partnerSchoolController = require('./controllers/partner-schools')
 const placementController = require('./controllers/placements')
-const partnerController = require('./controllers/partners')
-const findPlacementController = require('./controllers/find-placements')
+const userController = require('./controllers/users')
 
 const supportOrganisationController = require('./controllers/support/organisations')
 const supportOrganisationMentorController = require('./controllers/support/organisations/mentors')
 const supportOrganisationPlacementController = require('./controllers/support/organisations/placements')
 const supportOrganisationUserController = require('./controllers/support/organisations/users')
+const supportOrganisationPartnerProviderController = require('./controllers/support/organisations/partner-providers')
+const supportOrganisationPartnerSchoolController = require('./controllers/support/organisations/partner-schools')
 const supportUserController = require('./controllers/support/users')
 
 // Authentication middleware
@@ -202,12 +210,38 @@ router.get('/organisations/:organisationId/mentors/:mentorId', checkIsAuthentica
 router.get('/organisations/:organisationId/mentors', checkIsAuthenticated, mentorController.mentor_list)
 
 /// ------------------------------------------------------------------------ ///
-/// PARTNER ROUTES
+/// PARTNER SCHOOL ROUTES
 /// ------------------------------------------------------------------------ ///
 
-router.get('/organisations/:organisationId/schools', checkIsAuthenticated, partnerController.partner_schools_list)
+router.get('/organisations/:organisationId/schools/new', checkIsAuthenticated, partnerSchoolController.new_partner_school_get)
+router.post('/organisations/:organisationId/schools/new', checkIsAuthenticated, partnerSchoolController.new_partner_school_post)
 
-router.get('/organisations/:organisationId/providers', checkIsAuthenticated, partnerController.partner_providers_list)
+router.get('/organisations/:organisationId/schools/new/check', checkIsAuthenticated, partnerSchoolController.new_partner_school_check_get)
+router.post('/organisations/:organisationId/schools/new/check', checkIsAuthenticated, partnerSchoolController.new_partner_school_check_post)
+
+router.get('/organisations/:organisationId/schools/:schoolId/delete', checkIsAuthenticated, partnerSchoolController.delete_partner_school_get)
+router.post('/organisations/:organisationId/schools/:schoolId/delete', checkIsAuthenticated, partnerSchoolController.delete_partner_school_post)
+
+router.get('/organisations/:organisationId/schools/:schoolId', checkIsAuthenticated, partnerSchoolController.partner_school_details)
+
+router.get('/organisations/:organisationId/schools', checkIsAuthenticated, partnerSchoolController.partner_schools_list)
+
+/// ------------------------------------------------------------------------ ///
+/// PARTNER PROVIDER ROUTES
+/// ------------------------------------------------------------------------ ///
+
+router.get('/organisations/:organisationId/providers/new', checkIsAuthenticated, partnerProviderController.new_partner_provider_get)
+router.post('/organisations/:organisationId/providers/new', checkIsAuthenticated, partnerProviderController.new_partner_provider_post)
+
+router.get('/organisations/:organisationId/providers/new/check', checkIsAuthenticated, partnerProviderController.new_partner_provider_check_get)
+router.post('/organisations/:organisationId/providers/new/check', checkIsAuthenticated, partnerProviderController.new_partner_provider_check_post)
+
+router.get('/organisations/:organisationId/providers/:providerId/delete', checkIsAuthenticated, partnerProviderController.delete_partner_provider_get)
+router.post('/organisations/:organisationId/providers/:providerId/delete', checkIsAuthenticated, partnerProviderController.delete_partner_provider_post)
+
+router.get('/organisations/:organisationId/providers/:providerId', checkIsAuthenticated, partnerProviderController.partner_provider_details)
+
+router.get('/organisations/:organisationId/providers', checkIsAuthenticated, partnerProviderController.partner_providers_list)
 
 /// ------------------------------------------------------------------------ ///
 /// PLACEMENT ROUTES
@@ -247,9 +281,6 @@ router.post('/organisations/:organisationId/placements/new/subject', checkIsAuth
 router.get('/organisations/:organisationId/placements/new/mentor', checkIsAuthenticated, placementController.new_placement_mentor_get)
 router.post('/organisations/:organisationId/placements/new/mentor', checkIsAuthenticated, placementController.new_placement_mentor_post)
 
-router.get('/organisations/:organisationId/placements/new/window', checkIsAuthenticated, placementController.new_placement_window_get)
-router.post('/organisations/:organisationId/placements/new/window', checkIsAuthenticated, placementController.new_placement_window_post)
-
 router.get('/organisations/:organisationId/placements/new/check', checkIsAuthenticated, placementController.new_placement_check_get)
 router.post('/organisations/:organisationId/placements/new/check', checkIsAuthenticated, placementController.new_placement_check_post)
 
@@ -270,9 +301,6 @@ router.post('/organisations/:organisationId/placements/:placementId/subject', ch
 
 router.get('/organisations/:organisationId/placements/:placementId/mentor', checkIsAuthenticated, placementController.edit_placement_mentor_get)
 router.post('/organisations/:organisationId/placements/:placementId/mentor', checkIsAuthenticated, placementController.edit_placement_mentor_post)
-
-router.get('/organisations/:organisationId/placements/:placementId/window', checkIsAuthenticated, placementController.edit_placement_window_get)
-router.post('/organisations/:organisationId/placements/:placementId/window', checkIsAuthenticated, placementController.edit_placement_window_post)
 
 router.get('/organisations/:organisationId/placements/:placementId/delete', checkIsAuthenticated, placementController.delete_placement_get)
 router.post('/organisations/:organisationId/placements/:placementId/delete', checkIsAuthenticated, placementController.delete_placement_post)
@@ -326,6 +354,40 @@ router.post('/support/organisations/:organisationId/mentors/:mentorId/delete', c
 router.get('/support/organisations/:organisationId/mentors/:mentorId', checkIsAuthenticated, supportOrganisationMentorController.mentor_details)
 
 router.get('/support/organisations/:organisationId/mentors', checkIsAuthenticated, supportOrganisationMentorController.mentor_list)
+
+/// ------------------------------------------------------------------------ ///
+/// SUPPORT - ORGANISATION PARTNER SCHOOL ROUTES
+/// ------------------------------------------------------------------------ ///
+
+router.get('/support/organisations/:organisationId/schools/new', checkIsAuthenticated, supportOrganisationPartnerSchoolController.new_partner_school_get)
+router.post('/support/organisations/:organisationId/schools/new', checkIsAuthenticated, supportOrganisationPartnerSchoolController.new_partner_school_post)
+
+router.get('/support/organisations/:organisationId/schools/new/check', checkIsAuthenticated, supportOrganisationPartnerSchoolController.new_partner_school_check_get)
+router.post('/support/organisations/:organisationId/schools/new/check', checkIsAuthenticated, supportOrganisationPartnerSchoolController.new_partner_school_check_post)
+
+router.get('/support/organisations/:organisationId/schools/:schoolId/delete', checkIsAuthenticated, supportOrganisationPartnerSchoolController.delete_partner_school_get)
+router.post('/support/organisations/:organisationId/schools/:schoolId/delete', checkIsAuthenticated, supportOrganisationPartnerSchoolController.delete_partner_school_post)
+
+router.get('/support/organisations/:organisationId/schools/:schoolId', checkIsAuthenticated, supportOrganisationPartnerSchoolController.partner_school_details)
+
+router.get('/support/organisations/:organisationId/schools', checkIsAuthenticated, supportOrganisationPartnerSchoolController.partner_schools_list)
+
+/// ------------------------------------------------------------------------ ///
+/// SUPPORT - ORGANISATION PARTNER PROVIDER ROUTES
+/// ------------------------------------------------------------------------ ///
+
+router.get('/support/organisations/:organisationId/providers/new', checkIsAuthenticated, supportOrganisationPartnerProviderController.new_partner_provider_get)
+router.post('/support/organisations/:organisationId/providers/new', checkIsAuthenticated, supportOrganisationPartnerProviderController.new_partner_provider_post)
+
+router.get('/support/organisations/:organisationId/providers/new/check', checkIsAuthenticated, supportOrganisationPartnerProviderController.new_partner_provider_check_get)
+router.post('/support/organisations/:organisationId/providers/new/check', checkIsAuthenticated, supportOrganisationPartnerProviderController.new_partner_provider_check_post)
+
+router.get('/support/organisations/:organisationId/providers/:providerId/delete', checkIsAuthenticated, supportOrganisationPartnerProviderController.delete_partner_provider_get)
+router.post('/support/organisations/:organisationId/providers/:providerId/delete', checkIsAuthenticated, supportOrganisationPartnerProviderController.delete_partner_provider_post)
+
+router.get('/support/organisations/:organisationId/providers/:providerId', checkIsAuthenticated, supportOrganisationPartnerProviderController.partner_provider_details)
+
+router.get('/support/organisations/:organisationId/providers', checkIsAuthenticated, supportOrganisationPartnerProviderController.partner_providers_list)
 
 /// ------------------------------------------------------------------------ ///
 /// SUPPORT - ORGANISATION PLACEMENT ROUTES
@@ -398,6 +460,11 @@ router.get('/support/organisations', checkIsAuthenticated, supportOrganisationCo
 /// GENERAL ROUTES
 /// ------------------------------------------------------------------------ ///
 
+router.get('/feedback', feedbackController.feedback_form_get)
+router.post('/feedback', feedbackController.feedback_form_post)
+
+router.get('/feedback/confirmation', feedbackController.feedback_confirmation_get)
+
 router.get('/accessibility', contentController.accessibility)
 
 router.get('/cookies', contentController.cookies)
@@ -405,6 +472,14 @@ router.get('/cookies', contentController.cookies)
 router.get('/privacy', contentController.privacy)
 
 router.get('/terms', contentController.terms)
+
+router.get('/404', checkIsAuthenticated, errorController.page_not_found)
+
+router.get('/500', errorController.unexpected_error)
+
+router.get('/503', errorController.service_unavailable)
+
+router.get('/unauthorised', errorController.unauthorised)
 
 /// ------------------------------------------------------------------------ ///
 /// AUTOCOMPLETE ROUTES

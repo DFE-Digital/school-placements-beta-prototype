@@ -22,76 +22,92 @@
 {% endif %}
 {% endset %}
 
-{{ govukSummaryList({
-  rows: [
-    {
-      key: {
-        text: "Subject level"
+ {% if placement.mentors %}
+  {{ govukSummaryList({
+    rows: [
+      {
+        key: {
+          text: "Subject level"
+        },
+        value: {
+          text: placement.subjectLevel | getSubjectLevelLabel
+        }
       },
-      value: {
-        text: placement.subjectLevel | getSubjectLevelLabel
+      {
+        key: {
+          text: "Subject"
+        },
+        value: {
+          html: subjectHtml
+        },
+        actions: {
+          items: [
+            {
+              href: actions.change + "/subject",
+              text: "Change",
+              visuallyHiddenText: "subject"
+            }
+          ]
+        }
+      },
+      {
+        key: {
+          text: "Mentor" + ("s" if claim.mentors.length > 1)
+        },
+        value: {
+          html: mentorHtml
+        },
+        actions: {
+          items: [
+            {
+              href: actions.change + "/mentor",
+              text: "Change",
+              visuallyHiddenText: "mentor"
+            }
+          ]
+        }
       }
-    },
-    {
-      key: {
-        text: "Subject"
+    ]
+  }) }}
+
+{% else %}
+
+ {{ govukSummaryList({
+    rows: [
+      {
+        key: {
+          text: "Subject level"
+        },
+        value: {
+          text: placement.subjectLevel | getSubjectLevelLabel
+        }
       },
-      value: {
-        html: subjectHtml
-      },
-      actions: {
-        items: [
-          {
-            href: actions.change + "/subject",
-            text: "Change",
-            visuallyHiddenText: "subject"
-          }
-        ]
+      {
+        key: {
+          text: "Subject"
+        },
+        value: {
+          html: subjectHtml
+        },
+        actions: {
+          items: [
+            {
+              href: actions.change + "/subject",
+              text: "Change",
+              visuallyHiddenText: "subject"
+            }
+          ]
+        }
       }
-    },
-    {
-      key: {
-        text: "Mentor" + ("s" if claim.mentors.length > 1)
-      },
-      value: {
-        html: mentorHtml
-      },
-      actions: {
-        items: [
-          {
-            href: actions.change + "/mentor",
-            text: "Change",
-            visuallyHiddenText: "mentor"
-          }
-        ]
-      }
-    },
-    {
-      key: {
-        text: "Window"
-      },
-      value: {
-        text: placement.window | capitalize
-      },
-      actions: {
-        items: [
-          {
-            href: actions.change + "/window",
-            text: "Change",
-            visuallyHiddenText: "window"
-          }
-        ]
-      }
-    },
-    {
-      key: {
-        text: "Status"
-      },
-      value: {
-        html: govukTag({
-          text: "Published"
-        })
-      }
-    }
-  ]
+    ]
+  }) }}
+
+  {% set insetHtml %}
+    You will need to <a href='{{ actions.mentors }}'>add a mentor</a> to be able to assign mentors to this placement.
+  {% endset %}
+
+  {{ govukInsetText({
+  html: insetHtml
 }) }}
+
+{% endif %}

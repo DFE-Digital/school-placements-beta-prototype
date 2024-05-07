@@ -71,10 +71,6 @@ exports.insertOne = (params) => {
       placement.mentors = params.placement.mentors
     }
 
-    if (params.placement.window) {
-      placement.window = params.placement.window
-    }
-
     if (params.placement.status) {
       placement.status = params.placement.status
     }
@@ -112,10 +108,6 @@ exports.updateOne = (params) => {
 
     if (params.placement.mentors) {
       placement.mentors = params.placement.mentors
-    }
-
-    if (params.placement.window) {
-      placement.window = params.placement.window
     }
 
     placement.updatedAt = new Date()
