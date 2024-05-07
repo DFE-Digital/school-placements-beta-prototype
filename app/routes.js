@@ -52,6 +52,7 @@ const contentController = require('./controllers/content')
 const errorController = require('./controllers/errors')
 const feedbackController = require('./controllers/feedback')
 const findPlacementController = require('./controllers/find-placements')
+const locationController = require('./controllers/locations')
 const mentorController = require('./controllers/mentors')
 const organisationController = require('./controllers/organisations')
 const partnerProviderController = require('./controllers/partner-providers')
@@ -484,3 +485,5 @@ router.get('/unauthorised', errorController.unauthorised)
 router.get('/provider-suggestions', organisationController.provider_suggestions_json)
 
 router.get('/school-suggestions', organisationController.school_suggestions_json)
+
+router.get('/location-suggestions', locationController.location_suggestions_json)
