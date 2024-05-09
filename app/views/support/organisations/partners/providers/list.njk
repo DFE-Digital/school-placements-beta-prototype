@@ -39,7 +39,7 @@
         {% include "_includes/partners/providers/list.njk" %}
         {% include "_includes/pagination.njk" %}
       {% else %}
-        <p class="govuk-body">There are no {{ title | lower }} for {{ organisation.name if organisation.name else "your organisation" }}.</p>
+        <p class="govuk-body">There are no partner providers for {{ organisation.name if organisation.name else "your organisation" }}.</p>
       {% endif %}
 
     </div>
