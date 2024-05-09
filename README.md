@@ -1,4 +1,4 @@
-# school-placements-beta-prototype
+# Manage school placments prototype
 
 A service for training providers and schools to manage their mentors and placements.
 
