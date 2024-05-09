@@ -1,4 +1,4 @@
-# Manage school placments prototype
+# Manage school placements prototype
 
 A service for training providers and schools to manage their mentors and placements.
 
