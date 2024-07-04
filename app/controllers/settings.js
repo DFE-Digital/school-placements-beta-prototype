@@ -29,6 +29,7 @@ exports.settings_form_post = (req, res) => {
       errors
     })
   } else {
+    req.flash('success', 'Settings updated')
     res.redirect('/settings')
   }
 }
