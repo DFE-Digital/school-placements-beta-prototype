@@ -14,8 +14,6 @@ exports.update = (params) => {
     settings.pageSize = params.settings.pageSize
   }
 
-  settings.updatedAt = new Date()
-
   const filePath = directoryPath + '/settings.json'
 
   // create a JSON sting for the submitted data
