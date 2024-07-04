@@ -257,7 +257,7 @@ exports.placements_list = (req, res) => {
     delete req.session.data.placement
     delete req.session.data.currentSubjectLevel
 
-    const pagination = new Pagination(placements, req.query.page, pageSize)
+    const pagination = new Pagination(placements, req.query.page, settings.pageSize)
     placements = pagination.getData()
 
     res.render('../views/placements/schools/list', {
