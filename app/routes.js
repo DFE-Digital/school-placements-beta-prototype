@@ -94,10 +94,14 @@ const checkIsAuthenticated = (req, res, next) => {
 /// ------------------------------------------------------------------------ ///
 
 router.all('*', (req, res, next) => {
-  res.locals.settings = settings
   res.locals.referrer = req.query.referrer
   res.locals.query = req.query
   res.locals.flash = req.flash('success') // pass through 'success' messages only
+
+  for (let settingName of Object.keys(settings)) {
+    res.locals[settingName] = settings[settingName]
+  }
+
   next()
 })
 
