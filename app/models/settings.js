@@ -24,6 +24,5 @@ exports.update = (params) => {
   // write the JSON data
   fs.writeFileSync(filePath, fileData)
 
-
   return settings
 }
