@@ -5,6 +5,8 @@ const Pagination = require('../../../helpers/pagination')
 
 const placementDecorator = require('../../../decorators/placements.js')
 
+const settings = require('../../../data/dist/settings')
+
 /// ------------------------------------------------------------------------ ///
 /// LIST PLACEMENT
 /// ------------------------------------------------------------------------ ///
@@ -25,9 +27,7 @@ exports.placements_list = (req, res) => {
     })
   }
 
-  // TODO: get pageSize from settings
-  let pageSize = 25
-  let pagination = new Pagination(placements, req.query.page, pageSize)
+  const pagination = new Pagination(placements, req.query.page, settings.pageSize)
   placements = pagination.getData()
 
   res.render('../views/support/organisations/placements/list', {

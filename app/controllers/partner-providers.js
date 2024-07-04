@@ -4,6 +4,8 @@ const providerModel = require('../models/providers')
 
 const Pagination = require('../helpers/pagination')
 
+const settings = require('../data/dist/settings')
+
 /// ------------------------------------------------------------------------ ///
 /// LIST PARTNER PROVIDERS
 /// ------------------------------------------------------------------------ ///
@@ -23,11 +25,9 @@ exports.partner_providers_list = (req, res) => {
     })
   }
 
-  // TODO: get pageSize from settings
-  let pageSize = 25
-  let pagination = new Pagination(partners, req.query.page, pageSize)
+  const pagination = new Pagination(partners, req.query.page, settings.pageSize)
   partners = pagination.getData()
-console.log(partners);
+
   delete req.session.data.provider
 
   res.render('../views/partners/providers/list', {

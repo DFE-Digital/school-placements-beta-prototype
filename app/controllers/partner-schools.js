@@ -5,6 +5,8 @@ const schoolModel = require('../models/schools')
 
 const Pagination = require('../helpers/pagination')
 
+const settings = require('../data/dist/settings')
+
 /// ------------------------------------------------------------------------ ///
 /// LIST PARTNER SCHOOLS
 /// ------------------------------------------------------------------------ ///
@@ -17,9 +19,7 @@ exports.partner_schools_list = (req, res) => {
     return a.name.localeCompare(b.name)
   })
 
-  // TODO: get pageSize from settings
-  let pageSize = 25
-  let pagination = new Pagination(partners, req.query.page, pageSize)
+  const pagination = new Pagination(partners, req.query.page, settings.pageSize)
   partners = pagination.getData()
 
   delete req.session.data.school
