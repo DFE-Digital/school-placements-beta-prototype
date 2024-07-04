@@ -6,7 +6,7 @@
 const govukPrototypeKit = require('govuk-prototype-kit')
 const router = govukPrototypeKit.requests.setupRouter()
 
-const settings = require('./data/settings')
+const settings = require('./data/dist/settings')
 
 /// ------------------------------------------------------------------------ ///
 /// Flash messaging
@@ -50,6 +50,7 @@ const accountController = require('./controllers/account')
 const authenticationController = require('./controllers/authentication')
 const contentController = require('./controllers/content')
 const errorController = require('./controllers/errors')
+const settingController = require('./controllers/settings')
 const feedbackController = require('./controllers/feedback')
 const findPlacementController = require('./controllers/find-placements')
 const locationController = require('./controllers/locations')
@@ -456,6 +457,9 @@ router.get('/support/organisations', checkIsAuthenticated, supportOrganisationCo
 /// ------------------------------------------------------------------------ ///
 /// GENERAL ROUTES
 /// ------------------------------------------------------------------------ ///
+
+router.get('/settings', settingController.settings_form_get)
+router.post('/settings', settingController.settings_form_post)
 
 router.get('/feedback', feedbackController.feedback_form_get)
 router.post('/feedback', feedbackController.feedback_form_post)
