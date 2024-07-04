@@ -13,15 +13,14 @@ const subjectHelper = require('../helpers/subjects')
 
 const placementDecorator = require('../decorators/placements.js')
 
+const settings = require('../data/dist/settings')
+
 /// ------------------------------------------------------------------------ ///
 /// LIST PLACEMENT
 /// ------------------------------------------------------------------------ ///
 
 exports.placements_list = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
-
-  // TODO: get pageSize from settings
-  let pageSize = 25
 
   let placements
   if (['university','scitt'].includes(organisation.type)) {
@@ -219,7 +218,7 @@ exports.placements_list = (req, res) => {
 
     }
 
-    let pagination = new Pagination(placements, req.query.page, pageSize)
+    const pagination = new Pagination(placements, req.query.page, settings.pageSize)
     placements = pagination.getData()
 
     res.render('../views/placements/providers/list', {
@@ -258,7 +257,7 @@ exports.placements_list = (req, res) => {
     delete req.session.data.placement
     delete req.session.data.currentSubjectLevel
 
-    let pagination = new Pagination(placements, req.query.page, pageSize)
+    const pagination = new Pagination(placements, req.query.page, settings.pageSize)
     placements = pagination.getData()
 
     res.render('../views/placements/schools/list', {

@@ -9,6 +9,8 @@ const filterHelper = require('../helpers/filters.js')
 
 const placementDecorator = require('../decorators/placements.js')
 
+const settings = require('../data/dist/settings')
+
 /// ------------------------------------------------------------------------ ///
 /// Find
 /// ------------------------------------------------------------------------ ///
@@ -385,8 +387,7 @@ exports.placements_list = (req, res) => {
     return a.name.localeCompare(b.name) || a.school.name.localeCompare(b.school.name)
   })
 
-  let pageSize = 25
-  let pagination = new Pagination(placements, req.query.page, pageSize)
+  const pagination = new Pagination(placements, req.query.page, settings.pageSize)
   placements = pagination.getData()
 
   res.render('../views/placements/find/list', {
