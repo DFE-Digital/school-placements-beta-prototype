@@ -486,6 +486,10 @@ router.get('/503', errorController.service_unavailable)
 
 router.get('/unauthorised', errorController.unauthorised)
 
+router.get('/account-not-recognised', errorController.account_not_recognised)
+
+router.get('/account-no-organisation', errorController.account_no_organisation)
+
 /// ------------------------------------------------------------------------ ///
 /// AUTOCOMPLETE ROUTES
 /// ------------------------------------------------------------------------ ///
