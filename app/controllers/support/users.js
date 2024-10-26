@@ -164,6 +164,7 @@ exports.new_user_check_post = (req, res) => {
 exports.edit_user_get = (req, res) => {
   const currentUser = userModel.findOne({ userId: req.params.userId })
 
+  let user
   if (req.session.data.user) {
     user = req.session.data.user
   } else {
