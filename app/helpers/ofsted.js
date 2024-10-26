@@ -15,7 +15,7 @@ exports.getOfstedRatingOptions = () => { // selectedItem
   })
 
   items.sort((a, b) => {
-    return a.code > b.code
+    return a.text.localeCompare(b.text)
   })
 
   return items
