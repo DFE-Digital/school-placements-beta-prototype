@@ -1,7 +1,7 @@
 exports.getOfstedRatingOptions = () => { // selectedItem
   const items = []
 
-  let options = require('../data/dist/ofsted/ratings')
+  const options = require('../data/dist/ofsted/ratings')
 
   options.forEach((option, i) => {
     const item = {}
@@ -15,7 +15,7 @@ exports.getOfstedRatingOptions = () => { // selectedItem
   })
 
   items.sort((a, b) => {
-    return a.code > b.code
+    return a.text.localeCompare(b.text)
   })
 
   return items

@@ -117,40 +117,40 @@ exports.new_partner_school_post = (req, res) => {
     // if (schools.length > 1) {
     //   res.redirect(`/organisations/${req.params.organisationId}/schools/choose`)
     // } else {
+    const school = schoolModel.findOne({ query: req.session.data.school.name })
+    const schoolOrg = organisationModel.findOne({ organisationId: school.id })
+
+    let relationship = false
+
+    if (schoolOrg.relationships) {
+      relationship = !!schoolOrg.relationships.find(relationship => relationship.includes(req.params.organisationId))
+    }
+
+    if (relationship) {
+      const error = {}
+      error.fieldName = 'school'
+      error.href = '#school'
+      error.text = 'Partner school has already been added'
+      errors.push(error)
+    }
+
+    if (errors.length) {
+      res.render('../views/partners/schools/find', {
+        organisation,
+        actions: {
+          save,
+          back,
+          cancel: `/organisations/${req.params.organisationId}/schools`
+        },
+        errors
+      })
+    } else {
       const school = schoolModel.findOne({ query: req.session.data.school.name })
-      const schoolOrg = organisationModel.findOne({ organisationId: school.id })
 
-      let relationship = false
+      req.session.data.school.id = school.id
 
-      if (schoolOrg.relationships) {
-        relationship = !!schoolOrg.relationships.find(relationship => relationship.includes(req.params.organisationId))
-      }
-
-      if (relationship) {
-        const error = {}
-        error.fieldName = 'school'
-        error.href = '#school'
-        error.text = 'Partner school has already been added'
-        errors.push(error)
-      }
-
-      if (errors.length) {
-        res.render('../views/partners/schools/find', {
-          organisation,
-          actions: {
-            save,
-            back,
-            cancel: `/organisations/${req.params.organisationId}/schools`
-          },
-          errors
-        })
-      } else {
-        const school = schoolModel.findOne({ query: req.session.data.school.name })
-
-        req.session.data.school.id = school.id
-
-        res.redirect(`/organisations/${req.params.organisationId}/schools/new/check`)
-      }
+      res.redirect(`/organisations/${req.params.organisationId}/schools/new/check`)
+    }
     // }
   }
 }

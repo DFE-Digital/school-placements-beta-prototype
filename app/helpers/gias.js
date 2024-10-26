@@ -1,7 +1,7 @@
 exports.getEstablishmentTypeOptions = (selectedItem) => {
   const items = []
 
-  let establishmentTypes = require('../data/dist/schools/school-types')
+  const establishmentTypes = require('../data/dist/schools/school-types')
 
   establishmentTypes.forEach((establishmentType, i) => {
     const item = {}
@@ -27,7 +27,7 @@ exports.getEstablishmentTypeLabel = (code) => {
 
   let label
 
-  if (!!establishmentType) {
+  if (establishmentType) {
     label = establishmentType.name
   } else {
     label = 'Not entered'
@@ -39,7 +39,7 @@ exports.getEstablishmentTypeLabel = (code) => {
 exports.getEstablishmentGroupOptions = (selectedItem) => {
   const items = []
 
-  let establishmentGroups = require('../data/dist/schools/school-groups')
+  const establishmentGroups = require('../data/dist/schools/school-groups')
 
   establishmentGroups.forEach((establishmentGroup, i) => {
     const item = {}
@@ -65,7 +65,7 @@ exports.getEstablishmentGroupLabel = (code) => {
 
   let label
 
-  if (!!establishmentGroup) {
+  if (establishmentGroup) {
     label = establishmentGroup.name
   } else {
     label = 'Not entered'
@@ -77,7 +77,7 @@ exports.getEstablishmentGroupLabel = (code) => {
 exports.getEstablishmentStatusOptions = (selectedItem) => {
   const items = []
 
-  let establishementStatuses = require('../data/dist/schools/school-statuses')
+  const establishementStatuses = require('../data/dist/schools/school-statuses')
 
   establishementStatuses.forEach((establishementStatus, i) => {
     const item = {}
@@ -103,7 +103,7 @@ exports.getEstablishmentStatusLabel = (code) => {
 
   let label
 
-  if (!!establishementStatus) {
+  if (establishementStatus) {
     label = establishementStatus.name
   } else {
     label = 'Not entered'
@@ -115,7 +115,7 @@ exports.getEstablishmentStatusLabel = (code) => {
 exports.getEstablishmentPhaseOptions = (selectedItem) => {
   const items = []
 
-  let establishementPhases = require('../data/dist/schools/school-phases')
+  const establishementPhases = require('../data/dist/schools/school-phases')
 
   establishementPhases.forEach((establishementPhase, i) => {
     const item = {}
@@ -141,7 +141,7 @@ exports.getEstablishmentPhaseLabel = (code) => {
 
   let label
 
-  if (!!establishementPhase) {
+  if (establishementPhase) {
     label = establishementPhase.name
   } else {
     label = 'Not entered'
@@ -153,7 +153,7 @@ exports.getEstablishmentPhaseLabel = (code) => {
 exports.getGenderOptions = (selectedItem) => {
   const items = []
 
-  let genders = require('../data/dist/schools/school-genders')
+  const genders = require('../data/dist/schools/school-genders')
 
   genders.forEach((gender, i) => {
     const item = {}
@@ -179,7 +179,7 @@ exports.getGenderLabel = (code) => {
 
   let label
 
-  if (!!gender) {
+  if (gender) {
     label = gender.name
   } else {
     label = 'Not entered'
@@ -191,7 +191,7 @@ exports.getGenderLabel = (code) => {
 exports.getOfficialSixthFormOptions = (selectedItem) => {
   const items = []
 
-  let sixthForms = require('../data/dist/schools/school-sixth-form')
+  const sixthForms = require('../data/dist/schools/school-sixth-form')
 
   sixthForms.forEach((sixthForm, i) => {
     const item = {}
@@ -217,7 +217,7 @@ exports.getOfficialSixthFormLabel = (code) => {
 
   let label
 
-  if (!!sixthForm) {
+  if (sixthForm) {
     label = sixthForm.name
   } else {
     label = 'Not entered'
@@ -229,7 +229,7 @@ exports.getOfficialSixthFormLabel = (code) => {
 exports.getNurseryProvisionOptions = (selectedItem) => {
   const items = []
 
-  let nurseryProvisions = require('../data/dist/schools/school-nursery-provision')
+  const nurseryProvisions = require('../data/dist/schools/school-nursery-provision')
 
   nurseryProvisions.forEach((nurseryProvision, i) => {
     const item = {}
@@ -255,7 +255,7 @@ exports.getNurseryProvisionLabel = (code) => {
 
   let label
 
-  if (!!nurseryProvision) {
+  if (nurseryProvision) {
     label = nurseryProvision.name
   } else {
     label = 'Not entered'
@@ -267,7 +267,7 @@ exports.getNurseryProvisionLabel = (code) => {
 exports.getReligiousCharacterOptions = (selectedItem) => {
   const items = []
 
-  let religiousCharacters = require('../data/dist/schools/school-religious-character')
+  const religiousCharacters = require('../data/dist/schools/school-religious-character')
 
   religiousCharacters.forEach((religiousCharacter, i) => {
     const item = {}
@@ -293,7 +293,7 @@ exports.getReligiousCharacterLabel = (code) => {
 
   let label
 
-  if (!!religiousCharacter) {
+  if (religiousCharacter) {
     label = religiousCharacter.name
   } else {
     label = 'Not entered'
@@ -305,7 +305,7 @@ exports.getReligiousCharacterLabel = (code) => {
 exports.getAdmissionsPolicyOptions = (selectedItem) => {
   const items = []
 
-  let admissionsPolicies = require('../data/dist/schools/school-admissions-policy')
+  const admissionsPolicies = require('../data/dist/schools/school-admissions-policy')
 
   admissionsPolicies.forEach((admissionsPolicy, i) => {
     const item = {}
@@ -331,7 +331,7 @@ exports.getAdmissionsPolicyLabel = (code) => {
 
   let label
 
-  if (!!admissionsPolicy) {
+  if (admissionsPolicy) {
     label = admissionsPolicy.name
   } else {
     label = 'Not entered'
@@ -343,7 +343,7 @@ exports.getAdmissionsPolicyLabel = (code) => {
 exports.getSpecialClassesOptions = () => { // selectedItem
   const items = []
 
-  let options = require('../data/dist/schools/school-special-classes')
+  const options = require('../data/dist/schools/school-special-classes')
 
   options.forEach((option, i) => {
     const item = {}
@@ -369,7 +369,7 @@ exports.getSpecialClassesLabel = (code) => {
 
   let label
 
-  if (!!option) {
+  if (option) {
     label = option.name
   } else {
     label = 'Not entered'
@@ -381,7 +381,7 @@ exports.getSpecialClassesLabel = (code) => {
 exports.getUrbanRuralOptions = (selectedItem) => {
   const items = []
 
-  let options = require('../data/dist/schools/school-urban-rural')
+  const options = require('../data/dist/schools/school-urban-rural')
 
   options.forEach((option, i) => {
     const item = {}
@@ -407,7 +407,7 @@ exports.getUrbanRuralLabel = (code) => {
 
   let label
 
-  if (!!option) {
+  if (option) {
     label = option.name
   } else {
     label = 'Not entered'
@@ -419,7 +419,7 @@ exports.getUrbanRuralLabel = (code) => {
 exports.getSENDProvisionOptions = (selectedItem, noneOption = false) => {
   const items = []
 
-  let options = require('../data/dist/schools/school-send-provision')
+  const options = require('../data/dist/schools/school-send-provision')
 
   options.sort((a, b) => a.sortOrder - b.sortOrder)
 
@@ -458,7 +458,7 @@ exports.getSENDProvisionLabel = (code) => {
 
   let label
 
-  if (!!option) {
+  if (option) {
     label = option.name
   } else {
     label = 'Not entered'

@@ -191,7 +191,7 @@ exports.getSubjectOptions = (subjectLevel, selectedItem) => {
 
   let subjects = require('../data/dist/subjects/subjects')
   subjects = subjects.filter(subject => subject.level === subjectLevel &&
-    !['ML','24'].includes(subject.code))
+    !['ML', '24'].includes(subject.code))
 
   subjects.forEach((subject, i) => {
     const item = {}

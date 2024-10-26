@@ -52,7 +52,7 @@ exports.findOne = (params) => {
 }
 
 exports.insertOne = (params) => {
-  let placement = {}
+  const placement = {}
 
   if (params.organisationId) {
     placement.id = uuid()
@@ -95,7 +95,7 @@ exports.updateOne = (params) => {
   if (params.organisationId && params.placementId) {
     placement = this.findOne({
       organisationId: params.organisationId,
-      placementId: params.placementId,
+      placementId: params.placementId
     })
 
     if (params.placement.subjectLevel) {

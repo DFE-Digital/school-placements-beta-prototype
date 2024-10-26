@@ -1,10 +1,9 @@
-
 exports.getDistance = (lat1, lon1, lat2, lon2, unit = 'mi') => {
   // Convert degrees to radians
   const earthRadius = {
-    'km': 6371,  // Earth radius in kilometers
-    'mi': 3959 // Earth radius in miles
-  };
+    km: 6371, // Earth radius in kilometers
+    mi: 3959 // Earth radius in miles
+  }
 
   const lat1Rad = lat1 * Math.PI / 180
   const lat2Rad = lat2 * Math.PI / 180
@@ -21,7 +20,6 @@ exports.getDistance = (lat1, lon1, lat2, lon2, unit = 'mi') => {
 
   return distance
 }
-
 
 // origin
 // destination

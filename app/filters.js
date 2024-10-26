@@ -104,7 +104,6 @@ addFilter('getErrorMessage', (array, fieldName) => {
   return error
 })
 
-
 addFilter('getOrganisationTypeLabel', utilsHelper.getOrganisationTypeLabel)
 
 /* ------------------------------------------------------------------

@@ -178,6 +178,7 @@ exports.edit_user_get = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
   const currentUser = userModel.findOne({ organisationId: req.params.organisationId, userId: req.params.userId })
 
+  let user
   if (req.session.data.user) {
     user = req.session.data.user
   } else {
