@@ -123,39 +123,39 @@ exports.new_partner_provider_post = (req, res) => {
     // if (schools.length > 1) {
     //   res.redirect(`/organisations/${req.params.organisationId}/providers/choose`)
     // } else {
+    const provider = providerModel.findOne({ query: req.session.data.provider.name })
+
+    let relationship = false
+
+    if (organisation.relationships) {
+      relationship = !!organisation.relationships.find(relationship => relationship.includes(provider.id))
+    }
+
+    if (relationship) {
+      const error = {}
+      error.fieldName = 'provider'
+      error.href = '#provider'
+      error.text = 'Partner provider has already been added'
+      errors.push(error)
+    }
+
+    if (errors.length) {
+      res.render('../views/partners/providers/find', {
+        organisation,
+        actions: {
+          save,
+          back,
+          cancel: `/organisations/${req.params.organisationId}/providers`
+        },
+        errors
+      })
+    } else {
       const provider = providerModel.findOne({ query: req.session.data.provider.name })
 
-      let relationship = false
+      req.session.data.provider.id = provider.id
 
-      if (organisation.relationships) {
-        relationship = !!organisation.relationships.find(relationship => relationship.includes(provider.id))
-      }
-
-      if (relationship) {
-        const error = {}
-        error.fieldName = 'provider'
-        error.href = '#provider'
-        error.text = 'Partner provider has already been added'
-        errors.push(error)
-      }
-
-      if (errors.length) {
-        res.render('../views/partners/providers/find', {
-          organisation,
-          actions: {
-            save,
-            back,
-            cancel: `/organisations/${req.params.organisationId}/providers`
-          },
-          errors
-        })
-      } else {
-        const provider = providerModel.findOne({ query: req.session.data.provider.name })
-
-        req.session.data.provider.id = provider.id
-
-        res.redirect(`/organisations/${req.params.organisationId}/providers/new/check`)
-      }
+      res.redirect(`/organisations/${req.params.organisationId}/providers/new/check`)
+    }
     // }
   }
 }
@@ -163,7 +163,7 @@ exports.new_partner_provider_post = (req, res) => {
 exports.new_partner_provider_check_get = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
   const provider = providerModel.findOne({ query: req.session.data.provider.id })
-console.log(provider);
+  console.log(provider)
   res.render('../views/partners/providers/check-your-answers', {
     organisation,
     provider,

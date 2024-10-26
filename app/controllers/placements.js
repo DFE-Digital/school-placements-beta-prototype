@@ -23,7 +23,7 @@ exports.placements_list = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
 
   let placements
-  if (['university','scitt'].includes(organisation.type)) {
+  if (['university', 'scitt'].includes(organisation.type)) {
     // variables used in the find placement flow
     delete req.session.data.questions
     delete req.session.data.location
@@ -73,11 +73,11 @@ exports.placements_list = (req, res) => {
       ofstedRatings = filterHelper.getCheckboxValues(ofstedRating, req.session.data.filters.ofstedRating)
     }
 
-    const hasFilters = !!((subjects?.length > 0)
-      || (establishmentTypes?.length > 0)
-      || (genders?.length > 0)
-      || (religiousCharacters?.length > 0)
-      || (ofstedRatings?.length > 0)
+    const hasFilters = !!((subjects?.length > 0) ||
+      (establishmentTypes?.length > 0) ||
+      (genders?.length > 0) ||
+      (religiousCharacters?.length > 0) ||
+      (ofstedRatings?.length > 0)
     )
 
     let selectedFilters = null
@@ -172,9 +172,9 @@ exports.placements_list = (req, res) => {
       if (keywords?.length) {
         const query = keywords.toLowerCase()
         placements = placements.filter(placement => {
-          return placement.school.name.toLowerCase().includes(query)
-            || placement.school.urn?.toString().includes(query)
-            || placement.school.address?.postcode?.toLowerCase().includes(query)
+          return placement.school.name.toLowerCase().includes(query) ||
+            placement.school.urn?.toString().includes(query) ||
+            placement.school.address?.postcode?.toLowerCase().includes(query)
         })
       }
 
@@ -215,7 +215,6 @@ exports.placements_list = (req, res) => {
       placements.sort((a, b) => {
         return a.name.localeCompare(b.name) || a.school.name.localeCompare(b.school.name)
       })
-
     }
 
     const pagination = new Pagination(placements, req.query.page, settings.pageSize)
@@ -248,7 +247,6 @@ exports.placements_list = (req, res) => {
         }
       }
     })
-
   } else {
     const mentors = mentorModel.findMany({ organisationId: req.params.organisationId })
 
@@ -326,7 +324,7 @@ exports.placement_details = (req, res) => {
     cancel: `/organisations/${req.params.organisationId}/placements`
   }
 
-  if (['university','scitt'].includes(organisation.type)) {
+  if (['university', 'scitt'].includes(organisation.type)) {
     placement = placementDecorator.decorate(placement)
 
     res.render('../views/placements/providers/show', {
@@ -356,11 +354,11 @@ exports.new_placement_get = (req, res) => {
     req.session.data.placement = {}
   }
 
-  if ([2,3].includes(organisation.establishmentPhase)) {
+  if ([2, 3].includes(organisation.establishmentPhase)) {
     req.session.data.placement.subjectLevel = 'primary'
     // redirect to primary subjects
     res.redirect(`/organisations/${req.params.organisationId}/placements/new/subject`)
-  } else if ([4,5].includes(organisation.establishmentPhase)) {
+  } else if ([4, 5].includes(organisation.establishmentPhase)) {
     req.session.data.placement.subjectLevel = 'secondary'
     // redirect to secondary subjects
     res.redirect(`/organisations/${req.params.organisationId}/placements/new/subject`)
@@ -507,7 +505,7 @@ exports.new_placement_subject_post = (req, res) => {
       },
       errors
     })
-} else {
+  } else {
     if (!mentors.length) {
       res.redirect(`/organisations/${req.params.organisationId}/placements/new/check`)
     } else {
@@ -569,8 +567,8 @@ exports.new_placement_mentor_post = (req, res) => {
     error.text = 'Select a mentor'
     errors.push(error)
   } else if (
-    req.session.data.placement.mentors.length > 1
-    && req.session.data.placement.mentors.includes('unknown')
+    req.session.data.placement.mentors.length > 1 &&
+    req.session.data.placement.mentors.includes('unknown')
   ) {
     const error = {}
     error.fieldName = 'mentors'
@@ -653,7 +651,7 @@ exports.edit_placement_subject_post = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
   const currentPlacement = placementModel.findOne({ placementId: req.params.placementId })
   // combine submitted data with current placement data
-  const placement = {...currentPlacement, ...req.session.data.placement}
+  const placement = { ...currentPlacement, ...req.session.data.placement }
 
   const subjectOptions = subjectHelper.getSubjectOptions({
     subjectLevel: placement.subjectLevel,
@@ -724,7 +722,7 @@ exports.edit_placement_mentor_post = (req, res) => {
   const organisation = organisationModel.findOne({ organisationId: req.params.organisationId })
   const currentPlacement = placementModel.findOne({ placementId: req.params.placementId })
   // combine submitted data with current placement data
-  const placement = {...currentPlacement, ...req.session.data.placement}
+  const placement = { ...currentPlacement, ...req.session.data.placement }
 
   const otherOptionLabel = 'Not known yet'
   const mentorOptions = mentorHelper.getMentorOptions({
@@ -742,8 +740,8 @@ exports.edit_placement_mentor_post = (req, res) => {
     error.text = 'Select a mentor'
     errors.push(error)
   } else if (
-    req.session.data.placement.mentors.length > 1
-    && req.session.data.placement.mentors.includes('unknown')
+    req.session.data.placement.mentors.length > 1 &&
+    req.session.data.placement.mentors.includes('unknown')
   ) {
     const error = {}
     error.fieldName = 'mentors'
@@ -769,7 +767,7 @@ exports.edit_placement_mentor_post = (req, res) => {
     placementModel.updateOne({
       organisationId: req.params.organisationId,
       placementId: req.params.placementId,
-      placement: req.session.data.placement,
+      placement: req.session.data.placement
     })
 
     req.flash('success', 'Placement updated')

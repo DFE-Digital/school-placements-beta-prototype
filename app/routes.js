@@ -33,8 +33,8 @@ passport.deserializeUser((user, done) => {
 passport.use(new LocalStrategy(
   (username, password, done) => {
     const user = authenticationModel.findOne({
-      username: username,
-      password: password,
+      username,
+      password,
       active: true
     })
     if (user) { return done(null, user) }
@@ -98,7 +98,7 @@ router.all('*', (req, res, next) => {
   res.locals.query = req.query
   res.locals.flash = req.flash('success') // pass through 'success' messages only
 
-  for (let settingName of Object.keys(settings)) {
+  for (const settingName of Object.keys(settings)) {
     res.locals[settingName] = settings[settingName]
   }
 
@@ -263,12 +263,12 @@ router.get('/organisations/:organisationId/placements/find/results', checkIsAuth
 router.get('/organisations/:organisationId/placements/find/results/remove-keyword-search', checkIsAuthenticated, findPlacementController.removeKeywordSearch)
 
 router.get('/organisations/:organisationId/placements/find/results/remove-age-range-filter/:ageRange', checkIsAuthenticated, findPlacementController.removeFilterAgeRange)
-router.get('/organisations/:organisationId/placements/find/results/remove-establishment-type-filter/:establishmentType',  checkIsAuthenticated,findPlacementController.removeFilterEstablishmentType)
+router.get('/organisations/:organisationId/placements/find/results/remove-establishment-type-filter/:establishmentType', checkIsAuthenticated, findPlacementController.removeFilterEstablishmentType)
 router.get('/organisations/:organisationId/placements/find/results/remove-gender-filter/:gender', checkIsAuthenticated, findPlacementController.removeFilterGender)
 router.get('/organisations/:organisationId/placements/find/results/remove-religious-character-filter/:religiousCharacter', checkIsAuthenticated, findPlacementController.removeFilterReligiousCharacter)
 router.get('/organisations/:organisationId/placements/find/results/remove-ofsted-rating-filter/:ofstedRating', checkIsAuthenticated, findPlacementController.removeFilterOfstedRating)
 
-router.get('/organisations/:organisationId/placements/find/results/remove-all-filters',  checkIsAuthenticated,findPlacementController.removeAllFilters)
+router.get('/organisations/:organisationId/placements/find/results/remove-all-filters', checkIsAuthenticated, findPlacementController.removeAllFilters)
 
 router.get('/organisations/:organisationId/placements/find/results/:placementId', checkIsAuthenticated, findPlacementController.show)
 
@@ -291,12 +291,12 @@ router.post('/organisations/:organisationId/placements/new/check', checkIsAuthen
 router.get('/organisations/:organisationId/placements/remove-keyword-search', checkIsAuthenticated, placementController.removeKeywordSearch)
 
 router.get('/organisations/:organisationId/placements/remove-subject-filter/:subject', checkIsAuthenticated, placementController.removeFilterSubject)
-router.get('/organisations/:organisationId/placements/remove-establishment-type-filter/:establishmentType',  checkIsAuthenticated,placementController.removeFilterEstablishmentType)
+router.get('/organisations/:organisationId/placements/remove-establishment-type-filter/:establishmentType', checkIsAuthenticated, placementController.removeFilterEstablishmentType)
 router.get('/organisations/:organisationId/placements/remove-gender-filter/:gender', checkIsAuthenticated, placementController.removeFilterGender)
 router.get('/organisations/:organisationId/placements/remove-religious-character-filter/:religiousCharacter', checkIsAuthenticated, placementController.removeFilterReligiousCharacter)
 router.get('/organisations/:organisationId/placements/remove-ofsted-rating-filter/:ofstedRating', checkIsAuthenticated, placementController.removeFilterOfstedRating)
 
-router.get('/organisations/:organisationId/placements/remove-all-filters',  checkIsAuthenticated,placementController.removeAllFilters)
+router.get('/organisations/:organisationId/placements/remove-all-filters', checkIsAuthenticated, placementController.removeAllFilters)
 
 router.get('/organisations/:organisationId/placements/:placementId/subject', checkIsAuthenticated, placementController.edit_placement_subject_get)
 router.post('/organisations/:organisationId/placements/:placementId/subject', checkIsAuthenticated, placementController.edit_placement_subject_post)

@@ -25,7 +25,6 @@ const locationSuggestionsService = {
         } else {
           return []
         }
-
       })
       .catch(error => console.error('Error fetching predictions:', error))
 
@@ -46,7 +45,7 @@ const locationSuggestionsService = {
     const locations = fetch(url)
       .then(response => response.json())
       .then(data => {
-        console.log('Predictions:', data.predictions);
+        console.log('Predictions:', data.predictions)
         return data.predictions
       })
       .catch(error => console.error('Error fetching predictions:', error))
@@ -58,7 +57,7 @@ const locationSuggestionsService = {
     // https://developers.google.com/maps/documentation/places/web-service/details
 
     const getLocationPlaceId = (predictions) => {
-      console.log('Predictions:', predictions);
+      console.log('Predictions:', predictions)
       const location = predictions[0]
       return location.place_id
     }
@@ -66,7 +65,7 @@ const locationSuggestionsService = {
     const location = this.getLocations(query)
       .then(getLocationPlaceId)
       .then((placeId) => {
-        console.log('placeId:', placeId);
+        console.log('placeId:', placeId)
         // Build the request URL with input and API key
         const url = new URL('https://maps.googleapis.com/maps/api/place/details/json')
         url.searchParams.set('place_id', placeId)
@@ -77,7 +76,7 @@ const locationSuggestionsService = {
         const location = fetch(url)
           .then(response => response.json())
           .then(data => {
-            console.log('Place details:', data);
+            console.log('Place details:', data)
             return data.result
           })
           .catch(error => console.error('Error fetching place details:', error))

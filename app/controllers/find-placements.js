@@ -36,24 +36,24 @@ exports.find_location_post = (req, res) => {
 
   if (req.session.data.q === undefined) {
     const error = {}
-    error.fieldName = "q"
-    error.href = "#q"
-    error.text = "Select find placements by location or by school"
+    error.fieldName = 'q'
+    error.href = '#q'
+    error.text = 'Select find placements by location or by school'
     errors.push(error)
   } else {
     if (req.session.data.q === 'location' && !req.session.data.location.length) {
       const error = {}
-      error.fieldName = "location"
-      error.href = "#location"
-      error.text = "Enter a city, town or postcode"
+      error.fieldName = 'location'
+      error.href = '#location'
+      error.text = 'Enter a city, town or postcode'
       errors.push(error)
     }
 
     if (req.session.data.q === 'school' && !req.session.data.school.length) {
       const error = {}
-      error.fieldName = "school"
-      error.href = "#school"
-      error.text = "Enter a school name, URN or postcode"
+      error.fieldName = 'school'
+      error.href = '#school'
+      error.text = 'Enter a school name, URN or postcode'
       errors.push(error)
     }
   }
@@ -96,9 +96,9 @@ exports.find_subject_level_post = (req, res) => {
 
   if (!req.session.data.questions?.subjectLevel.length) {
     const error = {}
-    error.fieldName = "subjectLevel"
-    error.href = "#subjectLevel"
-    error.text = "Select a subject level"
+    error.fieldName = 'subjectLevel'
+    error.href = '#subjectLevel'
+    error.text = 'Select a subject level'
     errors.push(error)
   }
 
@@ -227,11 +227,11 @@ exports.placements_list = (req, res) => {
     ofstedRatings = filterHelper.getCheckboxValues(ofstedRating, req.session.data.filters.ofstedRating)
   }
 
-  const hasFilters = !!((ageRanges?.length > 0)
-    || (establishmentTypes?.length > 0)
-    || (genders?.length > 0)
-    || (religiousCharacters?.length > 0)
-    || (ofstedRatings?.length > 0)
+  const hasFilters = !!((ageRanges?.length > 0) ||
+    (establishmentTypes?.length > 0) ||
+    (genders?.length > 0) ||
+    (religiousCharacters?.length > 0) ||
+    (ofstedRatings?.length > 0)
   )
 
   let selectedFilters = null
@@ -420,7 +420,6 @@ exports.placements_list = (req, res) => {
       }
     }
   })
-
 }
 
 exports.removeKeywordSearch = (req, res) => {

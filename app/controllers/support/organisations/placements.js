@@ -35,7 +35,7 @@ exports.placements_list = (req, res) => {
     placements,
     pagination,
     actions: {
-      new: '#', //`/organisations/${req.params.organisationId}/placements/new`
+      new: '#', // `/organisations/${req.params.organisationId}/placements/new`
       view: `/support/organisations/${req.params.organisationId}/placements`,
       back: '/'
     }
