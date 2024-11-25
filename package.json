@@ -34,7 +34,7 @@
     "uuid": "^10.0.0"
   },
   "devDependencies": {
-    "markdownlint-cli": "^0.42.0",
+    "markdownlint-cli": "^0.43.0",
     "standard": "^17.1.2",
     "stylelint": "^16.10.0",
     "stylelint-config-recommended-scss": "^14.1.0",
